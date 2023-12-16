@@ -1,0 +1,32 @@
+{
+    "URL":[
+        {
+            "stagingURL":"https://agency.staging.better-seller.betterseller.com/sign-in",
+            "testURL":"https://agency.test.better-seller.betterseller.com/sign-in"
+        }
+    ],
+    "userAccounts":[
+        {
+            "usernameAdmin":"agencysu@betterseller.com",
+            "adminpassword":"y6A7cH0tg8KB",
+            "accountspecialist1":"aldwin.jumaoas+acountspecialist1@outgive.ca",
+            "accountspecialist":"aldwin.jumaoas+acountspecialist@outgive.ca",
+            "projectmanager":"aldwin.jumaoas+projectmanager@outgive.ca",
+            "brandstrategist":"aldwin.jumaoas+brandstrategist1@outgive.ca",
+            "accountspecialistandprojectmanagerpassword":"q@testing1",
+            "accountmanager":"aldwin.jumaoas+accountmanager@outgive.ca",
+            "accountmanagerpassword":"qatesting123"
+        }
+    ],
+    "AccountProfileSection":[
+        {
+            "useraccountprofilepicinitial":"div > button.bell-notif",
+            "signoutlinktext":"div > a[href='/sign-out']",
+            "usersettings":".flex .text-red-400",
+            "useremailaddress":".space-y-2 .text-xs",
+            "userrole":".space-y-2 .text-1xs",
+            "username":".space-y-2 .text-sm",
+            "initiallogo":".space-y-2 >span > span"
+        }
+    ]
+}

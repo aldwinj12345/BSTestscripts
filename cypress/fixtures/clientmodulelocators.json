@@ -1,0 +1,164 @@
+{
+    "ActiveClientsMainPageTitle":"#client-lists > div > h2",
+    "ClientNameTitle":"div.main-content-inner2 > div > h1",
+    "ClientMainPageTab":[
+        {
+            "ClientDashboardTab":"nav[aria-label='Tabs'] > a:nth-child(1)",
+            "BillingTab":"nav[aria-label='Tabs'] > a:nth-child(2)",
+            "TasksTab":"nav[aria-label='Tabs'] > a:nth-child(3)"
+        }
+    ],
+    "ClientDashboardTabPage":[
+        {
+            "PageTabs":[
+                {
+                    "ProfileTab":"div.tablinks > a:nth-child(1)",
+                    "OnboardingTab":"div.tablinks > a:nth-child(2)",
+                    "FilesTab":"div.tablinks > a:nth-child(3)",
+                    "MockupTab":"div.tablinks > a:nth-child(4)",
+                    "ProposalTab":"div.tablinks > a:nth-child(5)"
+                }
+            ],
+            "ProfileTabpage":[
+                {
+                    "OverviewTitle":"div.flex > div.justify-between > h4",
+                    "KebabMenuButton":"div.text-left > div > button",
+                    "PhotoProfileSection":"div.col-span-2 > div.relative",
+                    "ClientBasicContactInformationSection":[
+                        {
+                            "ContactNameLabel":"div > dl > dt:nth-child(1)",
+                            "ContactName":"div > dl > dd:nth-child(2)",
+                            "ContactNumberLabel":"div > dl > dt:nth-child(3)",
+                            "ContactNumber":"div > dl > dd:nth-child(4)",
+                            "AddressLabel":"div > dl > dt:nth-child(5)",
+                            "Address":"div > dl > dd:nth-child(6)",
+                            "ClientEmailAddressLabel":"div > dl > dt:nth-child(7)",
+                            "ClientEmailAddress":"div > dl > dd:nth-child(8)",
+                            "SellerInteractiveEmailAddressLabel":"div > dl > dt:nth-child(9)",
+                            "SellerInteractiveEmailAddress":"div > dl > dd:nth-child(10)"
+                        }
+                    ]
+                },
+                {
+                    "EditProfileSubPage":[
+                        {
+                            "ClientLabelandInputfield":"form > div > div:nth-child(1)",
+                            "UpdateButton":"div.space-x-4 > button"
+                        }
+                    ],
+                    "UpdateDefaultContactPasswordModal":[
+                        {
+                            "modal":"div.opacity-100 > div.inline-block",
+                            "modaltitle":"div > h3",
+                            "NewPasswordLabelandInputfield":"form > div > div:nth-child(1)",
+                            "ConfirmNewPasswordLabelandInputfield":"form > div > div:nth-child(2)",
+                            "CancelButton":"div.space-x-4 > button:nth-child(1)",
+                            "ResetButton":"div.space-x-4 > button:nth-child(2)"
+                        }
+                    ],
+                    "UpdateDefaultContactDetailsModal":[
+                        {
+                            "modal":"div.opacity-100 > div.inline-block",
+                            "modaltitle":"div > h3",
+                            "FirstNameLabelandInputfield":"form > div > div:nth-child(1)",
+                            "LastNameLabelandInputfield":"form > div > div:nth-child(2)",
+                            "EmailLabelandInputfield":"form > div > div:nth-child(3)",
+                            "CancelButton":"div.space-x-4 > button:nth-child(1)",
+                            "UpdateButton":"div.space-x-4 > button:nth-child(2)"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "BillingTabPage":[
+        {
+            "PageTabs":[
+                {
+                    "SubscriptionsTab":"div.tablinks > a:nth-child(1)",
+                    "UpsellsTab":"div.tablinks > a:nth-child(2)",
+                    "PaidReviewsTab":"div.tablinks > a:nth-child(3)",
+                    "CreditNotesTab":"div.tablinks > a:nth-child(4)",
+                    "InvoiceHistoryTab":"div.tablinks > a:nth-child(5)",
+                    "TransactionsTab":"div.tablinks > a:nth-child(6)",
+                    "CommissionsTab":"div.tablinks > a:nth-child(7)",
+                    "CommErrors":"div.tablinks > a:nth-child(8)"
+                }
+            ],
+            "SubscriptionTabpage":[
+                {
+                    "OverviewTitle":"div.client-content > div > h4.text-2xl",
+                    "KebabMenu":"",
+                    "ClientBasicContactInformationSection":[
+                        {
+                            "ClientLabel":"",
+                            "ClientFirstName":"",
+                            "SubscriptionNumberLabel":"",
+                            "SubscriptionNumber":"",
+                            "StatusLabel":"",
+                            "StatusElements":"",
+                            "BillingAddressLabel":"",
+                            "ActivationDateLabel":"",
+                            "ActivationDate":"",
+                            "StartDateLabel":"",
+                            "StartDate":"",
+                            "ValidUntilDateLabel":"",
+                            "ValidUntil":""
+                        }
+                    ]
+                }
+            ],
+            "UpsellsTabpage":[
+                {
+                    "UpsellsTitle":"div > h2",
+                    "CreateUpsellButton":"div.items-center > button",
+                    "CreateUpsellModal":[
+                        {
+                            "modal":"div.opacity-100 > div.transition-all",
+                            "modaltitle":"div > h3",
+                            "UpsellitemAndSelectDropdownmenu":"form > div.mt-6 > div > div.text-sm",
+                            "QuantitylabelAndInputfield":"form > div.mt-6 > div > div:nth-child(2)",
+                            "UnitPricelabelAndInputfield":"form > div.mt-6 > div > div:nth-child(3)",
+                            "WaiveUpsellFeelabelAndSlidebutton":"form > div.mt-6 > div > div:nth-child(4)",
+                            "UpsellDescriptionlabelAndTextareafield":"form > div.mt-6 > div > div:nth-child(5)",
+                            "ServiceASINTitle":"form > div.text-gray-800",
+                            "ASIN1defaultLabelandInputfield":"form > div.text-gray-800 > div > div",
+                            "AddServiceAsinButton":"div.mt-6 > button",
+                            "NoteTextareafieldandLabel":"form > div.mt-12",
+                            "SaveasDraftButton":"form > div.p-8 > button.text-blue-500",
+                            "SubmitButton":"form > div.p-8 > button.text-white",
+                            "UpsellItemIsRequiredErrorText":"form > div.mt-6 > div > div.text-sm > div",
+                            "DescriptionIsRequiredErrorText":"form > div.mt-6 > div > div:nth-child(5) > div",
+                            "ServiceASINItemisrequiredErrorText":"form > div.text-gray-800 > div > div > div:nth-child(2) > div",
+                            "SelectAvailableASINstoAddButton":"div.w-full > div.relative > button",
+                            "ReviewFeeLabelandInputfield":"form > div.mt-6 > div > div:nth-child(2)",
+                            "ProcessingFeeLabelandInputfield":"form > div.mt-6 > div > div:nth-child(3)",
+                            "TaxLabelandInputfield":"form > div.mt-6 > div > div:nth-child(4)",
+                            "EstimateCompletionDateLabelandInputfield":"form > div.mt-6 > div > div:nth-child(5)",
+                            "PaidReviewProgramUpsellItemDescriptionLabelandTextareafield":"form > div.mt-6 > div > div:nth-child(7)",
+                            "PaidReviewProgramQuantityLabelandInputfield":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(3)",
+                            "PaidReviewProgramUnitPriceLabelandInputfield":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4)",
+                            "PaidReviewProgramTotalProductCostLabelandDefaultValue":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(5)",
+                            "PaidReviewProgramTotalReviewFeeLabelandDefaultValue":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(6)",
+                            "PaidReviewProgramTotalProcessingFeeLabelandDefaultValue":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(7)",
+                            "PaidReviewProgramTotalTaxLabelandDefaultValue":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(8)",
+                            "YourUpsellRequestWasRejectedSection":"div.pt-0 > div.mb-4",
+                            "StatusLabelandstatus":"div.pt-0 > div.mt-3 > div > div:nth-child(7)"
+                        }
+                    ]
+                }
+            ],
+            "PaidReviewsTabpage":[
+                {
+
+                }
+            ],
+            "CreditNotesTabpage":[ 
+                {
+                    "CreditNotesTitle":"div > h2",
+                    "CreateCreditButton":"div.items-center > button"
+                }
+            ]   
+        }
+    ]
+}

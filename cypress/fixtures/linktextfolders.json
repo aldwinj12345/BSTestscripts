@@ -1,0 +1,83 @@
+{
+    "ClientModule":[
+        {
+            "ActiveClients":"#afterclass > div > a[href='/clients/active']",
+            "ForOnboarding":"#afterclass > div > a[href='/clients/foronboarding']",
+            "ForTermination":"#afterclass > div > a[href='/clients/fortermination']",
+            "InactiveClients":"#afterclass > div > a[href='/clients/inactive']",
+            "AllClients":"#afterclass > div > a[href='/clients/all']",
+            "Records":"#afterclass > div > a[href='/clients/records']",
+            "RatingDashboard":"#afterclass > div > a[href='/clients/performance-ratings']",
+            "AccountPerformance":"#afterclass > div > a[href='/clients/accounts-performance']",
+            "PPCDashboard":"#afterclass > div > a[href='/clients/ppc']",
+            "Complaints":"#afterclass > div > a[href='/clients/complaints']",
+            "ClientSurvey":"#afterclass > div > a[href='/clients/surveys']"
+        }
+    ],
+    "BillingModule":[
+        {
+            "Invoices":"#afterclass > div > a:nth-child(2)",
+            "CommissionErrors":"#afterclass > div > a[href='/commission-errors']",
+            "Payments":"#afterclass > div > a[href='/payments']",
+            "Transactions":"#afterclass > div > a[href='/transactions']",
+            "Events":"#afterclass > div > a[href='/events']",
+            "CreditNotes":"#afterclass > div > a[href='/credit-notes']",
+            "Upsells":"#afterclass > div > a:nth-child(8)",
+            "UpsellItems":"#afterclass > div > a[href='/addons']",
+            "Taxes":"#afterclass > div > a[href='/taxes']",
+            "TaxExemptions":"#afterclass > div > a[href='/tax-exemptions']",
+            "Plans":"#afterclass > div > a[href='/plans']",
+            "Terminations":"#afterclass > div > a[href='/billing/terminations']"
+        }
+    ],
+    "LeadsModule":[
+      {
+            "MyWorkplace":"#afterclass > div > a[href='/leads']",
+            "Records":"#afterclass > div > a[href='/leads-data']",
+            "Metrics":"#afterclass > div > a[href='/leads-metrics']",
+            "Settings":"#afterclass > div > a[href='/leads-settings']",
+            "Archived":"#afterclass > div > a[href='/leads-archived']",
+            "NoSellerInfo":"#afterclass > div > a[href='/leads-no-seller']",
+            "LeadGeneration":"#afterclass > div > a[href='/lead-generation']"
+      }  
+    ],
+    "MarketingModule":[
+        {
+            "MyWorkplace":"#afterclass > div > a[href='/leads-marketing-module']"
+        }
+    ],
+    "SalesModule":[
+       {
+            "MyWorkplace":"#afterclass > div > a[href='/sales/workplace']",
+            "Deals":"#afterclass > div > a[href='/sales/deals']",
+            "Metrics":"#afterclass > div > a[href='/sales-metrics']"
+       } 
+    ],
+    "WritingModule":[
+        {
+            "MyWorkplace":"#afterclass > div > a[href='/writing/workspace/my']",
+            "TeamWorkSpace":"#afterclass > div > a[href='/writing/workspace/team']",
+            "Metrics":"#afterclass > div > a[href='/writing/analytics']",
+            "Pending":"#afterclass > div > a[href='/writing/open']",
+            "RestrictedKeywords":"#afterclass > div > a[href='/writing/restricted-keywords']"
+        }
+    ],
+    "DesignModule":[
+        {
+            "Metrics":"#afterclass > div > a[href='/design/analytics']"
+        }
+    ],
+    "AdminModule":[
+        {
+            "Employees":"#afterclass > div > a[href='/employees']",
+            "EmployeeSurvey":"#afterclass > div > a[href='/employee-surveys']",
+            "Partners":"#afterclass > div > a[href='/partners']",
+            "Churn":"#afterclass > div > a[href='/churn']",
+            "Reports":"#afterclass > div > a[href='/reports']",
+            "DataSync":"#afterclass > div > a[href='/data-sync']",
+            "Settings":"#afterclass > div > a[href='/system-settings']",
+            "TaskManagement":"#afterclass > div > a[href='/task-management']",
+            "ProgressReports":"#afterclass > div > a[href='/progress-report']"
+        }
+    ]
+}

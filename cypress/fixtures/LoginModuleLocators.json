@@ -1,0 +1,16 @@
+{
+    "bettersellerlogo":"div > img",
+    "bettersellerHeaderTitle":"div > h2",
+    "EmailAddressInputfield":"#email",
+    "EmailAddressLabel":"label[for='email']",
+    "PasswordInputfield":"#password",
+    "PasswordLabel":"label[for='password']",
+    "RememberMeCheckbox":"#rememberMe",
+    "RememberMeLabel":"label[for='remember_me']",
+    "ForgotYourPasswordLinktext":"a[href='/forgot-password']",
+    "SigninButton":"form > div > button",
+    "EnteryouremailtoyourresetpasswordTEXT":"div > p",
+    "DidYourRememberYourPasswordTEXT":"div > div.text-sm",
+    "TryLoggingInLinktext":"div > a[href='/sign-in']",
+    "ReturntoLoginButton":"div > a > button"
+}

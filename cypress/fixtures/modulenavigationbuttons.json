@@ -1,0 +1,12 @@
+{
+    "WorkspaceModuleButton":"a[href='/home']",
+    "ClientsModuleButton":"div.space-y-1 > a[href='/clients/active']",
+    "BillingModuleButton":"div.space-y-1 > a:nth-child(3)",
+    "LeadsModuleButton":"a[href='/leads']",
+    "MarketingModuleButton":"a[href='/leads-marketing-module']",
+    "SalesModuleButton":"a[href='/sales/workplace']",
+    "WritingModuleButton":"a[href='/writing/workspace/my']",
+    "DesignModuleButton":"a[href='/design/analytics']",
+    "AdminModuleButton":"a[href='/employees']",
+    "SettingsModuleButton":"a[href='/user-settings']"
+}
