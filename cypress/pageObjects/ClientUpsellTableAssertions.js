@@ -116,6 +116,19 @@ class UpsellTablelist
                     .and('have.css', 'border-radius', '9999px')             //the curve edge that form the background color like a circle
                 })
         }
+        assertColumn7Action(locator, enabled_disabled, buttonName)
+        {
+            cy.get(locator)
+              .should('exist')
+              .and(enabled_disabled)
+              .and('have.css', 'font-weight', '700')                  //font bold
+              .and('have.css', 'color','rgb(148, 148, 148)')          //text color
+              .and('have.css', 'border-color', 'rgb(148, 148, 148)')  //the line that forms a square of a button
+              .and('have.css', 'border-radius', '12px')               //the curve edge of the button
+              .then((cName)=>{
+                expect(cName.text().trim()).to.equal(buttonName)
+              })
+        }
         assertColumn8Action(locator, enabled_disabled, buttonName)
         {
             cy.get(locator)

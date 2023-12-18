@@ -23,7 +23,7 @@ before('Connecting to Different Json Files at Fixture',()=>{
 
 beforeEach('Launch BS Login Page',()=>{
 
-    cy.visit(testdata.URL[0].testURL)
+    cy.visit(testdata.URL[0].stagingURL)
       .wait(3000)
 
     //change the window size of the browser

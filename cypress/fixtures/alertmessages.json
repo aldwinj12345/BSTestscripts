@@ -1,5 +1,5 @@
 {
-    "TopMessage":".ml-3 > .font-inter",
-    "SubMessage":".font-sourceSansPro",
+    "TopMessage":":nth-child(2) > .ml-3 > .font-inter",
+    "SubMessage":":nth-child(3) > .ml-3 > .font-sourceSansPro",
     "notificationmessagedeleteicon":".ml-4 .bg-white"
 }

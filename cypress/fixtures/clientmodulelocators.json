@@ -111,7 +111,7 @@
             "UpsellsTabpage":[
                 {
                     "UpsellsTitle":"div > h2",
-                    "CreateUpsellButton":"div.items-center > button",
+                    "CreateUpsellButton":"div.flex > div.items-center > button",
                     "CreateUpsellModal":[
                         {
                             "modal":"div.opacity-100 > div.transition-all",
@@ -143,7 +143,17 @@
                             "PaidReviewProgramTotalProcessingFeeLabelandDefaultValue":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(7)",
                             "PaidReviewProgramTotalTaxLabelandDefaultValue":"form > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(8)",
                             "YourUpsellRequestWasRejectedSection":"div.pt-0 > div.mb-4",
-                            "StatusLabelandstatus":"div.pt-0 > div.mt-3 > div > div:nth-child(7)"
+                            "StatusLabelandstatus":"div.pt-0 > div.mt-3 > div > div:nth-child(7)",
+                            "PaidReviewProgramADDASINsToReviewButton":"form > div:nth-child(2) > div > div > button"
+                        }
+                    ],
+                    "AreyousureyouwanttoresendthebillingsummaryinvoiceemailtotheclientModal":[
+                        {
+                            "modal":"div.min-h-screen > div.max-w-xl",
+                            "modaltitle":"div.min-h-screen > div.max-w-xl > h3",
+                            "ClientEmailAddressText":"div.min-h-screen > div.max-w-xl > div.my-8 > div",
+                            "CancelButton":"div.mt-4 > button:nth-child(1)",
+                            "ResendButton":"div.mt-4 > button:nth-child(2)"
                         }
                     ]
                 }
@@ -156,8 +166,27 @@
             "CreditNotesTabpage":[ 
                 {
                     "CreditNotesTitle":"div > h2",
-                    "CreateCreditButton":"div.items-center > button"
+                    "CreateCreditButton":"div.items-center > button",
+                    "CreditNotesModal":[
+                        {
+                            "modal":"div.opacity-100 > div.inline-block",
+                            "modaltitle":"div > h3",
+                            "CreditNoteDetailsLabel":"form > div.flex > p",
+                            "AmountLabelandValue":"form > div > div:nth-child(4)",
+                            "ZohoCreditNoteLabelandCNNumber":"form > div > div:nth-child(5)",
+                            "CreditsappliedtoinvoicesLabel":"form > div > div > div.flex-col > label",
+                            "RemainingCreditsLabelandAmount":"div.pt-8 > div:nth-child(1)",
+                            "CreditsAppliedLabelandAmount":"div.pt-8 > div:nth-child(2)",
+                            "CreditNoteNameLabelandInputfield":"form > div > div:nth-child(1)",
+                            "DescriptionLabelandTextareafield":"form > div > div:nth-child(2)",
+                            "RequesterNoteLabelandTextareafield":"form > div > div:nth-child(3)",
+                            "CreditRequestAmountLabel_DollarSign_Inputfield":"form > div > div:nth-child(4)",
+                            "SaveasDraftButton":"form > div > div:nth-child(5) > button:nth-child(1)",
+                            "SubmitButton":"form > div > div:nth-child(5) > button:nth-child(2)"
+                        }
+                    ]
                 }
+                
             ]   
         }
     ]
