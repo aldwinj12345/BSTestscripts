@@ -1,6 +1,37 @@
 {
     "ActiveClientsMainPageTitle":"#client-lists > div > h2",
     "ClientNameTitle":"div.main-content-inner2 > div > h1",
+    "TerminateButton":"div.main-content-inner2 > div > div > button",
+    "TerminationRequestModal":[
+        {
+            "modal":"div.opacity-100 > div.inline-block",
+            "modaltitle":"div.p-5 > div > h4",
+            "clientname":"div.p-5 > div > h5",
+            "ReasonForTerminationLabelandSelectMenu":"form > div.space-y-6 > div:nth-child(1)",
+            "RetentionEffortChecklistLabelandDescription":"form > div.space-y-6 > div:nth-child(2)",
+            "RetentionEffortChecklists":"form > div.space-y-6 > div:nth-child(3) > div",
+            "AdditionalNotesLabelandTextareafield":"form > div.space-y-6 > div:nth-child(4)",
+            "CancelButton":"form > div.space-y-6 > div:nth-child(5) > button:nth-child(1)",
+            "RequestForTerminationButton":"form > div.space-y-6 > div:nth-child(5) > button:nth-child(2)"
+        }
+    ],
+    "View_TerminationRequestModal":[
+        {
+            "modal":"div.opacity-100 > div.inline-block",
+            "modaltitle":"div.p-5 > div > h4",
+            "clientname":"div.p-5 > div > h5",
+            "ReasonForTerminationLabelandSelectMenu":"form > div.space-y-6 > div:nth-child(1)",
+            "RetentionEffortChecklistLabelandTheSelectedRetention":"form > div.space-y-6 > div:nth-child(2)",
+            "AdditionalNotesLabelandTheNotes":"form > div.space-y-6 > div:nth-child(3)",
+            "DenyButton":"form > div.space-y-6 > div:nth-child(4) > button:nth-child(1)",
+            "ApproveButton":"form > div.space-y-6 > div:nth-child(4) > button:nth-child(2)",
+            "LetTheRequestorKnowWhyAreYouDenyingTheRequestTEXT":"form > div.space-y-6 > h5",
+            "ReasonForDenyingLabelandTextarea":"form > div.space-y-6 > div:nth-child(2)",
+            "GobackButton":"form > div.space-y-6 > div:nth-child(3) > button:nth-child(1)",
+            "SubmitButton":"form > div.space-y-6 > div:nth-child(3) > button:nth-child(2)",
+            "YourTerminationRequestWasDeniedSection":"div.p-5 > div > div.bg-red-50"
+        }
+    ],
     "ClientMainPageTab":[
         {
             "ClientDashboardTab":"nav[aria-label='Tabs'] > a:nth-child(1)",
@@ -88,7 +119,7 @@
             "SubscriptionTabpage":[
                 {
                     "OverviewTitle":"div.client-content > div > h4.text-2xl",
-                    "KebabMenu":"",
+                    "KebabMenu":"div.z-2 > div > button",
                     "ClientBasicContactInformationSection":[
                         {
                             "ClientLabel":"",
@@ -104,6 +135,22 @@
                             "StartDate":"",
                             "ValidUntilDateLabel":"",
                             "ValidUntil":""
+                        }
+                    ],
+                    "ChargeOneTimeAddonModal":[
+                        {
+                            "modal":"div.opacity-100 > div.inline-block",
+                            "modaltitle":"div.px-4 > h3",
+                            "Addon1labelandDeletebutton":"form > div > div.justify-between",
+                            "AddonLabelandSelectMenu":"form > div > div:nth-child(2)",
+                            "TypeLabelandOne_Time":"form > div > div:nth-child(3)",
+                            "QtyLabelandInputfield":"form > div > div:nth-child(4)",
+                            "PriceLabelandInputfield":"form > div > div:nth-child(5)",
+                            "TotalLabelandValue":"form > div > div:nth-child(6)",
+                            "ItemDescriptiontextareafield":"form > div > div:nth-child(7)",
+                            "AddonButton":"form > div:nth-child(2) > button",
+                            "CancelButton":"div.space-x-4 > button:nth-child(1)",
+                            "ApplyButton":"div.space-x-4 > button:nth-child(2)"
                         }
                     ]
                 }
@@ -183,6 +230,16 @@
                             "CreditRequestAmountLabel_DollarSign_Inputfield":"form > div > div:nth-child(4)",
                             "SaveasDraftButton":"form > div > div:nth-child(5) > button:nth-child(1)",
                             "SubmitButton":"form > div > div:nth-child(5) > button:nth-child(2)"
+                        }
+                    ],
+                    "CancelCreditNoteModal":[
+                        {
+                            "modal":"div.min-h-screen > div.inline-block",
+                            "modaltitle":"div > h3",
+                            "creditnotenamelabelandThecreditnotename":"div.my-8 > div.text-gray-500 > div",
+                            "amountlabelanditsamount":"div.my-8 > div.text-gray-500 > div > span:nth-child(2)",
+                            "nobutton":"div.my-8 > div.mt-4 > button:nth-child(1)",
+                            "yesbutton":"div.my-8 > div.mt-4 > button:nth-child(2)"
                         }
                     ]
                 }

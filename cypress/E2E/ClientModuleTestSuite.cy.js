@@ -5,6 +5,8 @@ import BillingUpsellTablelist from "../pageObjects/BillingUpsellsTableAssertions
 import AdditionalServicesTable from "../pageObjects/ClientPartnerPage_AdditionalServicesTable.js"
 import ClientCreditNoteTable from "../pageObjects/ClientCreditNotesTable.js"
 import BillingCreditNoteTable from "../pageObjects/BillingCreditNotesTableAssertions.js"
+import ClientBillingInvoiceHistoryTable from "../pageObjects/ClientBillingInvoiceHistoryPageTable.js"
+import ForTerminationTable from "../pageObjects/ForTerminationTable.js"
 import GetDate from "../pageObjects/callingDateVariations.js"
 
 
@@ -16,6 +18,8 @@ let linktextfolder;
 let clientmodulelocator;
 let billingmodulelocator;
 let clientpartnerpage;
+let ratingdashboardlocators;
+let complaintslocators;
 
 before('Connecting to Different Json Files at Fixture',()=>{
 
@@ -51,6 +55,14 @@ before('Connecting to Different Json Files at Fixture',()=>{
     cy.fixture('ClientPartnerPage').then((data)=>{
       clientpartnerpage = data;
     })
+    //calling ClientRatingDashboardLocators
+    cy.fixture('ClientRatingDashboardLocators').then((data)=>{
+      ratingdashboardlocators = data;
+    })
+    //calling ClientsComplaintsLocators
+    cy.fixture('ClientsComplaintsLocators').then((data)=>{
+      complaintslocators = data;
+    })
 })
 
 
@@ -79,8 +91,12 @@ describe('Login Module Test Suite',()=>{
     const AdditionalServiceTableList = new AdditionalServicesTable();
     //calling ClientCreditNotesTable
     const ClientCreditNotesTableList = new ClientCreditNoteTable();
-    //calling
+    //calling BillingCreditNotesTableAssertions
     const BillingCreditNotesTablelist = new BillingCreditNoteTable();
+    //calling ClientBillingInvoiceHistoryPageTable
+    const InvoiceHistoryPageTable = new ClientBillingInvoiceHistoryTable();
+    //calling ForTerminationTable
+    const TerminationTable = new ForTerminationTable();
 
     it('Testcase ID: CP0001 - Verify when user click onto the client name, it will redirect to the client profile page', ()=>{
 
@@ -1087,8 +1103,8 @@ describe('Login Module Test Suite',()=>{
         .click()
         .wait(2000) 
 
-      //Select DEXY PAWS since the SP-API and ADV-API are enabled
-      cy.get('a[href="/clients/ed0db233-91e4-472f-879f-d9c2fbd44bde/dashboard"]')
+      //Select PPC-SANDBOX 
+      cy.get(`a[href="/clients/71fa24a1-4bf5-47fa-9f2a-571471686bc0/dashboard"]`)
         .click()
         .wait(2000)
 
@@ -1713,19 +1729,6 @@ describe('Login Module Test Suite',()=>{
 
       })
 
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -1913,19 +1916,6 @@ describe('Login Module Test Suite',()=>{
       }) 
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
-
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
 
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
@@ -2389,19 +2379,6 @@ describe('Login Module Test Suite',()=>{
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
 
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -2677,19 +2654,6 @@ describe('Login Module Test Suite',()=>{
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
      
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
- 
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -2862,7 +2826,7 @@ describe('Login Module Test Suite',()=>{
         //assert Row 1 column 6 name Submitted By
         BillingUpsells.assertColumn6Submittedby(' > td:nth-child(6) > div', 'LP', 'LoganPaul')
         //assert Row 1 column 7 name Rejector
-        BillingUpsells.assertColumn7RejectedTabRejector(' > td:nth-child(7) > div', 'PK', 'PeterKanluran')
+        BillingUpsells.assertColumn7RejectedTabRejector(' > td:nth-child(7) > div', 'LP', 'LoganPaul')
         //assert Row 1 column 8 Action column
         BillingUpsells.assertColumn8Action(' > td:nth-child(8) > button', 'be.disabled', 'View')
       })
@@ -2904,7 +2868,7 @@ describe('Login Module Test Suite',()=>{
           cy.get(' > p:nth-child(3)')
             .should('exist')
             .then((txt)=>{
-              expect(txt.text().replace(/\s+/g, ' ').trim()).to.equal('Peter Kanluran')
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.equal('Logan Paul')
             })
           //assert label Reason for Rejection
           cy.get(' > label:nth-child(4)')
@@ -2941,19 +2905,6 @@ describe('Login Module Test Suite',()=>{
       //I will have to close the button so that I may logout
       cy.get('body').type('{esc}'); // pressing esc button of the keyboard
 
-      //logout as the Approver / Project Manager
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login using account specialist
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Clients Navigation Module
       cy.get(modulebutton.ClientsModuleButton)
         .click()
@@ -2981,8 +2932,8 @@ describe('Login Module Test Suite',()=>{
         UpsellTable.assertColumn2InvoiceNumber(' > td:nth-child(2)', '—')
         //assert row 1 column 4 the status that it should be Rejected
         UpsellTable.assertColumn4Status(' > td:nth-child(4) > span', 'rejected', 'rgb(239, 68, 68)', 'rgb(254, 226, 226)')
-        //assert row 1 column 7 Updated by the approver name who denied
-        UpsellTable.assertColumn7UpdatedbyExpectedName('> td:nth-child(7) > div', 'PK', 'PeterKanluran') 
+        //assert row 1 column 7 Updated by the name who denied
+        UpsellTable.assertColumn7UpdatedbyExpectedName('> td:nth-child(7) > div', 'LP', 'LoganPaul') 
         //assert row 1 column 8 that it should be disabled the view button
         UpsellTable.assertColumn8Action(' > td:nth-child(8) > button', 'be.disabled', 'View')
       })
@@ -3023,7 +2974,7 @@ describe('Login Module Test Suite',()=>{
           cy.get(' > p:nth-child(3)')
             .should('exist')
             .then((txt)=>{
-              expect(txt.text().replace(/\s+/g, ' ').trim()).to.equal('Peter Kanluran')
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.equal('Logan Paul')
             })
           //assert label Reason for Rejection
           cy.get(' > label:nth-child(4)')
@@ -3180,19 +3131,6 @@ describe('Login Module Test Suite',()=>{
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
      
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
- 
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -3318,19 +3256,6 @@ describe('Login Module Test Suite',()=>{
       })
       //// PENDING TAB PENDING APPROVAL UPSELLS TABLE LIST ENDS HERE /////
       
-      //logout as the Approver / Project Manager
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login using account specialist
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Clients Navigation Module
       cy.get(modulebutton.ClientsModuleButton)
         .click()
@@ -3507,19 +3432,6 @@ describe('Login Module Test Suite',()=>{
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
      
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
- 
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -3600,19 +3512,6 @@ describe('Login Module Test Suite',()=>{
         BillingUpsells.assertColumn9Action(' > td:nth-child(9) > button', 'not.be.disabled', 'Resend')
       })
       //// PENDING TAB PENDING APPROVAL UPSELLS TABLE LIST ENDS HERE /////
-
-      //logout as the Approver / Project Manager
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login using account specialist
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
 
       //Click the Clients Navigation Module
       cy.get(modulebutton.ClientsModuleButton)
@@ -3947,19 +3846,6 @@ describe('Login Module Test Suite',()=>{
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
 
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -4074,19 +3960,6 @@ describe('Login Module Test Suite',()=>{
       })
 
       //// APPROVED TAB UPSELLS TABLE LIST ENDS HERE /////
-
-      //logout as Project Manager / Approver
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login using account specialist
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
 
       //Click the Clients Navigation Module
       cy.get(modulebutton.ClientsModuleButton)
@@ -4271,19 +4144,6 @@ describe('Login Module Test Suite',()=>{
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
 
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -4392,25 +4252,12 @@ describe('Login Module Test Suite',()=>{
         //assert Row 1 column 6 name Submitted By
         BillingUpsells.assertColumn6Submittedby(' > td:nth-child(6) > div', 'LP', 'LoganPaul')
         //assert Row 1 column 7 name Approver
-        BillingUpsells.assertColumn7Approver(' > td:nth-child(7) > div', 'PK', 'PeterKanluran')
+        BillingUpsells.assertColumn7Approver(' > td:nth-child(7) > div', 'LP', 'LoganPaul')
         //assert Row 1 column 8 Action has Send
         BillingUpsells.assertColumn8Action(' > td:nth-child(8) > button', 'not.be.disabled', 'Send')
       })
 
       //// APPROVED TAB UPSELLS TABLE LIST ENDS HERE /////
-
-      //logout as Project Manager / Approver
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login using account specialist
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
 
       //Click the Clients Navigation Module
       cy.get(modulebutton.ClientsModuleButton)
@@ -4440,7 +4287,7 @@ describe('Login Module Test Suite',()=>{
         //assert row 1 column 4 status as it should be Approved
         UpsellTable.assertColumn4Status(' > td:nth-child(4) > span', 'approved', 'rgb(59, 130, 246)', 'rgb(219, 234, 254)')
         //assert row 1 column 7 Updated by the approver
-        UpsellTable.assertColumn7UpdatedbyExpectedName('> td:nth-child(7) > div', 'PK', 'PeterKanluran')
+        UpsellTable.assertColumn7UpdatedbyExpectedName('> td:nth-child(7) > div', 'LP', 'LoganPaul')
         //assert row 1 column 8 action has resend button
         UpsellTable.assertColumn8Action(' > td:nth-child(8) > button', 'not.be.disabled','Send')
       })
@@ -4522,19 +4369,6 @@ describe('Login Module Test Suite',()=>{
 
       ///// CLIENT > BILLING > UPSELLS TABLE ASSERTIONS ENDS HERE //////
 
-      //logout as account specialist and then login as the approver / PM
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -4572,7 +4406,7 @@ describe('Login Module Test Suite',()=>{
 
       ///// BILLING > UPSELLS > PENDING TAB TABLE LIST ASSERTIONS ENDS HERE //////
 
-      //logout as approver / PM then login as the Client partner
+      //logout 
       //click the user account profile 
       cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
         .click()
@@ -4791,19 +4625,6 @@ describe('Login Module Test Suite',()=>{
 
       /////// CLIENT > BILLING > UPSELLS TAB > TABLE VERFICATION ENDS HERE /////////////
 
-      //Logout as Account Specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-      
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -4998,19 +4819,6 @@ describe('Login Module Test Suite',()=>{
       })
 
       ///// BILLING > UPSELLS > PENDING TAB TABLE LIST ASSERTIONS ENDS HERE //////
-
-      //logout as Project Manager
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login using account specialist
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
 
       //Click the Clients Navigation Module
       cy.get(modulebutton.ClientsModuleButton)
@@ -5253,19 +5061,6 @@ describe('Login Module Test Suite',()=>{
 
       ////// CLIENT > BILLING > UPSELLS > TABLE LIST ASSERTIONS ENDS HERE /////////////
 
-      //logout as account specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-      
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
         .click()
@@ -5321,7 +5116,7 @@ describe('Login Module Test Suite',()=>{
 
     })
 
-    it.only("Testcase ID: CCCR0002 - Deny Waive Upsell Fee, Upsell Request turned Credit Note Request",()=>{
+    it("Testcase ID: CCCR0002 - Deny Waive Upsell Fee, Upsell Request turned Credit Note Request",()=>{
 
 
       let GETClientName;
@@ -5513,19 +5308,6 @@ describe('Login Module Test Suite',()=>{
       }) 
 
       ////// CLIENT > BILLING > UPSELLS > TABLE LIST ASSERTIONS ENDS HERE /////////////
-
-      //logout as account specialist
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-      
-      //Login as Project Manager
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].projectmanager, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
 
       //Click the Billing navigation module
       cy.get(modulebutton.BillingModuleButton)
@@ -5801,7 +5583,7 @@ describe('Login Module Test Suite',()=>{
         //assert Column 6 > Submitted By
         BillingCreditNotesTablelist.assertColumn6Submittedby(' > td:nth-child(6) > div', 'LP', 'LoganPaul')
         //assert Column 7 > Updated By
-        BillingCreditNotesTablelist.assertColumn7UpdatedbyExpectedName(' > td:nth-child(7) > div', 'PK', 'PeterKanluran')
+        BillingCreditNotesTablelist.assertColumn7UpdatedbyExpectedName(' > td:nth-child(7) > div', 'LP', 'LoganPaul')
         //assert Column 8 > Action:View
         BillingCreditNotesTablelist.assertColumn8Action(' > td:nth-child(8) > button', 'not.be.disabled', 'View')
       })
@@ -5862,19 +5644,6 @@ describe('Login Module Test Suite',()=>{
       //close the modal by pressing the {esc} key
       cy.get('body').type('{esc}');
 
-      //logout as Project Manager
-      //click the user account profile 
-      cy.get(testdata.AccountProfileSection[0].useraccountprofilepicinitial)
-        .click()
-
-      //click the sign out link text
-      cy.get(testdata.AccountProfileSection[0].signoutlinktext)
-        .click()
-        .wait(10000)
-
-      //Login using account specialist
-      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
-
       //Click the Clients Navigation Module
       cy.get(modulebutton.ClientsModuleButton)
         .click()
@@ -5901,7 +5670,7 @@ describe('Login Module Test Suite',()=>{
         //assert Column 4 > Status
         UpsellTable.assertColumn4Status(' > td:nth-child(4) > span', 'denied', 'rgb(239, 68, 68)', 'rgb(254, 226, 226)')
         //assert Column 6 > Updated By
-        UpsellTable.assertColumn6UpdatedbyExpectedName(' > td:nth-child(6) > div', 'PK', 'PeterKanluran')
+        UpsellTable.assertColumn6UpdatedbyExpectedName(' > td:nth-child(6) > div', 'LP', 'LoganPaul')
         //assert Column 7 > Action:View
         UpsellTable.assertColumn7Action(' > td:nth-child(7) > button', 'be.disabled', 'View')
       })
@@ -5955,7 +5724,4553 @@ describe('Login Module Test Suite',()=>{
 
     it("Testcase ID: CCCR0003 - Approve Waive Upsell Fee, Upsell Request turned Credit Note Request",()=>{
 
+      let GETClientName;
+      let clientName;
+      let GETCNnumber;
+      let cnNumber;
+      let GETInvoiceNumber;
+      let theInvoiceNumber;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //GET the current client name that shows as the title
+      GETClientName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientNameTitle)
+          .then((name)=>{
+            clientName = name.text().trim();
+          })
+      })
+
+      //click the billing tab
+      cy.get(clientmodulelocator.ClientMainPageTab[0].BillingTab)
+        .click()
+        .wait(2000)
+
+      // Click the Upsells sub tab
+      cy.get(clientmodulelocator.BillingTabPage[0].PageTabs[0].UpsellsTab)
+        .click()
+        .wait(2000)
+        
+      //Click the Create Upsell button
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellButton)
+        .click()
+        .wait(2000)
+
+      //verify the Create Upsell modal
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].modal)
+        .should('exist')
+
+       ///////// CREATE UPSELL REQUEST STARTS HERE //////////////
+
+      //Select Upsell item
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].UpsellitemAndSelectDropdownmenu)
+        .find('select')
+        .should('exist')
+        .select('1604151000000147020')
+        .wait(1000)
+        .should('have.value', '1604151000000147020')
+
+      //verify that it goes on top option 1
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].UpsellitemAndSelectDropdownmenu)
+        .find('select option:selected')
+        .should('exist')
+        .wait(1000)
+        .should('have.text', 'Copywriting Work')
+
+      //verify Unit Price value updated
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].UnitPricelabelAndInputfield)
+        .find('.relative > input')
+        .should('exist')
+        .wait(1000)
+        .should('have.value', '97.95')
+
+      //verify Waive Upsell Fee Label and Slide button
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].WaiveUpsellFeelabelAndSlidebutton)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Waive Upsell Fee')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert button
+          cy.get('button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.attr', 'aria-checked', 'false') //by default it is off
+            .and('have.css', 'background-color', 'rgb(229, 231, 235)') //expected background color when OFF
+            .and('have.css', 'border-radius', '9999px') //the curve edge of the background color
+        })
+
+      //THEN slide ON the waive upsell fee button
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].WaiveUpsellFeelabelAndSlidebutton)
+        .find('button')
+        .click()
+        .wait(1000)
+        .should('have.css', 'background-color', 'rgb(16, 185, 129)').and('have.css', 'border-radius', '9999px') //the expected color after it was click
+
+
+      //verify Upsell Description value updated
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].UpsellDescriptionlabelAndTextareafield)
+        .find('textarea')
+        .should('exist')
+        .wait(1000)
+        .should('have.value', 'Copywriting Work')
+        
+      //Click Submit Button
+      cy.get(clientmodulelocator.BillingTabPage[0].UpsellsTabpage[0].CreateUpsellModal[0].SubmitButton)
+        .click()
+        .wait(8000)
+      /*
+      //verify alert-success message popup
+      cy.GETAlertMessagepopup(alertmessagepopup.TopMessage, 'Upsell Created')
+      //then i am going to close the alert popup
+      cy.get(alertmessagepopup.notificationmessagedeleteicon)
+        .click()
+      */
+      ///////// CREATE UPSELL REQUEST ENDS HERE //////////////
+
+      //verify as it is expected to automatically transferred to Client > Billing > Credit Notes Tab
+      cy.get(clientmodulelocator.BillingTabPage[0].PageTabs[0].CreditNotesTab)
+        .should('exist')
+        .and('have.text', ' Credit Notes')
+        .and('have.css', 'color', 'rgb(239, 68, 68)') //text color is red signifies that it is currently accessed
+        .and('have.css', 'font-weight', '600') //font bold
+
+      //verify that also the url destination is correct which is at the Credit Notes tab page
+      cy.url().should('contain', '/billing/creditnotes')
+
+      ////// CLIENT > BILLING > UPSELLS > TABLE LIST ASSERTIONS STARTS HERE ////////
+      
+      //verify Column Names
+      const expected_columnNames = [
+        'Name',
+        'Date',
+        'Amount',
+        'Status',
+        'Submitted By',
+        'Updated By',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($option, index) => {
+          cy.wrap($option).should('have.text', expected_columnNames[index])  //verify names based on the expected names per column
+          .should('exist')
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          cy.log(expected_columnNames[index]) 
+      });
+
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert column 1 > Service Name / Upsell Name Request
+        ClientCreditNotesTableList.assertColumn1CreditNoteRequestName(' > td:nth-child(1) > a', 'Copywriting Work')
+        //assert column 2 > Created/Submitted Date
+        ClientCreditNotesTableList.assertColumn2Date(' > td:nth-child(2) > span', DateTodayIs.TodayDateDDMMYYYY())
+        //assert column 3 > Amount
+        ClientCreditNotesTableList.assertColumn3Amount(' > td:nth-child(3) > span', '$ 97.95')
+        //assert row 1 column 4 > Status
+        ClientCreditNotesTableList.assertColumn4Status(' > td:nth-child(4) > span', 'awaiting approval', 'rgb(212, 130, 54)', 'rgb(255, 210, 185)')
+        //assert row 1 column 5 > Submitted By
+        ClientCreditNotesTableList.assertColumn5Submittedby(' > td:nth-child(5) > div', 'LP', 'LoganPaul')
+        //assert row 1 column 6 > Updated By
+        ClientCreditNotesTableList.assertColumn6UpdatedbyExpectedDASH(' > td:nth-child(6)','—')
+        //assert row 1 column 7 > Action column > has Cancel button
+        ClientCreditNotesTableList.assertColumn7Action(' > td:nth-child(7) > button', 'not.be.disabled', 'Cancel')
+      })
+
+      ////// CLIENT > BILLING > UPSELLS > TABLE LIST ASSERTIONS ENDS HERE ////////
+
+      //Go to Billing > Credit Notes
+
+      //Click the Billing navigation module
+      cy.get(modulebutton.BillingModuleButton)
+        .click()
+        .wait(2000)
+
+      //Click the Credit Notes link text folder
+      cy.get(linktextfolder.BillingModule[0].CreditNotes)
+        .click()
+        .wait(2000)
+
+      /////// BILLING > CREDIT NOTES > AWAITING APPROVAL TAB > TABLE LIST ASSERTIONS STARTS HERE //////////
+
+      //verify column Names
+      const AwaitingApprovalTableColumnNames = [
+        'Name',
+        'Client Name',
+        'Amount',
+        'Status',
+        'Request Date',
+        'Submitted By',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($option, index) => {
+          cy.wrap($option).should('have.text', AwaitingApprovalTableColumnNames[index])  //verify names based on the expected names per column
+          .should('exist')
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          cy.log(AwaitingApprovalTableColumnNames[index]) 
+      });
+
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Credit Note Request Name
+        BillingCreditNotesTablelist.assertColumn1CreditNoteRequestName(' > td:nth-child(1) > a', 'Copywriting Work')
+        //assert Column 2 > Client Name
+        GETClientName.then(()=>{
+          BillingCreditNotesTablelist.assertColumn2ClientName(' > td:nth-child(2) > a', clientName)
+        })
+        //assert Column 3 > Amount
+        BillingCreditNotesTablelist.assertColumn3Amount(' > td:nth-child(3) > span', '$ 97.95')
+        //assert Column 4 > Status
+        BillingCreditNotesTablelist.assertColumn4Status(' > td:nth-child(4) > span', 'awaiting approval', 'rgb(212, 130, 54)', 'rgb(255, 210, 185)')
+        //assert Column 5 > Reqeust Date /Created Date
+        BillingCreditNotesTablelist.assertColumn5RequestDate(' > td:nth-child(5) > span', DateTodayIs.TodayDateDDMMYYYY())
+        //assert Column 6 > Submitted By
+        BillingCreditNotesTablelist.assertColumn6Submittedby(' > td:nth-child(6) > div', 'LP', 'LoganPaul')
+        //assert Column 7 > Action:Review button
+        BillingCreditNotesTablelist.assertColumn7Action(' > td:nth-child(7) > button', 'not.be.disabled', 'Review')
+      })
+
+      /////// BILLING > CREDIT NOTES > AWAITING APPROVAL TAB > TABLE LIST ASSERTIONS ENDS HERE //////////
+
+      //Now I click the Review button of the submitted upsell request waive upsell
+      cy.get('table > tbody > tr:first-child > td:nth-child(7) > button')
+        .click()
+        .wait(2000)
+
+      //verify Upsell to Credit Request / Credit Note Request modal popup
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].modal)
+        .should('exist')
+
+      //Click Approve button
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].ApproveButton)
+        .scrollIntoView()
+        .click()
+        .wait(2000)
+
+      //verify Are you sure you want to approve the request to waive the upsell fee? modal popup
+      cy.get(billingmodulelocator.CreditNotesPage[0].AreyousureyouwanttoapprovetherequesttowaivetheupsellfeeModal[0].modal)
+        .should('exist')
+
+      //verify modal title
+      cy.get(billingmodulelocator.CreditNotesPage[0].AreyousureyouwanttoapprovetherequesttowaivetheupsellfeeModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', `Are you sure you want to approve the request to waive the upsell fee?`)
+
+      //verify If you click approve, a paid invoice will be automatically generated text
+      cy.get(billingmodulelocator.CreditNotesPage[0].AreyousureyouwanttoapprovetherequesttowaivetheupsellfeeModal[0].IfyouclickapproveapaidinvoicewillbeautomaticallygeneratedTEXT)
+        .should('exist')
+        .then((txt)=>{
+          expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('If you click approve, a paid invoice will be automatically generated')
+        })
+        .find('span').should('have.text', 'approve').and('have.css', 'color', 'rgb(0, 150, 109)') // approve text color
+
+      //verify Cancel button
+      cy.get(billingmodulelocator.CreditNotesPage[0].AreyousureyouwanttoapprovetherequesttowaivetheupsellfeeModal[0].CancelButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Cancel')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+
+      //verify Approve button
+      cy.get(billingmodulelocator.CreditNotesPage[0].AreyousureyouwanttoapprovetherequesttowaivetheupsellfeeModal[0].ApproveButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Approve')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(16, 185, 129)') //background color that form like a capsule
+        .and('have.css', 'border-radius', '9999px') //the curve edge of the background color
+
+      //Click the Approve button
+      cy.get(billingmodulelocator.CreditNotesPage[0].AreyousureyouwanttoapprovetherequesttowaivetheupsellfeeModal[0].ApproveButton)
+        .click()
+        .wait(6000)
+
+      //As expected it will go to Billing > Credit Notes > Applied Tab
+      //verify Applied tab if found then click
+      cy.get(billingmodulelocator.CreditNotesPage[0].pageTabs[0].AppliedTab)
+        .should('exist')
+        .and('have.text', 'applied')
+        .and('have.css', 'color', 'rgb(156, 163, 175)') //text color before it is click
+        .click()
+        .wait(2000)
+        .should('have.css', 'color', 'rgb(24, 121, 216)') //after it was click
+
+      //verif url destination
+      cy.url().should('contain', '=applied')
+
+      /////////// BILLING > CREDIT NOTES > APPLIED TAB > TABLE LIST ASSERTIONS STARTS HERE ////////////////
+
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Credit Notes Request Name
+        BillingCreditNotesTablelist.assertColumn1CreditNoteRequestName(' > td:nth-child(1) > a', 'Copywriting Work')
+        //assert Column 2 > Client Name
+        GETClientName.then(()=>{
+          BillingCreditNotesTablelist.assertColumn2ClientName(' > td:nth-child(2) > a', clientName)
+        })
+        //assert Column 3 > CN#
+        BillingCreditNotesTablelist.assertColumn3CN(' > td:nth-child(3)', 'CN-')
+        //GET the CN number and store in a variable
+        GETCNnumber = new Promise((resolve)=>{
+          cy.get(' > td:nth-child(3)').then((cnNum)=>{
+            cnNumber = cnNum.text().trim();
+          })
+        })
+        //assert Column 4 > Amount
+        BillingCreditNotesTablelist.assertColumn3Amount(' > td:nth-child(4) > span', '$ 97.95')
+        //assert Column 5 > Status
+        BillingCreditNotesTablelist.assertColumn5Status(' > td:nth-child(5) > span', 'applied', 'rgb(16, 185, 129)', 'rgb(209, 250, 229)')
+        //assert Column 6 > Request Date
+        BillingCreditNotesTablelist.assertColumn5RequestDate(' > td:nth-child(6) > span', DateTodayIs.TodayDateDDMMYYYY())
+        //assert Column 7 > Submitted By
+        BillingCreditNotesTablelist.assertColumn7Submittedby(' > td:nth-child(7) > div', 'LP', 'LoganPaul')
+        //assert Column 8 > Updated By
+        BillingCreditNotesTablelist.assertColumn7UpdatedbyExpectedName(' > td:nth-child(8) > div', 'LP', 'LoganPaul')
+        //assert Column 9 > Action:View
+        BillingCreditNotesTablelist.assertColumn9Action(' > td:nth-child(9) > button', 'not.be.disabled', 'View')
+      })
+
+      /////////// BILLING > CREDIT NOTES > APPLIED TAB > TABLE LIST ASSERTIONS ENDS HERE ////////////////
+
+      //then I will click the View button
+      cy.get('table > tbody > tr:first-child > td > button')
+        .click()
+        .wait(2000)
+
+      //verify Upsell Credit Note Request modal popup
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].modal)
+        .should('exist')
+
+      ////// UPSELL CREDIT NOTE REQUEST MODAL ELEMENTS ASSERTIONS STARTS HERE //////////
+
+      //verify Credit note details label
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].CreditNoteDetailsLabel)
+        .scrollIntoView()
+        .should('exist')
+        .and('have.text', 'Credit note details')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Amount $ 97.95 (incl. invoice tax, if applicable)
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].AmountLabelandValue)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Amount')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert $0.00
+          cy.get(' > div > span.text-inherit')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 97.95')
+            })
+            .find('span.text-grayscale-600').should('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          //assert (incl. invoice tax, if applicable)
+          cy.get(' > div > span.text-grayscale-700')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+            .and('have.css', 'font-style', 'italic')
+            .and('have.css', 'font-size', '11px')
+        })
+
+      //verify ZOHO Credit Note Label and CN# number
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].ZohoCreditNoteLabelandCNNumber)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Zoho Credit Note')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert CN number
+          GETCNnumber.then(()=>{
+            cy.get('div > span')
+              .should('exist')
+              .and('have.text', cnNumber)
+          })
+          //assert View PDF button
+          cy.get("div > button[title='View PDF']")
+            .should('exist')
+            .and('not.be.disabled')
+          //assert Download PDF button
+          cy.get("div > button[title='Download PDF']")
+            .should('exist')
+            .and('not.be.disabled')
+        })
+
+      //verify Credits applied to invoices label
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].CreditsappliedtoinvoicesLabel)
+        .should('exist')
+        .and('have.text', 'Credits applied to invoices')
+        .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+
+      //verify Credits applied to invoices section - column names
+      const expectedColumnNames = [
+        'Invoice Number',
+        'Applied Credits',
+        'Applier',
+        'Date Applied'
+      ];
+      cy.get('div.bg-grayscale-400 > div').each(($option, index) => {
+        cy.wrap($option).should('have.text', expectedColumnNames[index]) //verify names based on the expected options
+          .should('exist')
+          .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          cy.log(expectedColumnNames[index]) 
+      });
+
+      //verify under the Credits applied to invoices section
+      cy.get('form > div > div > div.flex-col > div > div:nth-child(2)')
+        .should('exist')
+        .within(()=>{
+          //assert check mark beside the invoice number
+          cy.get(' > p > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 186, 136)') //text color
+          //assert Invoice Number link text
+          cy.get(' > p > a')
+            .should('exist')
+            .and('not.be.disabled')
+          //Then I will get the invoice number and store it in a variable for later verification
+          GETInvoiceNumber = new Promise((resolve)=>{
+            cy.get(' > p > a')
+              .then((txt)=>{
+                theInvoiceNumber = txt.text().trim();
+              })
+              resolve();
+          })
+          //assert Applied credit amount
+          cy.get(' > div > span')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 97.95')
+            })
+            .and('have.css', 'color', 'rgb(0, 186, 136)') //text color
+            .find('span').should('have.text', '$').and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          //assert Applier Name
+          cy.get(' > div.text-center')
+            .should('exist')
+            .and('have.text', 'Logan Paul')
+          //assert Date Applied
+          cy.get(' > p.text-center')
+            .should('exist')
+            .and('contain', DateTodayIs.TodayDateDDMMYYYY())
+        })
+      
+      //verify Remaining Credits Label and the amount
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].RemainingCreditsLabelandAmount)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Remaining Credits:')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert the amount
+          cy.get('p')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 0.00')
+            })
+            .find('span.text-3xl').should('have.text', '$').and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+        })
+
+      //verify Credits Applied Label and the amount
+      cy.get(billingmodulelocator.CreditNotesPage[0].CreditNoteRequestModal[0].CreditsAppliedLabelandAmount)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Credits Applied:')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert the amount
+          cy.get('p')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 97.95')
+            })
+            .find('span.text-3xl').should('have.text', '$').and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+        })
+
+      ////// UPSELL CREDIT NOTE REQUEST MODAL ELEMENTS ASSERTIONS ENDS HERE //////////
+
+      //close the modal
+      cy.get('body').type('{esc}'); // pressing esc button of the keyboard
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //click the billing tab
+      cy.get(clientmodulelocator.ClientMainPageTab[0].BillingTab)
+        .click()
+        .wait(2000)
+
+      //Click the Credit Notes Tab
+      cy.get(clientmodulelocator.BillingTabPage[0].PageTabs[0].CreditNotesTab)
+        .click()
+        .wait(2000)
+
+      ////// CLIENT > BILLING > CREDIT NOTES > TABLE LIST ASSERTION STARTS HERE //////////
+
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 4 > Status
+        ClientCreditNotesTableList.assertColumn4Status(' > td:nth-child(4) > span', 'applied', 'rgb(16, 185, 129)', 'rgb(209, 250, 229)')
+        //assert Column 6 > Updated By
+        ClientCreditNotesTableList.assertColumn6UpdatedbyExpectedName(' > td:nth-child(6) > div', 'LP', 'LoganPaul')
+      })
+
+      ////// CLIENT > BILLING > CREDIT NOTES > TABLE LIST ASSERTION ENDS HERE //////////
+
+      //Then I will click the view button
+      cy.get('table > tbody > tr:first-child > td:nth-child(7) > button')
+        .click()
+        .wait(2000)
+
+      //verify Upsell Credit Note Request modal popup
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].modal)
+        .should('exist')
+
+      ////// CLIENT > BILLING > CREDIT NOTES > UPSELL CREDIT NOTE REQUEST MODAL ELEMENTS ASSERTIONS STARTS HERE //////////
+
+      //verify Credit note details label
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditNoteDetailsLabel)
+        .scrollIntoView()
+        .should('exist')
+        .and('have.text', 'Credit note details')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Amount $ 97.95 (incl. invoice tax, if applicable)
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].AmountLabelandValue)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Amount')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert $0.00
+          cy.get(' > div > span.text-inherit')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 97.95')
+            })
+            .find('span.text-grayscale-600').should('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          //assert (incl. invoice tax, if applicable)
+          cy.get(' > div > span.text-grayscale-700')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+            .and('have.css', 'font-style', 'italic')
+            .and('have.css', 'font-size', '11px')
+        })
+
+      //verify ZOHO Credit Note Label and CN# number
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].ZohoCreditNoteLabelandCNNumber)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Zoho Credit Note')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert CN number
+          GETCNnumber.then(()=>{
+            cy.get('div > span')
+              .should('exist')
+              .and('have.text', cnNumber)
+          })
+          //assert View PDF button
+          cy.get("div > button[title='View PDF']")
+            .should('exist')
+            .and('not.be.disabled')
+          //assert Download PDF button
+          cy.get("div > button[title='Download PDF']")
+            .should('exist')
+            .and('not.be.disabled')
+        })
+
+      //verify Credits applied to invoices label
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditsappliedtoinvoicesLabel)
+        .should('exist')
+        .and('have.text', 'Credits applied to invoices')
+        .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+
+      //verify Credits applied to invoices section - column names
+      const expectColumnNames = [
+        'Invoice Number',
+        'Applied Credits',
+        'Applier',
+        'Date Applied'
+      ];
+      cy.get('div.bg-grayscale-400 > div').each(($option, index) => {
+        cy.wrap($option).should('have.text', expectColumnNames[index]) //verify names based on the expected options
+          .should('exist')
+          .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          cy.log(expectColumnNames[index]) 
+      });
+      
+      //verify under the Credits applied to invoices section
+      cy.get('form > div > div > div.flex-col > div > div:nth-child(2)')
+        .should('exist')
+        .within(()=>{
+          //assert check mark beside the invoice number
+          cy.get(' > p > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 186, 136)') //text color
+          //assert Invoice Number link text
+          cy.get(' > p > a')
+            .should('exist')
+            .and('not.be.disabled')
+          //Then I will get the invoice number and store it in a variable for later verification
+          GETInvoiceNumber = new Promise((resolve)=>{
+            cy.get(' > p > a')
+              .then((txt)=>{
+                theInvoiceNumber = txt.text().trim();
+              })
+              resolve();
+          })
+          //assert Applied credit amount
+          cy.get(' > div > span')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 97.95')
+            })
+            .and('have.css', 'color', 'rgb(0, 186, 136)') //text color
+            .find('span').should('have.text', '$').and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          //assert Applier Name
+          cy.get(' > div.text-center')
+            .should('exist')
+            .and('have.text', 'Logan Paul')
+          //assert Date Applied
+          cy.get(' > p.text-center')
+            .should('exist')
+            .and('contain', DateTodayIs.TodayDateDDMMYYYY())
+        })
+
+      //verify Remaining Credits Label and the amount
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].RemainingCreditsLabelandAmount)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Remaining Credits:')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert the amount
+          cy.get('p')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 0.00')
+            })
+            .find('span.text-3xl').should('have.text', '$').and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+        })
+
+      //verify Credits Applied Label and the amount
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditsAppliedLabelandAmount)
+        .should('exist')
+        .within(()=>{
+          //assert label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Credits Applied:')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert the amount
+          cy.get('p')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.contain('$ 97.95')
+            })
+            .find('span.text-3xl').should('have.text', '$').and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+        })
+
+      ////// CLIENT > BILLING > CREDIT NOTES > UPSELL CREDIT NOTE REQUEST MODAL ELEMENTS ASSERTIONS ENDS HERE //////////
+
+    })
+
+    it("Testcase ID: CCCR0004 - Create Credit Note Request. Clients with no pending, or overdue invoices",()=>{
+
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //click the billing tab
+      cy.get(clientmodulelocator.ClientMainPageTab[0].BillingTab)
+        .click()
+        .wait(2000)
+
+      //Click the Credit Notes sub tab
+      cy.get(clientmodulelocator.BillingTabPage[0].PageTabs[0].CreditNotesTab)
+        .click()
+        .wait(2000)
+
+      //verify expected url destination
+      cy.url().should('contain', '/billing/creditnotes?page')
+
+      //Click the Create Credit Button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreateCreditButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', ' Create Credit')
+        .and('have.css', 'font-weight', '700') // font bold
+        .and('have.css', 'border-color', 'rgb(30, 58, 138)')
+        .and('have.css', 'border-radius', '9999px')
+        .click()
+        .wait(2000)
+
+      //verify Create Credit Note Request Modal popup
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].modal)
+        .should('exist')
+
+      /////////// CLIENT > BILLING > CREDIT NOTES TAB > CREATE CREDIT NOTE REQUEST MODAL ASSERTIONS STARTS HERE ////////////////
+
+      //verify modal title
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'create Credit Note Request')
+        .and('have.css', 'font-weight', '700') // font bold
+
+      //verify Credit Note Name Label and Input field
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditNoteNameLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Credit Note Name Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Credit Note Name*')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //text color
+          //assert Input field
+          cy.get(' > input[name="name"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') //empty by default
+            .and('have.attr', 'placeholder', 'Enter Credit Note Name')
+        })
+
+      //verify Description Label and Textarea field
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].DescriptionLabelandTextareafield)
+        .should('exist')
+        .within(()=>{
+          //assert Description Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Description*')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //text color
+          //assert Textarea field
+          cy.get(' > textarea[name="description"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') //empty by default
+            .and('have.attr', 'placeholder', 'Enter Credit Note Description')
+        })
+
+      //verify Requester Note Label and Textarea field
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].RequesterNoteLabelandTextareafield)
+        .should('exist')
+        .within(()=>{
+          //assert Requester Note Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Requester Note*')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //text color
+          //assert Textarea field
+          cy.get(' > textarea[name="notes"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') //empty by default
+            .and('have.attr', 'placeholder', 'Enter Requester Note')
+        })
+
+      //verify Credit Request Amount Label, Dollar Sign, and Input field
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditRequestAmountLabel_DollarSign_Inputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Credit Request Amount Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Credit Request Amount*')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //text color
+          //assert Dollar Sign
+          cy.get(' > div > span')
+            .should('exist')
+            .and('have.text', '$')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+            .and('have.css', 'font-weight', '600') // font bold
+          //assert Input field
+          cy.get(' > div > input[name="amount"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '0') //default value
+            .and('have.attr', 'placeholder', 'Enter Credit Request Amount')
+        })
+
+      //verify Save as Draft Button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].SaveasDraftButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Save as Draft')
+        .and('have.css', 'color', 'rgb(24, 121, 216)') //text color
+        .and('have.css', 'font-weight', '700') // font bold
+
+      //verify Submit Button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].SubmitButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Submit')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color that form like a capsule
+        .and('have.css', 'border-radius', '9999px')
+        .and('have.css', 'font-weight', '700') // font bold
+
+      /////////// CLIENT > BILLING > CREDIT NOTES TAB > CREATE CREDIT NOTE REQUEST MODAL ASSERTIONS ENDS HERE ////////////////
+
+      ////////// REQUIRED ASSERTIONS STARTS HERE ////////////  
+
+      //without enter any data on any fields, click the Submit button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].SubmitButton)
+        .click()
+        .wait(3000)
+
+      //verify alert-error text message 
+      cy.GETAlertMessagepopup(alertmessagepopup.TopMessage, 'Errors found')
+      cy.GETAlertMessagepopup(alertmessagepopup.SubMessage, "Credit Note Name is required\nDescription is required\nCredit Request Amount must be >= 1\nRequester Note is required")
+      
+      //verify Create Credit Note Request Modal popup should remain open
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].modal)
+        .should('exist')
+
+      //verify Error Text 1 - Credit Note Name is required
+      cy.get('form > div > div:nth-child(1) > div')
+        .should('exist')
+        .and('have.text', 'Credit Note Name is required')
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //verify Error Text 2 - Description is required
+      cy.get('form > div > div:nth-child(2) > div')
+        .should('exist')
+        .and('have.text', 'Description is required')
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //verify Error Text 3 - Requester Note is required
+      cy.get('form > div > div:nth-child(3) > div')
+        .should('exist')
+        .and('have.text', 'Requester Note is required')
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //verify Error Text 4 - Credit Request Amount must be >= 1
+      cy.get('form > div > div:nth-child(4) > div:nth-child(3)')
+        .should('exist')
+        .and('have.text', "Credit Request Amount must be >= 1")
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //Enter Credit Note Name
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditNoteNameLabelandInputfield)
+        .find(' > input[name="name"]')
+        .clear()
+        .type('Credit Request For Test')
+        .wait(600)
+        .should('have.value', 'Credit Request For Test')
+
+      //Enter Description
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].DescriptionLabelandTextareafield)
+        .find(' > textarea[name="description"]')
+        .clear()
+        .type('This description is for testing purposes only')
+        .wait(600)
+        .should('have.value', 'This description is for testing purposes only')
+
+      //Enter Requester Note
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].RequesterNoteLabelandTextareafield)
+        .find(' > textarea[name="notes"]')
+        .clear()
+        .type('This requester note is for testing purposes only')
+        .wait(600)
+        .should('have.value', 'This requester note is for testing purposes only')
+
+      //Enter Credit Request Amount
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditRequestAmountLabel_DollarSign_Inputfield)
+        .find(' > div > input[name="amount"]')
+        .clear()
+        .type('447')
+        .wait(600)
+        .should('have.value', '447')
+
+      //Click Submit Button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].SubmitButton)
+        .click()
+        .wait(3000)
+
+      //verify alert success message popup
+      cy.GETAlertMessagepopup(alertmessagepopup.TopMessage, 'Your credit note request has been sent for approval')
+      cy.GETAlertMessagepopup(alertmessagepopup.SubMessage, "Credit note request created.")
+      
+      ////////// REQUIRED ASSERTIONS ENDS HERE //////////// 
+      
+      ///////////// CLIENT > BILLING > CREDIT NOTES TAB > TABLE LISTS ASSERTIONS STARTS HERE ///////////////
+
+      //verify Column names
+      const expectedcolumnNames = [
+        'Name',
+        'Date',
+        'Amount',
+        'Status',
+        'Submitted By',
+        'Updated By',
+        'Action'
+      ]
+      cy.get('table > thead > tr > th').each(($name, index)=>{
+        cy.wrap($name)
+          .should('exist')
+          .and('have.text', expectedcolumnNames[index])
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          .and('have.css', 'font-weight', '700') // font bold
+      })
+
+      //Then assert the Row 1 each column data
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Credit Note Name
+        ClientCreditNotesTableList.assertColumn1CreditNoteRequestName(' > td:nth-child(1) > a', 'Credit Request For Test')
+        //assert Column 2 > Date
+        ClientCreditNotesTableList.assertColumn2Date(' > td:nth-child(2) > span', DateTodayIs.TodayDateDDMMYYYY())
+        //assert Column 3 > Amount
+        ClientCreditNotesTableList.assertColumn3Amount(' > td:nth-child(3) > span', '$ 447.00')
+        //assert Column 4 > Status
+        ClientCreditNotesTableList.assertColumn4Status(' > td:nth-child(4) > span', 'awaiting approval', 'rgb(212, 130, 54)', 'rgb(255, 210, 185)')
+        //assert Column 5 > Submitted By
+        ClientCreditNotesTableList.assertColumn5Submittedby(' > td:nth-child(5) > div', 'LP', 'LoganPaul')
+        //assert Column 6 > Updated By
+        ClientCreditNotesTableList.assertColumn6UpdatedbyExpectedDASH(' > td:nth-child(6)', '—')
+        //assert Column 7 > Action:Cancel
+        ClientCreditNotesTableList.assertColumn7Action(' > td:nth-child(7) > button', 'not.be.disabled', 'Cancel')
+      })
+      ///////////// CLIENT > BILLING > CREDIT NOTES TAB > TABLE LISTS ASSERTIONS ENDS HERE ///////////////
+      
+    })
+
+    it("Testcase ID: CCCR0005 - Cancel the Credit Note Request",()=>{
+
+
+       //Login using account specialist
+       cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+       //Click the Clients Navigation Module
+       cy.get(modulebutton.ClientsModuleButton)
+         .click()
+         .wait(2000) 
+ 
+       //Then click then client name link text
+       cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+         .click()
+         .wait(3000)
+ 
+       //click the billing tab
+       cy.get(clientmodulelocator.ClientMainPageTab[0].BillingTab)
+         .click()
+         .wait(2000)
+ 
+       //Click the Credit Notes sub tab
+       cy.get(clientmodulelocator.BillingTabPage[0].PageTabs[0].CreditNotesTab)
+         .click()
+         .wait(2000)
+ 
+       //verify expected url destination
+       cy.url().should('contain', '/billing/creditnotes?page')
+ 
+       //Click the Create Credit Button
+       cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreateCreditButton)
+         .should('exist')
+         .and('not.be.disabled')
+         .and('have.text', ' Create Credit')
+         .and('have.css', 'font-weight', '700') // font bold
+         .and('have.css', 'border-color', 'rgb(30, 58, 138)')
+         .and('have.css', 'border-radius', '9999px')
+         .click()
+         .wait(2000)
+ 
+       //verify Create Credit Note Request Modal popup
+       cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].modal)
+         .should('exist')
+ 
+       ////////// CREATE CREDIT NOTE REQUEST STARTS HERE ////////////  
+ 
+       //Enter Credit Note Name
+       cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditNoteNameLabelandInputfield)
+         .find(' > input[name="name"]')
+         .clear()
+         .type('To be Deleted Credit Request')
+         .wait(600)
+         .should('have.value', 'To be Deleted Credit Request')
+ 
+       //Enter Description
+       cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].DescriptionLabelandTextareafield)
+         .find(' > textarea[name="description"]')
+         .clear()
+         .type('This description is for testing purposes only')
+         .wait(600)
+         .should('have.value', 'This description is for testing purposes only')
+ 
+       //Enter Requester Note
+       cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].RequesterNoteLabelandTextareafield)
+         .find(' > textarea[name="notes"]')
+         .clear()
+         .type('This requester note is for testing purposes only')
+         .wait(600)
+         .should('have.value', 'This requester note is for testing purposes only')
+ 
+       //Enter Credit Request Amount
+       cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].CreditRequestAmountLabel_DollarSign_Inputfield)
+         .find(' > div > input[name="amount"]')
+         .clear()
+         .type('447')
+         .wait(600)
+         .should('have.value', '447')
+ 
+       //Click Submit Button
+       cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CreditNotesModal[0].SubmitButton)
+         .click()
+         .wait(3000)
+ 
+       //verify alert success message popup
+       cy.GETAlertMessagepopup(alertmessagepopup.TopMessage, 'Your credit note request has been sent for approval')
+       cy.GETAlertMessagepopup(alertmessagepopup.SubMessage, "Credit note request created.")
+       
+       ////////// CREATE CREDIT NOTE REQUEST ENDS HERE //////////// 
+       
+       ///////////// CLIENT > BILLING > CREDIT NOTES TAB > TABLE LISTS ASSERTIONS STARTS HERE ///////////////
+ 
+       //verify Column names
+       const expectedcolumnNames = [
+         'Name',
+         'Date',
+         'Amount',
+         'Status',
+         'Submitted By',
+         'Updated By',
+         'Action'
+       ]
+       cy.get('table > thead > tr > th').each(($name, index)=>{
+         cy.wrap($name)
+           .should('exist')
+           .and('have.text', expectedcolumnNames[index])
+           .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+           .and('have.css', 'font-weight', '700') // font bold
+       })
+ 
+      //Then assert the Row 1 each column data
+       cy.get('table > tbody > tr:first-child').within(()=>{
+         //assert Column 1 > Credit Note Name
+         ClientCreditNotesTableList.assertColumn1CreditNoteRequestName(' > td:nth-child(1) > a', 'To be Deleted Credit Request')
+         //assert Column 2 > Date
+         ClientCreditNotesTableList.assertColumn2Date(' > td:nth-child(2) > span', DateTodayIs.TodayDateDDMMYYYY())
+         //assert Column 3 > Amount
+         ClientCreditNotesTableList.assertColumn3Amount(' > td:nth-child(3) > span', '$ 447.00')
+         //assert Column 4 > Status
+         ClientCreditNotesTableList.assertColumn4Status(' > td:nth-child(4) > span', 'awaiting approval', 'rgb(212, 130, 54)', 'rgb(255, 210, 185)')
+         //assert Column 5 > Submitted By
+         ClientCreditNotesTableList.assertColumn5Submittedby(' > td:nth-child(5) > div', 'LP', 'LoganPaul')
+         //assert Column 6 > Updated By
+         ClientCreditNotesTableList.assertColumn6UpdatedbyExpectedDASH(' > td:nth-child(6)', '—')
+         //assert Column 7 > Action:Cancel
+         ClientCreditNotesTableList.assertColumn7Action(' > td:nth-child(7) > button', 'not.be.disabled', 'Cancel')
+       })
+      ///////////// CLIENT > BILLING > CREDIT NOTES TAB > TABLE LISTS ASSERTIONS ENDS HERE ///////////////
+       
+      //Then here I am going to click the Cancel button
+      cy.get('table > tbody > tr:first-child > td:nth-child(7) > button')
+        .click()
+        .wait(2000)
+
+      //verify the cancel credit note modal popup
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CancelCreditNoteModal[0].modal)
+        .should('exist')
+
+      //verify modal title
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CancelCreditNoteModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'Cancel Credit Note?')
+        .and('have.css', 'font-weight', '700')  //font bold
+
+      //verify Credit Note Name label and the credit note name itself
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CancelCreditNoteModal[0].creditnotenamelabelandThecreditnotename)
+        .should('exist')
+        .within((el)=>{
+          //assert label and the Credit Note Request name
+          cy.get(' > span:nth-child(1)')
+            .should('exist')
+            .then((el)=>{
+              expect(el.text().replace(/\s+/g, ' ').trim()).to.equal('Credit Note Name: To be Deleted Credit Request')
+            })
+          //assert that the credit note name itself is in bold
+          cy.get(' > span:nth-child(2)')
+            .should('exist')
+            .then((txt)=>{
+              expect(el.text().replace(/\s+/g, ' ').trim()).to.contain('Amount: $447')
+            })
+            .find('b').should('have.text', '$447').and('have.css', 'font-weight', '700')  //font bold
+        })
+
+      //verify no button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CancelCreditNoteModal[0].nobutton)
+        .should('exist')
+        .and('be.visible')
+        .and('have.text', 'No')
+        .and('have.css', 'font-weight', '700')  //font bold
+        .and('have.css', 'color', 'rgb(148, 148, 148)')  //text color
+        .then((txt)=>{
+          const computedStyle = getComputedStyle(txt[0]);
+          const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+          expect(customPropertyValue).to.equal('1');
+        })
+
+      //verify Yes button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CancelCreditNoteModal[0].yesbutton)
+        .should('exist')
+        .and('be.visible')
+        .and('have.text', 'Yes')
+        .and('have.css', 'font-weight', '700')  //font bold
+        .and('have.css', 'color', 'rgb(255, 255, 255)')  //text color
+        .and('have.css', 'background-color', 'rgb(5, 150, 105)') //background color that form like a capsule
+        .and('have.css', 'border-radius', '40px') // the curve edge
+
+      //click the Yes button
+      cy.get(clientmodulelocator.BillingTabPage[0].CreditNotesTabpage[0].CancelCreditNoteModal[0].yesbutton)
+        .click()
+        .wait(2000)
+
+      //verify alert-error text message 
+      cy.GETAlertMessagepopup(alertmessagepopup.TopMessage, 'Success')
+      cy.GETAlertMessagepopup(alertmessagepopup.SubMessage, 'Credit request updated.')
+
+      //intentionally wait to close the alert-success 
+      cy.wait(2000)
+
+      //verify on that cancelled credit note request status as it should be Cancelled
+      cy.get('table > tbody > tr:first-child > td:nth-child(4) > span')
+        .should('exist')
+        .and('be.visible')
+        .and('have.text', 'cancelled')
+        .and('have.css', 'text-transform', 'capitalize')
+        .and('have.css', 'color', 'rgb(239, 68, 68)')  //text color
+        .and('have.css', 'background-color', 'rgb(254, 226, 226)') //background color that form like a capsule
+        .and('have.css', 'border-radius', '9999px') // the curve edge
+
+      //verify also at the action column that from cancel it becomes View button but disabled
+      cy.get('table > tbody > tr:first-child > td > button')
+        .should('exist')
+        .and('be.visible')
+        .and('be.disabled')
+        .and('have.text', ' View')
+        .and('have.css', 'font-weight', '700')                  //font bold
+        .and('have.css', 'color','rgb(148, 148, 148)')          //text color
+        .and('have.css', 'border-color', 'rgb(148, 148, 148)')  //the line that forms a square of a button
+        .and('have.css', 'border-radius', '12px')               //the curve edge of the button
+        .and('have.css', 'width', '108px')
+        .and('have.css', 'height', '40px')
+
+      //verify back in the Billing > Credit Notes Table that the cancelled credit note request should have a status of Cancelled
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 4 > Status
+        ClientCreditNotesTableList.assertColumn4Status(' > td:nth-child(4) > span', 'cancelled', 'rgb(239, 68, 68)', 'rgb(254, 226, 226)')
+        //assert Column 7 > Action:Cancel
+        ClientCreditNotesTableList.assertColumn7Action(' > td:nth-child(7) > button', 'be.disabled', 'View')
+      })
+    })
+
+    it.skip("Testcase ID: CCCR0006 - Apply to Next Month Invoice [Enter Total Max Credit amount]",()=>{
+
+    })
+
+    it.skip("Testcase ID: CCCR0007 - Apply to Next Month Invoice [Enter partial Credit amount]",()=>{
+
     })
 
     // **** CLIENT CREDIT NOTE ENDS HERE ***
+    // **** CLIENT BILLING SUBSCRIPTIONS PAYMENT METHOD CARD STARTS HERE ***
+    it.skip("Testcase ID: CBS0001 - Verify user can Add New Card Number at the Billing > Subscriptions > Payment Methods [Braintree processed]",()=>{
+         
+        
+      //login using admin role account
+      cy.userloginaccount(loginpagelocatorsdata.emailaddressinputfield, loginpagelocatorsdata.passwordinputfield, loginpagelocatorsdata.signinbutton, useraccountdata.usernameAdmin, useraccountdata.adminpassword)
+
+      //click the first top client test in the active client listing AAAROO
+      cy.click_link_button(activeclientpagelocatorsdata.aaarootestactiveclient)
+      cy.wait(2000)
+
+      //click the billing tab
+      cy.click_link_button_xpathlocator(clientbillingpagedata.billingtablink)
+      .wait(3000)
+
+      //verify in here that when you click the billing tab the default focus sub tab is the Subscription tab
+      //it will be identified as the title becomes in bold red color signifying that it is by default selected or visit
+      //then you will find also that there is a title called Overview   
+      cy.get(billingsubscriptiondata.Subscriptionstab)
+      .should('have.css', 'color', 'rgb(239, 68, 68)') //font color
+      .and('have.css', 'font-weight', '600') //font bold
+      .and('be.visible')
+      .and('exist')
+
+      //verify title in the Subscriptions tab
+      cy.get(billingsubscriptiondata.overviewtitle)
+      .should('have.css', 'font-weight', '700') //font bold
+      .and('be.visible')
+      .and('exist')
+
+      //This test client is created as a brain tree payment process
+      //verify the payment methods title
+      cy.get(billingsubscriptiondata.paymentmethodstitle)
+      .should('have.css', 'font-weight', '700') //font bold
+      .and('be.visible')
+      .and('exist')
+      .and('contain', 'Payment Methods')
+
+      //verify add new button
+      cy.get(billingsubscriptiondata.addnewbutton)
+      .should('have.css', 'color', 'rgb(250, 250, 250)') //font color
+      .and('have.css', 'font-weight', '700') //font bold
+      .and('have.css', 'background-color', 'rgb(0, 47, 93)') // color of the capsule-like background
+      .and('have.css', 'border-radius', '40px') //the curve edge
+      .and('have.css', 'width', '114.359375px')
+      .and('have.css', 'height', '39.5px')
+      .and('be.visible')
+      .and('exist')
+      .and('not.have.attr', 'disabled')
+
+      //click the add new button
+      cy.click_link_button(billingsubscriptiondata.addnewbutton)
+      cy.wait(1000)
+
+      //verify that the Add new payment method popup
+      cy.get(billingsubscriptiondata.addnewpaymentmethodmodal)
+      .should('be.visible')
+      .and('exist')
+
+      //verify the add new payment modal title
+      cy.get(billingsubscriptiondata.addnewpaymentmethodmodaltitle)
+      .should('have.css', 'font-weight', '700') //font bold
+      .and('be.visible')
+      .and('exist')
+      .and('contain', 'Add new Payment Method')
+
+      //verify card number input field label
+      cy.get(billingsubscriptiondata.addnewpaymentmethodmodalcardnumberinputfieldlabel)
+      .should('be.visible')
+      .and('exist')
+      .and('contain', 'Card Number')
+
+      //verify card number input field 
+     cy.get(billingsubscriptiondata.addnewpaymentmethodmodalcardnumberinputfield)
+      .should('be.visible')
+      .and('exist')
+      .and('not.have.attr', 'disabled')
+      //since the input field of the card number is in iframe so trying to get the exact iframe input field 
+   
+
+      //////////////////////////////////////////////////////////////////////
+
+        function getStripeField({iframeSelector, fieldSelector}, attempts = 0) {
+          Cypress.log({displayName: 'getCardField', message: `${fieldSelector}: ${attempts}`})
+        
+          if (attempts > 50) throw new Error('too many attempts')
+        
+          return cy.get(iframeSelector, {timeout:10_000, log:false})
+            .eq(0, {log:false})
+            .its('0.contentDocument', {log:false}) 
+            .find('body', {log:false})
+            .then(body => {
+              cy.wait(10000)
+              const stripeField = body.find(fieldSelector)
+              if (!stripeField.length) {
+                return cy.wait(300, {log:false})
+                  .then(() => {
+                    getStripeField({iframeSelector, fieldSelector}, ++attempts)
+                  })
+              } else {
+                return cy.wrap(stripeField)
+              }
+            })
+        }
+
+        getStripeField({
+          iframeSelector: '#braintree-hosted-field-number', 
+          fieldSelector: '#credit-card-number'
+        })
+        .should('have.value', '4242 4242 4242 4242').should('be.visible')
+      //////////////////////////////////////////////////////////////////////        
+    })
+    it("Testcase ID: CBS0004 - Verify user can do Charge One-Time Addon feature",()=>{
+
+      let GETClientName;
+      let clientName;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //GET the current client name that shows as the title
+      GETClientName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientNameTitle)
+          .then((name)=>{
+            clientName = name.text().trim();
+          })
+      })
+
+      //click the billing tab
+      cy.get(clientmodulelocator.ClientMainPageTab[0].BillingTab)
+        .click()
+        .wait(2000)
+
+      //verify the kebab menu buton in the Billing > Subscriptions page - next to Edit button
+      //if found, then click
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].KebabMenu)
+        .should('exist')
+        .and('not.be.disabled')
+        .click()
+        .wait(1000)
+
+      //verify the sub menus such as Charge One-Time Addon | One Time Change | Pause Subscription | Cancel Subscription
+      //verify the Charge One-Tim Addon and One Time Charge sub menus
+      const ChargeOneTimeAddon_and_OneTimeCharge_SubmenuButtons = [
+        'Charge One-Time Addon',
+        'One Time charge'
+      ];
+      cy.get('div.ring-opacity-5 > div:nth-child(1) > button').each(($option, index) => {
+          cy.wrap($option).should('have.text', ChargeOneTimeAddon_and_OneTimeCharge_SubmenuButtons[index])  //verify names based on the expected names per column
+            .should('exist')
+            .and('not.be.disabled')
+            .realHover()
+            .wait(500)
+            .should('have.css', 'color', 'rgb(255, 255, 255)') //text color changed as it hovers onto it
+            .and('have.css', 'background-color', 'rgb(239, 68, 68)') // background color emerge as it hovers onto it
+          cy.log(ChargeOneTimeAddon_and_OneTimeCharge_SubmenuButtons[index]) 
+      });
+
+      //verify Pause Subscription and Cancel Subscription sub menus
+      const PauseSubscription_and_CancelSubscription_SubmenuButtons = [
+        'Pause Subscription',
+        'Cancel Subscription'
+      ];
+
+      cy.get('div.ring-opacity-5 > div:nth-child(2) > button').each(($option, index) => {
+        cy.wrap($option).should('have.text', PauseSubscription_and_CancelSubscription_SubmenuButtons[index])  //verify names based on the expected names per column
+          .should('exist')
+          .and('not.be.disabled')
+          .realHover()
+          .wait(500)
+          .should('have.css', 'color', 'rgb(255, 255, 255)') //text color changed as it hovers onto it
+          .and('have.css', 'background-color', 'rgb(239, 68, 68)') // background color emerge as it hovers onto it
+        cy.log(PauseSubscription_and_CancelSubscription_SubmenuButtons[index]) 
+      });
+
+      //Then click the Charge On-Time Addon sub menu button
+      cy.get('div.ring-opacity-5 > div:nth-child(1) > button')
+        .realHover()
+        .click()
+        .wait(1000)
+
+      //verify Charge One-Time Addon modal popup
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].modal)
+        .should('exist')
+
+      //verify modal title
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'Charge One-Time Addon')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Addon 1 Label and the Delete icon button
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].Addon1labelandDeletebutton)
+        .should('exist')
+        .within(()=>{
+          //assert Addon1 label
+          cy.get('span')
+            .should('exist')
+            .and('have.text', 'Addon 1')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert delete icon button
+          cy.get('button')
+            .should('exist')
+            .and('not.be.disabled')
+        })
+
+      //verify Addon Label and the Select Menu Drop down menu
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].AddonLabelandSelectMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Addon label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Addon *')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk color
+          //assert Addon Select drop down menu
+          cy.get('select[name="addons.0.addon_code"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .find('option').should('have.length.gt', 0) //Since the list is not static and it can be added and/or remove, but it should have at least minimum of 1
+        })
+
+      //verify Type Label and One_Time text
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].TypeLabelandOne_Time)
+        .should('exist')
+        .within(()=>{
+          //assert Type Label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Type')
+          //assert One_Time text
+          cy.get('div')
+            .should('exist')
+            .and('have.text', 'one_time')
+            .and('have.css', 'text-transform', 'capitalize')
+        })
+
+      //verify Qty label and Input field
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].QtyLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Qty Label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Qty')
+          //assert Qty input field
+          cy.get('input[name="addons.0.quantity"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '1')
+        })
+
+      //verify Price label and Input field
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].PriceLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Price label
+          cy.get('label')
+            .should('exist')
+            .and('contain', 'Price')
+          //assert the $ symbol
+          cy.get(' > div > div > span')
+            .should('exist')
+            .and('have.text', '$')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //and then the input field
+          cy.get(' > div > input[name="addons.0.price"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '0')
+        })
+
+      //verify Total label and value
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].TotalLabelandValue)
+        .should('exist')
+        .within(()=>{
+          //assert Price label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Total')
+          //assert $0.00
+          cy.get('span')
+            .should('exist')
+            .and('have.text', '$0.00')
+            .and('have.css', 'color', 'rgb(16, 185, 129)') //text color
+        })
+
+      //verify Addon Item Description textarea field
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].ItemDescriptiontextareafield)
+        .should('exist')
+        .within(()=>{
+          //assert textarea input field
+          cy.get('textarea[name="addons.0.addon_description"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') //empty by default before selecting an item
+            .and('have.attr', 'maxlength', '2000')
+          //assert the 0/2000 characters text info
+          cy.get(' > div')
+            .should('exist')
+            .then((txt)=>{
+              expect(txt.text().replace(/\s+/g, ' ').trim()).to.equal('0/2000 characters')
+            })
+        })
+
+      //verify +Addon button
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].AddonButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'color', 'rgb(75, 85, 99)') //text color
+        .and('have.css', 'border-color', 'rgb(75, 85, 99)') //border color outline that form a capsule like
+        .and('have.css', 'border-radius', '16px')
+        .and('have.css', 'font-weight', '700')
+        .then((txt)=>{
+          expect(txt.text().trim()).to.equal('Addon')
+        })
+
+      //verify Cancel button
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].CancelButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Cancel')
+        .and('have.css', 'font-weight', '700')
+        .and('have.css', 'color', 'rgb(239, 68, 68)') //text color
+
+      //verify Apply button
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].ApplyButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Apply')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'background-color', 'rgb(185, 28, 28)') //background color that form like a capsule
+
+      /////// REQUIRED CHARGE ONE-TIME ADDON MODAL ASSERTIONS STARTS HERE /////////////
+
+      //without selecing addon, click the Apply button
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].ApplyButton)
+        .click()
+        .wait(3000)
+
+      //alert-success message popup
+      cy.GETAlertMessagepopup(alertmessagepopup.TopMessage, 'Errors found')
+      cy.GETAlertMessagepopup(alertmessagepopup.SubMessage, 'addon code is required')
+
+      //verify that the modal should remain open
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].modal)
+        .should('exist')
+
+      //verify Error text appear inside the modal - addon code is required
+      cy.get('form > div > div:nth-child(2) > div')
+        .should('exist')
+        .and('have.text', 'addon code is required')
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //Now I will select addon
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].AddonLabelandSelectMenu)
+        .find('select[name="addons.0.addon_code"]').select('1604151000000179046').should('have.value', '1604151000000179046')
+        .wait(500)
+
+      //verify that after i select an addon item, it goes onto the top
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].AddonLabelandSelectMenu)
+        .find('select option:selected')
+        .should('have.text', 'Product Images')
+
+      //verify that the Error Text should not visible inside the modal
+      cy.get('form > div > div:nth-child(2) > div')
+        .should('not.exist')
+
+      //verify the updated Price value
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].PriceLabelandInputfield)
+        .find(' > div > input[name="addons.0.price"]')
+        .should('have.value', '125.35')
+        .and('not.be.disabled')
+
+      //verify the updated Total value
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].TotalLabelandValue)
+        .find('span')
+        .should('have.text', '$125.35')
+
+      //verify the updated Item description value
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].ItemDescriptiontextareafield)
+        .find('textarea[name="addons.0.addon_description"]')
+        .should('have.value', 'Product Images')
+
+      /////// REQUIRED CHARGE ONE-TIME ADDON MODAL ASSERTIONS ENDS HERE /////////////
+
+      //To continue, No I am going to click the Apply button
+      cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ChargeOneTimeAddonModal[0].ApplyButton)
+        .click()
+        .wait(3000)
+
+      //verify success notification popup
+      cy.GETAlertMessagepopup(alertmessagepopup.TopMessage, 'Charge successful')
+      cy.GETAlertMessagepopup(alertmessagepopup.SubMessage, 'One-time addon has been purchased successfully.')
+
+      //the reason for this is to avoid if there is a delay in producing an invoice at the billing > invoice history tab - it will not be able to find in time
+      //Now as expected it will create an invoice at the Billing > Invoice History
+      cy.wait(8000)  
+      
+      //verify Invoice History Tab, if Found then click
+      cy.get(clientmodulelocator.BillingTabPage[0].PageTabs[0].InvoiceHistoryTab)
+        .should('exist')
+        .and('have.text', ' Invoice History')
+        .and("have.css", "color", "rgb(156, 163, 175)") //default text color 
+        .and("have.css", "font-weight", "400") //font bold
+        .click()
+        .wait(700)
+        .should("have.css", "color", "rgb(239, 68, 68)") //after it was click it changes the text color
+        
+      //verify the url expected destination page
+      cy.url().should('contain', '/billing/invoicehistory')
+
+      /////// CLIENT > BILLING > INVOICE HISTORY > TABLE LIST ASSERTIONS STARTS HERE ///////////
+
+      //verify first the column Names
+      //verify the expected column names
+      const expectedColumnNames = [
+        'Invoice #',
+        'Amount',
+        'Balance',
+        'Status',
+        'Due Date',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($option, index) => {
+          cy.wrap($option).should('have.text', expectedColumnNames[index]) //verify names based on the expected options
+          .should('exist')
+          .and('have.css', 'font-weight', '700')  //font bold
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          cy.log(expectedColumnNames[index]) 
+      });
+
+
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Invoice Number
+        InvoiceHistoryPageTable.assertColumn1InvoiceNumber(' > td:nth-child(1) > a', 'INV-')
+        //assert Column 2 > Amount
+        InvoiceHistoryPageTable.assertColumn2Amount(' > td:nth-child(2) > span', '$ 125.35')
+        //assert Column 3 > Balance
+        InvoiceHistoryPageTable.assertColumn3Balance(' > td:nth-child(2) > span', '$ 125.35')
+        //assert Column 4 > Status
+        InvoiceHistoryPageTable.assertColumn4Status(' > td:nth-child(4) > span', 'sent', 'rgb(59, 130, 246)', 'rgb(219, 234, 254)')
+        //assert Column 5 > Due Date - the Due Date is 5 days from the time the Charge One-Time Addon is submitted
+        InvoiceHistoryPageTable.assertColumn5Date(' > td:nth-child(5) > span', DateTodayIs.TodayDateDDMMYYYYPlus5days())
+        //assert Column 6 > Action:DownloadPDF | SENT EMAIL | VIEW PDF icons
+        InvoiceHistoryPageTable.assertActionColumWith3Buttons(' > td:nth-child(6) > span')
+      })
+      /////// CLIENT > BILLING > INVOICE HISTORY > TABLE LIST ASSERTIONS ENDS HERE ///////////
+    
+    })  
+    it.skip("Testcase ID: CBS0005 - Verify user can Edit description under the Plan & Addon Details",()=>{
+
+      let GETcurrentAddoNDescription;
+      let currentAddonDescription;
+
+      //login using account specialist
+      cy.userloginaccount(loginmoduledata.cssSelectors[0].emailaddressInputfield, loginmoduledata.cssSelectors[0].passwordInputfield, loginmoduledata.cssSelectors[0].submitButton, useraccountdata.accountspecialist1, useraccountdata.accountspecialistandprojectmanagerpassword)
+
+      //click the Client module nav link
+      cy.get(BSmodulesnavlink.clientsnavlink)
+        .click()
+        .wait(3000)
+
+      //click the row 1 test in the active client 
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(2000)
+
+      //click the billing tab
+      cy.get(clientmoduledata.cssSelectors[1].BillingTabLink)
+        .click()
+        .wait(1000)
+
+      //////////  PLAN & ADD ON DETAILS TABLE AND ELEMENTS ASSERTIONS STARTS HERE /////////////
+      //verify the PLAN & ADD ON DETAILS TABLE Each Column names
+      const ColumnNames = [
+        'Plan & Addon Details',
+        'Qty',
+        'Rate',
+        'Tax',
+        'Amount'
+      ];
+      cy.get('table > thead > tr > th').each(($option, index) => {
+          cy.wrap($option).should('have.text', ColumnNames[index]) //verify names based on the expected options
+            .should('exist')
+            .and('have.css', 'font-weight', '700')  //font bold
+            .and('have.css', 'text-transform', 'uppercase') //all caps
+          cy.log(ColumnNames[index]) 
+      });
+    
+      ///// PLAN & ADDON DETAILS > ROW 1 > TABLE LISTS ASSERTIONS STARTS HERE /////
+      
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Row 1 > Column 1 > Addon Description
+        cy.get(' > td:nth-child(1)')
+          .should('exist')
+          .and('contain', 'Agency Subscription') // Addon Description title
+          .within(()=>{
+            //assert the Addon Description
+            cy.get(' > div > div > div:nth-child(1)')
+              .should('exist')
+              .and('not.have.text', '') // means there is a description regardless of what it is
+              .then((txt)=>{
+                GETcurrentAddoNDescription = new Promise((resolve)=>{
+                  //then i will get the description
+                  currentAddonDescription = txt.text().trim();
+                  resolve();
+                })
+                
+              })
+            //assert Edit Description Link text
+            cy.get(' > div > div > div:nth-child(2)')
+              .should('exist')
+              .and('not.be.disabled')
+              .and('have.text', 'Edit Description')
+              .and('have.css', 'color', 'rgb(239, 68, 68)') //text color
+          })
+        //assert Row 1 > Column 2 > Qty
+        cy.get(' > td:nth-child(2)')
+          .should('exist')
+          .and('have.text', '1')
+        //assert Row 1 > Column 3 > Rate
+        cy.get(' > td:nth-child(3)')
+          .should('exist')
+          .and('have.text', '$800.00')
+        //Assert Row 1 > Column 4 > Tax 
+        cy.get(' > td:nth-child(4)')
+          .should('exist')
+          .and('have.text', '-') //no added tax value since the address is not canada
+        //assert Row 1 > Column 5 > Amount
+        cy.get(' > td:nth-child(5)')
+          .should('exist')
+          .and('have.text', '$800.00')
+      })
+
+      ///// PLAN & ADDON DETAILS > ROW 1 > TABLE LISTS ASSERTIONS ENDS HERE /////
+
+      //Under still the table there is Sub Total label and the Sub total amount - Then verify
+      cy.get('table > tbody > tr:nth-child(2) ')
+        .should('exist')
+        .within(()=>{
+          //assert Sub Total label
+          cy.get(' > td:nth-child(1)')
+            .should('exist')
+            .and('have.text', 'Sub Total')
+          //assert Sub Total Amount
+          cy.get(' > td:nth-child(2)')
+            .should('exist')
+            .and('have.text', '$800.00')
+        })
+    
+      //verify No Tax Label and the value
+      cy.get('table > tbody > tr:nth-child(3)')
+        .should('exist')
+          .within(()=>{
+            //assert No Tax (0%) label
+            cy.get(' > td:nth-child(1)')
+              .should('exist')
+              .and('have.text', 'No Tax (0%)')
+            //assert No Tax (0%) Amount
+            cy.get(' > td:nth-child(2)')
+              .should('exist')
+              .and('have.text', '$0.00')
+          })
+
+      //verify TOTAL(USD) label and the total amount
+      cy.get('table > tbody > tr:nth-child(4)')
+        .should('exist')
+          .within(()=>{
+            //assert TOTAL(USD) label
+            cy.get(' > td:nth-child(1)')
+              .should('exist')
+              .and('have.text', 'Total (USD)')
+              .and('have.css', 'font-weight', '700')  //font bold
+            //assert Total Amount
+            cy.get(' > td:nth-child(2)')
+              .should('exist')
+              .and('have.text', '$800.00')
+              .and('have.css', 'font-weight', '700')  //font bold
+          })
+    
+      //Now I will click the Edit Description Link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1) > div:nth-child(2)')
+        .click()
+        .wait(1000)
+
+      //After a user clicks onto the Edit Description link text, the Addon Description becomes a textarea field
+      // This is a test description. Please disregard as I will remove it after. -> this is the default addon description
+      //verify
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1)')
+        .find('textarea')
+        .should('exist')
+        .then(()=>{
+          GETcurrentAddoNDescription.then(()=>{
+            cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1)')
+            .find('textarea')
+            .should('have.value', currentAddonDescription)
+          })
+        })
+      //Then I will edit
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1)')
+        .find('textarea')
+        .and('not.be.disabled')
+        .clear()
+        .type("This editted Addon Description is for testing purposes only!")
+        .wait(600)
+        .should('have.value', 'This editted Addon Description is for testing purposes only!')
+        .type('{ctrl}{enter}') //And I will Press {CTRL} + {ENTER} on my keyboard
+        .wait(3000)
+
+      //verify alert-success message popup
+      cy.getMessagepopup(alertmessageslocators.authenticationerror, 'description updated')
+      cy.getMessagepopup(alertmessageslocators.loginerrormessage, 'Item description has been updated successfully.')
+
+      //Intentionally I will have to wait for 7 seconds then reload the page 
+      cy.wait(10000)
+      cy.reload()
+
+      //Again verify if the description is updated and from textarea field becomes back to non textarea field
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1) > div:nth-child(1)')
+        .should('exist')
+        .then((txt)=>{
+          expect(txt.text().trim()).to.equal('This editted Addon Description is for testing purposes only!')
+        })
+
+    })
+  
+    it.skip("Testcase ID: CBS0006 - Verify user can delete the added description under the Plan & Addon Details",()=>{
+
+      
+      
+      //login using account specialist
+      cy.userloginaccount(loginmoduledata.cssSelectors[0].emailaddressInputfield, loginmoduledata.cssSelectors[0].passwordInputfield, loginmoduledata.cssSelectors[0].submitButton, useraccountdata.accountspecialist1, useraccountdata.accountspecialistandprojectmanagerpassword)
+
+      //click the Client module nav link
+      cy.get(BSmodulesnavlink.clientsnavlink)
+        .click()
+        .wait(3000)
+
+      //click the row 1 test in the active client 
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(2000)
+
+      //click the billing tab
+      cy.get(clientmoduledata.cssSelectors[1].BillingTabLink)
+        .click()
+        .wait(1000)
+
+      //Now I will click the Edit Description Link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1) > div:nth-child(2)')
+        .click()
+        .wait(1000)
+
+      //Delete the Entire Description
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1)')
+        .find('textarea')
+        .clear()
+        .type('{ctrl}{enter}') //And I will Press {CTRL} + {ENTER} on my keyboard
+        .wait(3000)
+
+      //verify alert-success message popup
+      cy.getMessagepopup(alertmessageslocators.authenticationerror, 'description updated')
+      cy.getMessagepopup(alertmessageslocators.loginerrormessage, 'Item description has been updated successfully.')
+
+      //Intentionally I will have to wait for 7 seconds then reload the page 
+      cy.wait(8000)
+      cy.reload()
+      cy.wait(3000)
+      cy.reload()
+
+      //Again verify if the description is updated and from textarea field becomes back to non textarea field
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1) > div:nth-child(1)')
+        .should('exist')
+        .then((txt)=>{
+          expect(txt.text().trim()).to.equal('Add a description') // default text
+        })
+
+      //verify the Edit Description Link text is now Add Description Link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > div > div:nth-child(1) > div:nth-child(2)')
+        .should('exist')
+        .and('have.text', 'Add Description')
+        .and('have.css', 'color', 'rgb(239, 68, 68)') //text color
+      
+    })
+    it.skip("Testcase ID: CBS0007 - Verify user can Add a Subscription Note ",()=>{
+      
+      //calling utility functions
+      const utilfunc = new utilityfunctions();
+  
+      //login using account specialist
+      cy.userloginaccount(loginmodules.loginform[0].emailaddressinputfield, loginmodules.loginform[0].passwordinputfield, loginmodules.loginform[0].signinbutton, useraccountdata.accountspecialist, useraccountdata.accountspecialistandprojectmanagerpassword)
+
+      //click the Client module nav link
+      cy.click_link_button(clientmodulesnavlink.clientsnavlink)
+        .wait(3000)
+
+      //click the first top client test in the active client listing AAAROO TEST
+      cy.click_link_button(clientmodules.testclient)
+        .wait(2000)
+    
+      //click the billing tab
+      cy.click_link_button(clientmodules.billingtab[0].billingtablink)
+        .wait(1000)
+
+      //note section area
+      //verify notes label
+      cy.get(clientmodules.billingtab[1].notesarea[0].noteslabelsectionarea)
+        .should('have.css', 'color', 'rgb(156, 163, 175)') //font text color
+        .and('be.visible')
+        .and('exist')
+        .and('contain', 'NOTES')
+        .then(($el) => {
+          const computedStyle = getComputedStyle($el[0]);
+          const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+          expect(customPropertyValue).to.equal('1')
+        })
+
+      //verify Add link text
+      cy.get(clientmodules.billingtab[1].notesarea[0].notesareaaddlinktext)
+        .should('have.css', 'color', 'rgb(239, 68, 68)') // font text color
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('be.visible')
+        .and('exist')
+        .and('not.be.disabled')
+        .and('contain', ' Add')
+
+      //click the Add button
+      cy.click_link_button(clientmodules.billingtab[1].notesarea[0].notesareaaddlinktext)
+        .wait(1000)
+
+      //verify Add note modal popup
+      cy.get(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].modal)
+        .should('be.visible')
+        .and('exist')
+      
+      ////////// ADD NOTE MODAL ASSERTIONS ELEMENT STARTS HERE ///////////  
+      //verify add note modal title
+      cy.get(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].addnotemodaltitle)
+        .should('be.visible')
+        .and('exist')
+        .and('have.text', 'Add Note')
+
+      //verify add note modal textarea field
+      cy.get(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].addnotemodaltextareafield)
+        .should('be.visible')
+        .and('exist')
+        .and('be.empty')
+        .and('be.enabled')
+        .and('have.value','')
+
+      //verify add note modal save button
+      cy.get(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].savebutton)
+        .should('have.css', 'color', 'rgb(255, 255, 255)') //font color text
+        .and('have.css', 'background-color', 'rgb(239, 68, 68)') //background color / button color
+        .and('have.css', 'border-radius', '6px') // the curve of the edge of the button
+        .and('have.css', 'width', '47.953125px')
+        .and('have.css', 'height', '32px')
+        .and('not.be.disabled')
+        .and('contain', 'Save')
+      
+      //verify add note modal cancel link text
+      cy.get(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].cancelbutton)
+        .should('be.visible')
+        .and('exist')
+        .and('contain', 'Cancel')
+        .and('not.be.disabled')
+        .then(($el) => {
+          const computedStyle = getComputedStyle($el[0]);
+          const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+          expect(customPropertyValue).to.equal('1')
+        })
+      ////////// ADD NOTE MODAL ASSERTIONS ELEMENT ENDS HERE /////////// 
+      //// REQUIRED FIELD ASSERTION STARTS HERE ////////
+      //without adding a note, click the save button
+      //as expected, the note modal remains open, and alert-error message popup
+      cy.click_link_button(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].savebutton)
+        .wait(3000)
+
+      //verify alert-error message popup
+      cy.getMessagepopup(alertmessageslocators.updatesuccessmessagepopup, 'Failed to add note')
+
+      //wait for the alert-error message to close
+      cy.wait(5000)
+      //// REQUIRED FIELD ASSERTION ENDS HERE ////////
+      //------------------------------------//
+      // Add note
+      cy.type_enter_data(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].addnotemodaltextareafield, 'This is a test note. Please disregard. Thank you.') 
+        .wait(1000)
+          
+      //click the save button
+      cy.click_link_button(clientmodules.billingtab[1].notesarea[0].addnotemodal[0].savebutton)
+        .wait(2000)
+      
+      //verify alert-success message popup
+      cy.getMessagepopup(alertmessageslocators.updatesuccessmessagepopup, 'Note added')
+      cy.getMessagepopup(alertmessageslocators.updatemessage, 'Notes added.')
+      //------------------------------------//
+
+      // i forcebly wait for 1 minute and 30 seconds then reload the page
+      // this happen because in the staging and test there is a huge delay in updating the page
+      cy.wait(90000) 
+      cy.reload()
+      cy.wait(5000) //giving enough time after the reload of the page
+
+      //verify if it added a new section of note
+      cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].divisionsection).should('exist').then(()=>{
+        //assert newly added note icon
+        cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].noteicon)
+          .should('be.visible')
+          .and('exist')
+          .then(($el) => {
+            const computedStyle = getComputedStyle($el[0]);
+            const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+            expect(customPropertyValue).to.equal('1')
+          })
+        //assert the newly added note
+        cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].newlyaddednote)
+          .should('be.visible')
+          .and('exist')
+          .and('have.text', 'This is a test note. Please disregard. Thank you.')
+        //assert the one who created the newly added note
+        cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].whocreatedthenewlyaddednote)
+          .should('be.visible')
+          .and('exist')
+          .and('contain', '- Seller Interactive Admin')
+          .and('have.css', 'font-style', 'italic')
+          .then(($el) => {
+            const computedStyle = getComputedStyle($el[0]);
+            const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+            expect(customPropertyValue).to.equal('1')
+          })
+        //assert the date created on the newly added note
+        cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].newlyaddednotedate)
+          .should('be.visible')
+          .and('exist')
+          .and('contain', utilfunc.getFormattedDate()) // as expected because it was created today
+          .then(($el) => {
+            const computedStyle = getComputedStyle($el[0]);
+            const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+            expect(customPropertyValue).to.equal('1')
+          })
+        //assert delete icon on newly added note
+        cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].newlyaddedmotedeleteicon)
+          .should('be.visible')
+          .and('exist')
+          .and('not.be.disabled')
+          .then(($el) => {
+            const computedStyle = getComputedStyle($el[0]);
+            const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+            expect(customPropertyValue).to.equal('1')
+          })
+      })
+    })
+    it.skip("Testcase ID: CBS0009 - Verify user can Delete a Subscription Note ",()=>{
+
+      //calling utility functions
+      const utilfunc = new utilityfunctions();
+  
+      //login using account specialist
+      cy.userloginaccount(loginmodules.loginform[0].emailaddressinputfield, loginmodules.loginform[0].passwordinputfield, loginmodules.loginform[0].signinbutton, useraccountdata.accountspecialist, useraccountdata.accountspecialistandprojectmanagerpassword)
+
+      //click the Client module nav link
+      cy.click_link_button(clientmodulesnavlink.clientsnavlink)
+        .wait(3000)
+
+      //click the first top client test in the active client listing AAAROO TEST
+      cy.click_link_button(clientmodules.testclient)
+        .wait(2000)
+    
+      //click the billing tab
+      cy.click_link_button(clientmodules.billingtab[0].billingtablink)
+        .wait(1000)
+
+      //previous test case was to add new note. so in this test case, I am going to delete it
+      //find that newly added note and on its delete icon, i will click it
+      cy.click_link_button(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].newlyaddedmotedeleteicon)
+        .wait(1000)
+
+      //verify delete confirmation dialog popup
+      cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].deleteconfirmationdialog[0].modal)
+        .should('be.visible')
+        .and('exist')
+
+      ////////// DELETE CONFIRMATION DIALOG POPUP ASSERTIONS ELEMENTS STARTS HERE //////////////////////
+      //verify delete confirmation dialog popup modal title
+      cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].deleteconfirmationdialog[0].modaltitle)
+        .should('be.visible')
+        .and('exist')
+        .and('have.text', 'Delete Note')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Are you sure you want to delete this note?
+      cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].deleteconfirmationdialog[0].areyousureyouwanttodeletethisnote)
+        .should('be.visible')
+        .and('exist')
+        .and('contain', 'Are you sure you want to delete this note?')
+        .then(($el) => {
+          const computedStyle = getComputedStyle($el[0]);
+          const customPropertyValue = computedStyle.getPropertyValue('--tw-text-opacity').trim();
+          expect(customPropertyValue).to.equal('1')
+        })
+
+      //verify yes button
+      cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].deleteconfirmationdialog[0].yesbutton)
+        .should('be.visible')
+        .and('exist')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //font color text
+        .and('have.css', 'background-color', 'rgb(5, 150, 105)') //background color or the button color
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'border-radius', '40px') //the curve of the button on its edge
+        .and('not.be.disabled')
+        .and('have.text', 'Yes')
+
+      //verify no button
+      cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].deleteconfirmationdialog[0].nobutton)
+        .should('be.visible')
+        .and('exist')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('not.be.disabled')
+        .and('have.text', 'No')
+      ////////// DELETE CONFIRMATION DIALOG POPUP ASSERTIONS ELEMENTS ENDS HERE //////////////////////
+      //I will now click the yes button
+      cy.click_link_button(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].deleteconfirmationdialog[0].yesbutton)
+        .wait(2000)
+
+      //verify alert-success message popup
+      cy.getMessagepopup(alertmessageslocators.updatesuccessmessagepopup, 'Note deleted')
+      cy.getMessagepopup(alertmessageslocators.updatemessage, 'The note has been deleted.')
+
+      // i forcebly wait for 1 minute and 30 seconds then reload the page
+      // this happen because in the staging and test there is a huge delay in updating the page
+      cy.wait(90000) 
+      cy.reload()
+      cy.wait(5000) //giving enough time after the reload of the page
+
+      //verify that the entire section of that recently deleted note should be deleted
+      cy.get(clientmodules.billingtab[1].notesarea[0].newaddednotesection[0].divisionsection)
+        .should('not.exist') // this should be enough since it assert that it is not visible or removed totally in the DOM and therefore it is not also visible in the page
+    })
+    // **** CLIENT BILLING SUBSCRIPTIONS PAYMENT METHOD  ENDS HERE ***
+
+    it("Testcase ID: CRD0001 - Verify user can Add Rate Account Performance",()=>{
+
+      let GETClientName;
+      let clientName;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //GET the current client name that shows as the title
+      GETClientName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientNameTitle)
+          .then((name)=>{
+            clientName = name.text().trim();
+          })
+      })
+  
+      //verify Rating Dashboard link text folder
+      cy.get(linktextfolder.ClientModule[0].RatingDashboard)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Rating Dashboard')
+        .and('have.css', 'color', 'rgb(156, 163, 175)') //default text color
+        .find('svg').should('exist').and('be.visible').and('have.css', 'color', 'rgb(156, 163, 175)') //its star icon verification
+
+      //Click the Rating Dashboard Link text folder
+      cy.get(linktextfolder.ClientModule[0].RatingDashboard)
+        .click()
+        .wait(1000)
+        .should('have.css', 'color', 'rgb(239, 68, 68)') // text color
+        .find('svg').should('have.css', 'color', 'rgb(239, 68, 68)') //text color
+      
+      //verify correct destination page url
+      cy.url().should('contain', '/clients/performance-ratings')
+
+      //verify Rating Dashboard Main Title - Partner Rating Dashboard
+      cy.get(ratingdashboardlocators.pageTitle)
+        .should('exist')
+        .and('have.css', 'font-weight', '700') // font bold
+        .and('have.text', 'Partner Rating Dashboard')
+
+      //verify Rate Account Performance button, if found then click
+      cy.get(ratingdashboardlocators.RateAccountPerformanceButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Rate Account Performance')
+        .and('have.css', 'color','rgb(250, 250, 250)') // font text color
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color button 
+        .and('have.css', 'border-radius', '40px') //the curve edges of the button
+        .click()
+        .wait(2000)
+
+      //verify that the Rate Account Performance modal popup
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].modal)
+        .should('exist')
+
+      ////////////// RATE ACCOUNT PERFORMANCE MODAL ELEMENT ASSERTIONS STARTS HERE ////////////////
+      //verify Rate Account Performance Modal Title 
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].modaltitle)
+        .should('exist')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.text', 'Rate Account Performance')
+
+      //verify the Partner's Account Label and the drop down menu
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].PartnersAccountLabelandDropdownmenu)
+        .should('exist')
+        .within(()=>{
+          //assert Partner's Account* Label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', "Partner's Account*")
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') // asterisk text color
+          //assert Partner's Account select menu button
+          cy.get(' > div > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.attr', 'aria-expanded', 'false') // before it is click, this is just a button
+            .and('have.text', "Select Partner's Account")
+          //Click the button - expected to emerge an search input field within and a drop down list of clients available
+          cy.get(' > div > div > button')
+            .click()
+            .wait(1000)
+            .should('have.attr', 'aria-expanded', 'true')
+          //assert search input field emerge
+          cy.get('#email')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') // empty by default
+            .and('have.attr', 'placeholder', 'Search')
+          //assert a drop down list of available client. regardless of what and how many but there should be at least 1
+          cy.get('div.scrollbar-container > ul')
+            .should('exist')
+            .and('not.be.disabled')
+            .within(()=>{
+              //assert there should be a list
+              cy.get('li').should('have.length.gt', 0)
+            })
+          //Now clicking back the Partner's Account button should hide the Search input field and the client list
+          cy.get(' > div > div > button')
+            .click()
+            .wait(1000)
+            .should('have.attr', 'aria-expanded', 'false')
+          //assert search input field should not be visible
+          cy.get('#email')
+            .should('not.exist')
+          //assert the client list also should not be visible
+          cy.get('div.scrollbar-container > ul')
+            .should('not.exist')
+        })
+
+      //verify Type of Review Label and the lists
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].TypeOfReviewLabelandThelists)
+        .should('exist')
+        .within(()=>{
+          //assert the Type of Review label
+          cy.get('label')
+            .should('exist')
+            .and('contain', 'Type of Review*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') // asterisk text color
+          //assert the lists with each radio button
+          //and the expected options
+          const TypeOfReviewLists = [
+            'Finished Tasks',
+            'Missed Meetings',
+            'More action needed',
+            'Missed deadlines/Delays',
+            'Delayed Reporting',
+            'Lack of sales growth',
+            'Increase in sales',
+            'PPC Issues'
+          ];
+          cy.get(' > div > label').each(($option, index) => {
+            cy.wrap($option).should('have.text', TypeOfReviewLists[index]) //verify names based on the expected
+              .should('exist')
+              .and('not.be.checked')
+              .and('not.be.disabled')
+            cy.log(TypeOfReviewLists[index])
+          })
+      })
+
+      //verify Start Rating label and the five star elements
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].StartRatingLabelandThe5StarsElement)
+        .should('exist')
+        .within(()=>{
+          //assert the Star Rating label
+          cy.get('label')
+            .should('exist')
+            .and('have.text', 'Start Rating*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') // asterisk text color
+          //assert the 5 star elements
+          cy.get(' > div > span > span')
+            .should('exist')
+            .and('have.length', 5)
+            .each(($span)=>{
+              cy.wrap($span)
+                .should('exist')
+                .and('not.be.disabled')
+                .and('not.be.checked')
+            })
+        })
+
+      //verify Additional Information Screenshots Label and button
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].AdditionalInformationScreenshotsLabelandButton)
+        .should('exist')
+        .within(()=>{
+          //assert Additional Information Screenshots Label
+          cy.get(' > div > label')
+            .should('exist')
+            .and('have.text', 'Additional Information Screenshots*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') // asterisk text color
+          //assert Additional Information Screenshots button
+          cy.get(' > div > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Additional Information Screenshots')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+            .and('have.css', 'font-weight', '700') //font bold
+            .and('have.css', 'border-color', 'rgb(148, 148, 148)')
+            .and('have.css', 'border-radius', '40px') //the curve of the edge of the button
+        })
+
+      //verify Any additional notes related to this rating?* label and textarea field
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].AnyadditionalNotesRelatedToThisRatingLabelandTextareafield)
+        .should('exist')
+        .within(()=>{
+          //assert Any additional notes related to this rating?* label
+          cy.get('label')
+            .should('exist')
+            .and('contain', "Any additional notes related to this rating?*")
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') // asterisk text color
+          //assert textarea field
+          cy.get('textarea[name="information"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') //empty by default
+        })
+
+      //verify Cancel Button
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].CancelButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', "Cancel")
+        .and('have.css', 'color', 'rgb(24, 121, 216)') //text color
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Submit Button
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].SubmitButton)
+        .should('exist')
+        .and('be.disabled')
+        .and('have.text', "Submit")
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'background-color', 'rgb(0, 28, 55)') //the button capsule color
+
+      ////////////// RATE ACCOUNT PERFORMANCE MODAL ELEMENT ASSERTIONS ENDS HERE ////////////////
+
+      //Enter Test Client Name (AAAROO) TEST Then click it when it shows up
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].PartnersAccountLabelandDropdownmenu)
+        .within(()=>{
+          //click the button
+          cy.get(' > div > div > button')
+            .click()
+            .wait(700)
+          //Enter the Client test name in the Search Input field
+          cy.get('input[type="email"][name="email"]')
+            .clear()
+            .type('(AAA')
+            .wait(3000)
+          //Then click the name as it showed up which is the (AAAROO) TEST
+          cy.get('ul > li > button')
+            .click()
+            .wait(700)
+        })
+
+      //verify that it appeared on top after it was selected
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].PartnersAccountLabelandDropdownmenu)
+        .find(' > div > div > button')
+        .then((txt)=>{
+          GETClientName.then(()=>{
+            expect(txt.text().trim()).to.equal(clientName);
+          })
+        })
+
+      //verify Type of Review by ticking each radio button for each of the list
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].TypeOfReviewLabelandThelists)
+        .find(' > div > label > input')
+        .each(($input) => {
+          cy.wrap($input).check()
+            .wait(700)
+            .should('be.checked')
+        })
+      
+      //Then I will select the first
+      cy.get('form > div > div:nth-child(2) > div > label:nth-child(1) > input')
+        .check()
+        .should('be.checked')
+        .wait(1000)
+        /*
+      //verify star rating by clicking star 1
+      cy.get('form > div > div:nth-child(3) > div > span > span:nth-child(1) > span:nth-child(1)')
+        .click('center')//expected 50% which is equivalent to 40px
+        .wait(600)
+      cy.get('form > div > div:nth-child(3) > div > span > span:nth-child(1) > span:nth-child(2) > svg')
+        .should('have.css', 'color', 'rgb(245, 158, 11)') //yellow color
+      cy.get('form > div > div:nth-child(3) > div > span > span:nth-child(1) > span:nth-child(2)')
+        .should('have.css', 'width', '40px') // the 100% is 80px 
+
+      cy.wait(2000)
+        *//////////////////////
+      //Then I will click the full star 1
+      cy.get('form > div > div:nth-child(3) > div > span > span:nth-child(1) > span:nth-child(1)')
+        .click('right')//expected 100% which is equivalent to 80px
+        .wait(600)
+        .should('have.css', 'width', '80px') // the 100% is 80px 
+      cy.get('form > div > div:nth-child(3) > div > span > span:nth-child(1) > span:nth-child(2) > svg')
+        .should('have.css', 'color', 'rgb(245, 158, 11)') //yellow color
+    
+      //Upload a file
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].AdditionalInformationScreenshotsLabelandButton)
+        .within(()=>{
+          //upload an image file
+          cy.get(' > div > div > input')
+            .should('exist')
+            .attachFile('azoginsuit.jpg')
+            .wait(1000)
+          //verify that the name of the buttone is now Upload more
+          cy.get(' > div > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Upload more')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+            .and('have.css', 'font-weight', '700') //font bold
+            .and('have.css', 'border-color', 'rgb(148, 148, 148)')
+            .and('have.css', 'border-radius', '40px') //the curve of the edge of the button
+          //Then verify the uploaded image file is in the Modal
+          cy.get(' > div:nth-child(2)')
+            .should('exist')
+            .within(()=>{
+              //assert the x close button on top right corner of the uploaded image 
+              cy.get(' > div > div:nth-child(1)')
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.css', 'background-color', 'rgb(0, 47, 93)') // the circular blue color that surrounds the x button
+                .find('svg').should('exist').and('have.css', 'color', 'rgb(255, 255, 255)') //the x text color
+              //assert the uploaded image itself
+              cy.get(' > div > div:nth-child(2) > img')
+                .should('exist')
+                .and('have.css', 'width', '131px') //the rendered width size of the uploaded image file
+                .and('have.css', 'height', '133px') //the rendered height size of the uploaded image file
+            })
+        })
+        
+      //Add Additional Notes Related to this Rating
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].AnyadditionalNotesRelatedToThisRatingLabelandTextareafield)
+        .find('textarea[name="information"]')
+        .clear()
+        .type('The notes here that I added is for testing purposes only.')
+        .wait(600)
+        .should('have.value', 'The notes here that I added is for testing purposes only.')
+
+      //verify that the Submit button should be enabled since all the required elements are now filled
+      cy.get(ratingdashboardlocators.RateAccountPerformanceModal[0].SubmitButton)
+        .should('not.be.disabled')
+        .click()
+        .wait(3000)
+        
+      //////// PARTNER RATING DASHBOARD TABLE LIST ASSERTIONS STARTS HERE ///////////////
+      
+      //verify first the column names
+      //verify Column Names
+      const expected_columnNames = [
+        'Review',
+        'Details',
+        'Date Added',
+        'Reviewer',
+        'Rating',
+        'View Details'
+      ];
+      cy.get('table > thead > tr > th').each(($option, index) => {
+          cy.wrap($option).should('have.text', expected_columnNames[index])  //verify names based on the expected names per column
+          .should('exist')
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          .and('have.css', 'font-weight', '700') //font bold
+          cy.log(expected_columnNames[index]) 
+      });
+
+      //Now verify the table in row 1
+      cy.get('table >tbody > tr:first-child').within(()=>{
+        //assert Column1 > Review Name / the selected type of review you choose
+        cy.get(' > td:nth-child(1)')
+          .should('exist')
+          .and('not.be.disabled')
+          .and('have.text', 'Finished Tasks')
+          .and('have.css', 'color', 'rgb(24, 121, 216)') //text color
+        //assert Column 2 > Details / the added related notes you entered
+        cy.get(' > td:nth-child(2)')
+          .should('exist')
+          .and('have.text', 'The notes here that I added is for testing purposes only.')
+          .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+        //assert Column 3 > Date Added
+        cy.get(' > td:nth-child(3)')
+          .should('exist')
+          .and('have.text', DateTodayIs.TodayDateMMDDYYYY_ShortMonthWord_NoTHonDate())
+          .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+        //assert Column 4 > Reviewer
+        cy.get(' > td:nth-child(4)')
+          .should('exist')
+          .within(()=>{
+            cy.get('> div > div > span')  //the initial logo
+              .should('exist')
+              .and('have.text', 'LP')
+              .and('have.css', 'color', 'rgb(255, 255, 255)')         //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)')  //background color
+              .and('have.css', 'border-radius', '9999px')             //the curve edge that form the background color like a circle
+          })
+        //assert Column 5 > Rating
+        cy.get(' > td:nth-child(5) > div')
+          .should('exist')
+          .within(()=>{
+            //assert the rating value which is 1 meaning 1 star
+            cy.get('p')
+              .should('exist')
+              .and('have.text', '1')
+              .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+              .and('have.css', 'font-weight', '700') //font bold
+              .and('have.css', 'font-size', '25px')
+            //assert the 1st star from the left to the right
+            cy.get(' > span > span')
+              .should('exist')
+              .and('have.length', 5) // 5 stars
+          })
+        //assert Column 6 > View Details
+        cy.get(' > td:nth-child(6) > div')
+          .should('exist')
+          .and('not.be.disabled')
+          .find('svg').should('have.css', 'color', 'rgb(0, 150, 109)')
+      })
+
+    //Then I will click the view details button
+    cy.get('table >tbody > tr:first-child > td:nth-child(6) > div')
+      .click()
+      .wait(2000)
+
+    //verify Account Performance Review Modal popup
+    cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].modal)
+      .should('exist')
+
+    /////// ACCOUNT PERFORMANCE REVIEW MODAL ASSERTIONS STARTS HERE //////////
+
+    //verify modal title
+    cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].modaltitle)
+      .should('exist')
+      .and('have.text', 'Account Performance Review')
+      .and('have.css', 'font-weight', '700') //font bold
+
+    //verify Partners Account Label and the Client Name
+    cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].PartnersAccountLabelandClientName)
+      .should('exist')
+      .within(()=>{
+        //assert the Partner's Account Label 
+        cy.get(' > p:nth-child(1)')
+          .should('exist')
+          .and('have.text', "Partner's Account")
+          .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        //assert the client Name
+        cy.get(' > p:nth-child(2)')
+          .should('exist')
+          .then((txt)=>{
+            GETClientName.then(()=>{
+              expect(txt.text().trim()).to.equal(clientName);
+            })
+          })
+      })
+
+    //verify Reviewer Label and the Name of the Reviewer
+    cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].ReviewerLabelandReviewerName)
+      .should('exist')
+      .within(()=>{
+        //assert Reviewer Label
+        cy.get(' > p')
+          .should('exist')
+          .and('have.text', "Reviewer")
+          .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        //assert Reviewer Name
+        cy.get('div')
+          .then(()=>{
+            //assert the Initial Logo
+            cy.get(' > div > div > div > span')
+              .should('exist')
+              .and('have.text', 'LP')
+              .and('have.css', 'color', 'rgb(255, 255, 255)')         //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)')  //background color
+              .and('have.css', 'border-radius', '9999px')
+            //assert the name
+            cy.get(' div > p')
+              .should('exist')
+              .and('have.text', "Logan Paul")
+          })
+      })
+
+      //verify the Date Added Label and the Date
+      cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].DateAddedLabelandTheDate)
+        .should('exist')
+        .within(()=>{
+          //assert the Date Added Label
+          cy.get('p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Date Added")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //verify the Date 
+          cy.get('p:nth-child(2)')
+            .should('exist')
+            .and('have.text', DateTodayIs.TodayDateMMDDYYYY_ShortMonthWord_NoTHonDate())
+        })
+
+      //verify Type Label and the type
+      cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].TypeLabelandTheSelectedType)
+        .should('exist')
+        .within(()=>{
+
+          //assert the Type Label
+          cy.get('p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Type")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //verify the Date 
+          cy.get('p:nth-child(2)')
+            .should('exist')
+            .and('have.text', 'Finished Tasks')
+        })
+
+      //verify the Rating Label and the number and stars elements
+      cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].RatingLabelandTheStars)
+        .should('exist')
+        .within(()=>{
+          //assert the Rating Label
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', "Rating")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //verify the Count / score rating 
+          cy.get(' > div > p')
+            .should('exist')
+            .and('have.text', '1')
+          //assert the Stars
+          cy.get(' > div > span > span')
+            .should('exist')
+            .and('have.length', 5) // 5 stars
+        })
+
+      //verify the Files Uploaded Label and the File
+      cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].FilesUploadedLabelandTheFile)
+        .should('exist')
+        .within(()=>{
+          //assert the Files Uploaded Label
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', "Files Uploaded")
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .and('have.css', 'font-weight', '700') //font bold
+          //verify the file itself
+          cy.get(' > div > div > img')
+            .should('exist')
+        })
+
+      //verify the Additional Notes Label and the Notes
+      cy.get(ratingdashboardlocators.AccountPerformanceReviewModal[0].AdditionalNotesLabelandTheNotes)
+        .should('exist')
+        .within(()=>{
+          //assert the Files Uploaded Label
+          cy.get('p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Additional Notes")
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .and('have.css', 'font-weight', '700') //font bold
+          //verify the file itself
+          cy.get('p:nth-child(2)')
+            .should('exist')
+            .and('have.text', 'The notes here that I added is for testing purposes only.')
+        })
+        
+    })
+
+    it.skip("Testcase ID: CAAR0001 - Verify user can Add Request",()=>{
+    })
+
+    it("Testcase ID: CC0001 - Verify client partner can add complaint form",()=>{
+
+      let GETClientName;
+      let clientName;
+      let GETClientPartnerFullName;
+      let clientFullName;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //GET the current client name that shows as the title
+      GETClientName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientNameTitle)
+          .then((name)=>{
+            clientName = name.text().trim();
+          })
+      })
+
+      //GET the Client Partner full name in the Client > Client Dashboard > Profile > Overview > Contact Name
+      GETClientPartnerFullName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientDashboardTabPage[0].ProfileTabpage[0].ClientBasicContactInformationSection[0].ContactName)
+          .then((cName)=>{
+            clientFullName = cName.text().trim();
+            resolve();
+          })
+      })
+    
+      //verify there this is Complaints link text folder under the client module
+      cy.get(linktextfolder.ClientModule[0].Complaints) //Complaints link text
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Complaints')
+        .and('have.css', 'color', 'rgb(156, 163, 175)') //default text color
+        .find('svg').should('exist').and('be.visible').and('have.css', 'color', 'rgb(156, 163, 175)') //its star icon verification
+
+      //Click the Complaints Link text folder
+      cy.get(linktextfolder.ClientModule[0].Complaints)
+        .click()
+        .wait(1000)
+        .should('have.css', 'color', 'rgb(239, 68, 68)') // text color
+        .find('svg').should('have.css', 'color', 'rgb(239, 68, 68)') //text color
+
+      //verify correct destination page url
+      cy.url().should('contain', '/clients/complaints')
+  
+      //verify Complaints page title - Complaints
+      cy.get(complaintslocators.PageTitle)
+        .should('exist')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.text', 'Complaints')
+
+      //verify Add button if Found then click
+      cy.get(complaintslocators.AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)') //border capsule shape color
+        .and('have.css', 'border-radius', '40px') // the curve edge 
+        .click()
+        .wait(2000)
+
+      //verify that the Client Complaint Form modal popup
+      cy.get(complaintslocators.ClientComplaintFormModal[0].modal)
+        .should('exist')
+
+      ////////////// CLIENT COMPLAINT FORM MODAL ELEMENT ASSERTIONS STARTS HERE ////////////////
+      
+      //verify Client Complaint Form modal title
+      cy.get(complaintslocators.ClientComplaintFormModal[0].modaltitle)
+        .should('exist')
+        .and('have.css', 'font-weight', '700') // font bold
+        .and('have.text', 'Client Complaint Form')
+
+      //verify Partners Account Label and the Select Partners Account select menu
+      cy.get(complaintslocators.ClientComplaintFormModal[0].PartnersAccountLabelandSelectPartnersAccountButton)
+        .should('exist')
+        .within(()=>{
+          //assert Partner's Account Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', "Partner's Account*")
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Select Partner's Account button
+          cy.get(' > div > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', "Select Partner's Account")
+            .and('have.attr', 'aria-expanded', 'false') // it means if the Select Partner's Account is not yet click, then it is still abutton
+          //Then I am going to click the Select Partner's Account button
+          cy.get(' > div > div > button')
+            .click()
+            .wait(1000)
+            .should('have.attr', 'aria-expanded', 'true') //it means it becomes a select drop down menu
+          //verify that there is a Search input field
+          cy.get('input[type="email"][name="email"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') //empty by default
+            .and('have.attr', 'placeholder', 'Search')
+          //assert the drop down menu - there should be no zero - at least 1
+          cy.get('div.scrollbar-container > ul > li')
+            .should('exist')
+            .and('have.length.gt', 0)
+          //Now if I am going to click Again the Select Partner's Account button
+          cy.get(' > div > div > button')
+            .click()
+            .wait(1000)
+            .should('have.attr', 'aria-expanded', 'false') //it means it becomes back as a button
+          //assert that the Search Input field should not be visible
+          cy.get('input[type="email"][name="email"]')
+            .should('not.exist')
+          //assert the drop down menu should not be visible
+          cy.get('div.scrollbar-container > ul > li')
+            .should('not.exist')
+        })
+
+      //verify Type of Complaints Label and the lists of complaints
+      cy.get(complaintslocators.ClientComplaintFormModal[0].TypeofComplaintLabelandTheLists)
+        .should('exist')
+        .within(()=>{
+          //asser the Type of Complaint Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', "Type of Complaint*")
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert the Type of Complaint lists - one by one
+          const TypeofComplaintsLists = [
+            'Onboarding Process',
+            'Missed Meetings',
+            'Creatives',
+            'Missed deadlines/Delays',
+            'Copywriting',
+            'Lack of sales growth',
+            'Communication',
+            'PPC Issues',
+            'Other'
+          ];
+          cy.get(' > div > label').each(($label, index)=>{
+            cy.wrap($label)
+              .should('have.text', TypeofComplaintsLists[index]) //verify names based on the expected
+              .and('not.be.checked')
+              .and('not.be.disabled')
+              cy.log(TypeofComplaintsLists[index])
+            })
+          //tick or check each radio button
+          cy.get(' > div > label > input')
+            .each(($input) => {
+              cy.wrap($input).check()
+                .wait(700)
+                .should('be.checked')
+            })
+        })
+
+      //verify How many times has this client reached out regarding this issue to you? Label and drop down menu
+      cy.get(complaintslocators.ClientComplaintFormModal[0].HowmanytimeshasthisclientreachedoutregardingthisissuetoyouLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert the How many times has this client reached out regarding this issue to you? label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'How many times has this client reached out regarding this issue to you?*')
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Select Number of Occurence drop down menu
+          cy.get(' > select[name="occurence"]')
+            .should('exist')
+            .and('not.be.disabled')
+          //and the expected options
+          const expectedOptions = [
+            'Select Number of Occurence',
+            '1st',
+            '2nd',
+            '3rd',
+            '4th',
+            '5th+'
+          ];
+          cy.get(" > select[name='occurence'] > option").each(($option, index) => {
+            cy.wrap($option)
+              .should('have.text', expectedOptions[index])
+              .and('not.be.disabled')
+          });
+        })
+
+      //verify Urgency Level Label and each of the 1-2 elements
+      cy.get(complaintslocators.ClientComplaintFormModal[0].UrgencyLevelLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert the Urgency Level label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Urgency Level*')
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert the number elements from 1 to 5
+          cy.get(' > div > button')
+            .should('exist')
+            .each(($button)=>{
+              cy.wrap($button)
+                .should('exist')
+                .and('not.be.disabled')
+            })
+        })
+      //Click one by one and assert changes in the UI
+      cy.get(complaintslocators.ClientComplaintFormModal[0].UrgencyLevelLabelandDropdownMenu)
+        .within(()=>{
+          //click and then assert number 1
+          cy.get(' > div > button:nth-child(1)')
+            .click()
+            .wait(700)
+            .should('have.css', 'color', 'rgb(191, 166, 84)') //text color
+            .and('have.css', 'background-color', 'rgb(249, 220, 125)') //background color
+            .and('have.css', 'border-radius', '9999px')
+          //click and then assert number 2
+          cy.get(' > div  > button:nth-child(2)')
+            .click()
+            .wait(700)
+            .should('have.css', 'color', 'rgb(191, 166, 84)') //text color
+            .and('have.css', 'background-color', 'rgb(249, 220, 125)') //background color
+            .and('have.css', 'border-radius', '9999px')
+          //assert number 1 that it should go back to normal
+          cy.get(' > div > button:nth-child(1)')
+            .should('have.css', 'color', 'rgb(0, 0, 0)') //text color
+            .and('have.css', 'background-color', 'rgba(0, 0, 0, 0)') //background color
+          //click and then assert number 3
+          cy.get(' > div  > button:nth-child(3)')
+            .click()
+            .wait(700)
+            .should('have.css', 'color', 'rgb(212, 130, 54)') //text color
+            .and('have.css', 'background-color', 'rgb(255, 210, 185)') //background color
+            .and('have.css', 'border-radius', '9999px')
+          //assert number 2 that it should go back to normal
+          cy.get(' > div > button:nth-child(2)')
+            .should('have.css', 'color', 'rgb(0, 0, 0)') //text color
+            .and('have.css', 'background-color', 'rgba(0, 0, 0, 0)') //background color
+          //click and then assert number 4
+          cy.get(' > div  > button:nth-child(4)')
+            .click()
+            .wait(700)
+            .should('have.css', 'color', 'rgb(212, 130, 54)') //text color
+            .and('have.css', 'background-color', 'rgb(255, 210, 185)') //background color
+            .and('have.css', 'border-radius', '9999px')
+          //assert number 3 that it should go back to normal
+          cy.get(' > div > button:nth-child(3)')
+            .should('have.css', 'color', 'rgb(0, 0, 0)') //text color
+            .and('have.css', 'background-color', 'rgba(0, 0, 0, 0)') //background color
+          //click and then assert number 5
+          cy.get(' > div  > button:nth-child(5)')
+            .click()
+            .wait(700)
+            .should('have.css', 'color', 'rgb(195, 0, 0)') //text color
+            .and('have.css', 'background-color', 'rgb(255, 175, 175)') //background color
+            .and('have.css', 'border-radius', '9999px')
+        })
+
+      //verify Additional Information Screenshots Label and button
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AdditionalInformationScreenshotsLabelandButton)
+        .should('exist')
+        .within(()=>{
+          //assert the Additional Information Screenshots Label
+          cy.get(' > div:nth-child(1) > label')
+            .should('exist')
+            .and('have.text', 'Additional Information Screenshots*')
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Additional Information Screenshots button
+          cy.get(' > div:nth-child(1) > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Additional Information Screenshots')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+            .and('have.css', 'font-weight', '700') //font bold
+            .and('have.css', 'border-color', 'rgb(148, 148, 148)')
+            .and('have.css', 'border-radius', '40px') //the curve of the edge of the button
+        })
+
+      //verify Any additional notes related to this complaint? Label and textarea field
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AnyAdditionalNotesRelatedToThisComplaintLabelandTextareafield)
+        .should('exist')
+        .within(()=>{
+          //assert the Additional Information Screenshots Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Any additional notes related to this complaint?*')
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert textarea field
+          cy.get(' > textarea[name="information"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') // empty by default
+        })
+
+      //verify Cancel Button
+      cy.get(complaintslocators.ClientComplaintFormModal[0].CancelButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', "Cancel")
+        .and('have.css', 'color', 'rgb(24, 121, 216)') //text color
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Submit Button
+      cy.get(complaintslocators.ClientComplaintFormModal[0].SubmitButton)
+        .should('exist')
+        .and('be.disabled') //by default the button should be disabled because it has a required elements needs to respond inside the Rate Account Performance modal
+        .and('have.text', "Submit")
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'background-color', 'rgb(0, 28, 55)') //the button capsule color
+
+      ///////// CLIENT COMPLAINT FORM REQUIRED ASSERTIONS STARTS HERE ///////////
+
+      //Select Client test in the Select Partner's Account
+      cy.get(complaintslocators.ClientComplaintFormModal[0].PartnersAccountLabelandSelectPartnersAccountButton)
+        .within(()=>{
+          //click the button
+          cy.get(' > div > div > button')
+          .click()
+          .wait(1000)
+          //enter the client name in the Search Input field
+          cy.get('input[type="email"][name="email"]')
+            .clear()
+            .type('(AAA')
+            .wait(3000)
+          //Then as it appears, click the client test
+          cy.get('ul > li > button')
+            .click()
+            .wait(700)
+        })
+
+      //verify that it appeared on top after it was selected
+      cy.get(complaintslocators.ClientComplaintFormModal[0].PartnersAccountLabelandSelectPartnersAccountButton)
+        .find(' > div > div > button')
+        .then((txt)=>{
+          GETClientName.then(()=>{
+            expect(txt.text().trim()).to.equal(clientName);
+          })
+        })
+
+      //Select Type of Complaint - Onboarding Process
+      cy.get(complaintslocators.ClientComplaintFormModal[0].TypeofComplaintLabelandTheLists)
+        .find(' > div > label:nth-child(1) > input')
+        .check()
+        .should('be.checked')
+
+      //Select Number of Occurence
+      cy.get(complaintslocators.ClientComplaintFormModal[0].HowmanytimeshasthisclientreachedoutregardingthisissuetoyouLabelandDropdownMenu)
+        .find(" > select[name='occurence']")
+        .select('2').should('have.value','2')
+        .wait(2000)
+      //verify that the selected number of occurence is on top 
+      cy.get(complaintslocators.ClientComplaintFormModal[0].HowmanytimeshasthisclientreachedoutregardingthisissuetoyouLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', '2nd')
+
+      //Select Urgency Level
+      cy.get(complaintslocators.ClientComplaintFormModal[0].UrgencyLevelLabelandDropdownMenu)
+        .find(' > div > button:nth-child(1)')
+        .click()
+        .wait(1000)
+
+      //Upload Additional Screenshot
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AdditionalInformationScreenshotsLabelandButton)
+        .find(' > div:nth-child(1) > div > input')
+        .attachFile('azoginsuit.jpg')
+        .wait(2000)
+
+      //verify that the Additional Screenshot button has changed its name and now it becomes Upload more
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AdditionalInformationScreenshotsLabelandButton)
+        .within(()=>{
+          //assert buton name
+          cy.get(' > div:nth-child(1) > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Upload more')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+            .and('have.css', 'font-weight', '700') //font bold
+            .and('have.css', 'border-color', 'rgb(148, 148, 148)')
+            .and('have.css', 'border-radius', '40px') //the curve of the edge of the button
+          //assert the uploaded image file
+          cy.get(' > div:nth-child(2) > div')
+            .should('exist')
+            .within(()=>{
+              //assert the x close button
+              cy.get(' > div:nth-child(1)')
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.css', 'background-color', 'rgb(0, 47, 93)') // blue circle background color
+                .find('svg').should('have.css', 'color', 'rgb(255, 255, 255)') // text color
+              //the image
+              cy.get(' > div:nth-child(2) > img')
+                .should('exist')
+            })
+        })
+
+      //Add data on Any additional notes related to this complaint?
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AnyAdditionalNotesRelatedToThisComplaintLabelandTextareafield)
+        .find(' > textarea[name="information"]')
+        .clear()
+        .type('This is only a test data for testing purposes only')
+        .wait(500)
+        .should('have.value', 'This is only a test data for testing purposes only')
+
+      //verify that the submit button now is enabled
+      cy.get(complaintslocators.ClientComplaintFormModal[0].SubmitButton)
+        .should('not.be.disabled')
+
+      //Then click the Submit button
+      cy.get(complaintslocators.ClientComplaintFormModal[0].SubmitButton)
+        .click()
+        .wait(3000)
+        
+      //////// COMPLAINTS TABLET LISTS ASSERTIONS STARTS HERE ///////////////
+
+      //verify first the Column Names
+      const columnNames = [
+        "Partner's Account",
+        "Partner's Name",
+        "Submitted Date",
+        "Submitted By",
+        "Sales Representative",
+        "Project Manager",
+        "Type",
+        "Occurence",
+        "Urgency Level",
+        "Status",
+        "Action"
+      ]
+      cy.get('table > thead > tr > th').each(($option, index)=>{
+        cy.wrap($option)
+          .should('exist')
+          .and('have.text', columnNames[index])
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          .and('have.css', 'font-weight', '700') //font bold
+        cy.log(columnNames[index])
+      })
+
+      //Then verify each columns in row 1
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Partner's Account / Client Name
+        cy.get(' > td:nth-child(1) > a')
+          .should('exist')
+          .and('not.be.disabled')
+          .then((txt)=>{
+            GETClientName.then(()=>{
+              expect(txt.text().trim()).to.equal(clientName);
+            })
+          })
+        //assert Column 2 > Partner's Name / Client Partner's Name
+        cy.get(' > td:nth-child(2)')
+          .should('exist')
+          .then((txt)=>{
+            GETClientPartnerFullName.then(()=>{
+              expect(txt.text().trim()).to.equal(clientFullName);
+            })
+          })
+        //assert Column 3 > Submitted Date
+        cy.get(' > td:nth-child(3)')
+          .should('exist')
+          .and('have.text', DateTodayIs.TodayDateMMDDYYYY_ShortMonthWord_NoTHonDate())
+        //assert Column 4 > Submitted By
+        cy.get(' > td:nth-child(4) > div')
+          .should('exist')
+          .within(()=>{
+            //assert Logo Initial
+            cy.get(' > div > div > span')
+              .should('exist')
+              .and('have.text', 'LP')
+              .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)') //the circular background color
+              .and('have.css', 'border-radius', '9999px')
+            //assert the Name
+            cy.get(' > span')
+              .should('exist')
+              .and('have.text', 'Logan Paul')
+          })
+        //assert Column 5 > Sales Representative - this is optional
+        //assert Column 6 > Project Manager
+        cy.get(' > td:nth-child(6) > div')
+          .should('exist')
+          .within(()=>{
+            //assert Logo Initial
+            cy.get(' > div > div > span')
+              .should('exist')
+              .and('have.text', 'PK')
+              .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)') //the circular background color
+              .and('have.css', 'border-radius', '9999px')
+            //assert the Name
+            cy.get(' > span')
+              .should('exist')
+              .and('have.text', 'Peter Kanluran')
+          })
+        //assert Column 7 > Type
+        cy.get(' > td:nth-child(7)')
+          .should('exist')
+          .and('have.text', 'Onboarding Process')
+        //assert Column 8 > Occurrence
+        cy.get(' > td:nth-child(8)')
+          .should('exist')
+          .and('have.text', '2nd')
+        //assert Column 9 > Urgency Level
+        cy.get(' > td:nth-child(9) > span')
+          .should('exist')
+          .and('have.text', '1')
+          .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+          .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+          .and('have.css', 'border-radius', '9999px')
+        //assert Column 10 > Status
+        cy.get(' td:nth-child(10) > span')
+          .should('exist')
+          .and('have.text', 'Ongoing')
+          .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+          .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+          .and('have.css', 'border-radius', '40px')
+        //assert Column 11 > Action:View
+        cy.get(' > td:nth-child(11) > div ')
+          .should('exist')
+          .and('not.be.disabled')
+          .find('svg').should('have.css', 'color', 'rgb(0, 150, 109)') //text color
+      })
+      //////// COMPLAINTS TABLET LISTS ASSERTIONS ENDS HERE ///////////////
+
+    })
+
+    it("Testcase ID: CC0002 - Verify client partner can view the existing created complaint form",()=>{
+
+
+      let GETClientName;
+      let clientName;
+      let GETClientPartnerFullName;
+      let clientFullName;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //GET the current client name that shows as the title
+      GETClientName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientNameTitle)
+          .then((name)=>{
+            clientName = name.text().trim();
+          })
+      })
+
+      //GET the Client Partner full name in the Client > Client Dashboard > Profile > Overview > Contact Name
+      GETClientPartnerFullName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientDashboardTabPage[0].ProfileTabpage[0].ClientBasicContactInformationSection[0].ContactName)
+          .then((cName)=>{
+            clientFullName = cName.text().trim();
+            resolve();
+          })
+      })
+    
+      //Click the Complaints Link text folder
+      cy.get(linktextfolder.ClientModule[0].Complaints)
+        .click()
+        .wait(1000)
+        .should('have.css', 'color', 'rgb(239, 68, 68)') // text color
+        .find('svg').should('have.css', 'color', 'rgb(239, 68, 68)') //text color
+
+      //verify correct destination page url
+      cy.url().should('contain', '/clients/complaints')
+  
+      //verify Add button if Found then click
+      cy.get(complaintslocators.AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)') //border capsule shape color
+        .and('have.css', 'border-radius', '40px') // the curve edge 
+        .click()
+        .wait(2000)
+
+      //verify that the Client Complaint Form modal popup
+      cy.get(complaintslocators.ClientComplaintFormModal[0].modal)
+        .should('exist')
+
+      ///////// CREATE CLIENT COMPLAINT STARTS HERE ///////////
+
+      //Select Client test in the Select Partner's Account
+      cy.get(complaintslocators.ClientComplaintFormModal[0].PartnersAccountLabelandSelectPartnersAccountButton)
+        .within(()=>{
+          //click the button
+          cy.get(' > div > div > button')
+          .click()
+          .wait(1000)
+          //enter the client name in the Search Input field
+          cy.get('input[type="email"][name="email"]')
+            .clear()
+            .type('(AAA')
+            .wait(3000)
+          //Then as it appears, click the client test
+          cy.get('ul > li > button')
+            .click()
+            .wait(700)
+        })
+
+      //verify that it appeared on top after it was selected
+      cy.get(complaintslocators.ClientComplaintFormModal[0].PartnersAccountLabelandSelectPartnersAccountButton)
+        .find(' > div > div > button')
+        .then((txt)=>{
+          GETClientName.then(()=>{
+            expect(txt.text().trim()).to.equal(clientName);
+          })
+        })
+
+      //Select Type of Complaint - Onboarding Process
+      cy.get(complaintslocators.ClientComplaintFormModal[0].TypeofComplaintLabelandTheLists)
+        .find(' > div > label:nth-child(1) > input')
+        .check()
+        .should('be.checked')
+
+      //Select Number of Occurence
+      cy.get(complaintslocators.ClientComplaintFormModal[0].HowmanytimeshasthisclientreachedoutregardingthisissuetoyouLabelandDropdownMenu)
+        .find(" > select[name='occurence']")
+        .select('2').should('have.value','2')
+        .wait(2000)
+
+      //verify that the selected number of occurence is on top 
+      cy.get(complaintslocators.ClientComplaintFormModal[0].HowmanytimeshasthisclientreachedoutregardingthisissuetoyouLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', '2nd')
+
+      //Select Urgency Level
+      cy.get(complaintslocators.ClientComplaintFormModal[0].UrgencyLevelLabelandDropdownMenu)
+        .find(' > div > button:nth-child(1)')
+        .click()
+        .wait(1000)
+
+      //Upload Additional Screenshot
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AdditionalInformationScreenshotsLabelandButton)
+        .find(' > div:nth-child(1) > div > input')
+        .attachFile('azoginsuit.jpg')
+        .wait(2000)
+
+      //Add data on Any additional notes related to this complaint?
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AnyAdditionalNotesRelatedToThisComplaintLabelandTextareafield)
+        .find(' > textarea[name="information"]')
+        .clear()
+        .type('This is only a test data for testing purposes only')
+        .wait(500)
+        .should('have.value', 'This is only a test data for testing purposes only')
+
+      //verify that the submit button now is enabled
+      cy.get(complaintslocators.ClientComplaintFormModal[0].SubmitButton)
+        .should('not.be.disabled')
+
+      //Then click the Submit button
+      cy.get(complaintslocators.ClientComplaintFormModal[0].SubmitButton)
+        .click()
+        .wait(3000)
+
+      ///////// CREATE CLIENT COMPLAINT ENDS HERE ///////////
+        
+      //////// COMPLAINTS TABLET LISTS ASSERTIONS STARTS HERE ///////////////
+
+      //verify first the Column Names
+      const columnNames = [
+        "Partner's Account",
+        "Partner's Name",
+        "Submitted Date",
+        "Submitted By",
+        "Sales Representative",
+        "Project Manager",
+        "Type",
+        "Occurence",
+        "Urgency Level",
+        "Status",
+        "Action"
+      ]
+      cy.get('table > thead > tr > th').each(($option, index)=>{
+        cy.wrap($option)
+          .should('exist')
+          .and('have.text', columnNames[index])
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          .and('have.css', 'font-weight', '700') //font bold
+        cy.log(columnNames[index])
+      })
+
+      //Then verify each columns in row 1
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Partner's Account / Client Name
+        cy.get(' > td:nth-child(1) > a')
+          .should('exist')
+          .and('not.be.disabled')
+          .then((txt)=>{
+            GETClientName.then(()=>{
+              expect(txt.text().trim()).to.equal(clientName);
+            })
+          })
+        //assert Column 2 > Partner's Name / Client Partner's Name
+        cy.get(' > td:nth-child(2)')
+          .should('exist')
+          .then((txt)=>{
+            GETClientPartnerFullName.then(()=>{
+              expect(txt.text().trim()).to.equal(clientFullName);
+            })
+          })
+        //assert Column 3 > Submitted Date
+        cy.get(' > td:nth-child(3)')
+          .should('exist')
+          .and('have.text', DateTodayIs.TodayDateMMDDYYYY_ShortMonthWord_NoTHonDate())
+        //assert Column 4 > Submitted By
+        cy.get(' > td:nth-child(4) > div')
+          .should('exist')
+          .within(()=>{
+            //assert Logo Initial
+            cy.get(' > div > div > span')
+              .should('exist')
+              .and('have.text', 'LP')
+              .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)') //the circular background color
+              .and('have.css', 'border-radius', '9999px')
+            //assert the Name
+            cy.get(' > span')
+              .should('exist')
+              .and('have.text', 'Logan Paul')
+          })
+        //assert Column 5 > Sales Representative - this is optional
+        //assert Column 6 > Project Manager
+        cy.get(' > td:nth-child(6) > div')
+          .should('exist')
+          .within(()=>{
+            //assert Logo Initial
+            cy.get(' > div > div > span')
+              .should('exist')
+              .and('have.text', 'PK')
+              .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)') //the circular background color
+              .and('have.css', 'border-radius', '9999px')
+            //assert the Name
+            cy.get(' > span')
+              .should('exist')
+              .and('have.text', 'Peter Kanluran')
+          })
+        //assert Column 7 > Type
+        cy.get(' > td:nth-child(7)')
+          .should('exist')
+          .and('have.text', 'Onboarding Process')
+        //assert Column 8 > Occurrence
+        cy.get(' > td:nth-child(8)')
+          .should('exist')
+          .and('have.text', '2nd')
+        //assert Column 9 > Urgency Level
+        cy.get(' > td:nth-child(9) > span')
+          .should('exist')
+          .and('have.text', '1')
+          .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+          .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+          .and('have.css', 'border-radius', '9999px')
+        //assert Column 10 > Status
+        cy.get(' td:nth-child(10) > span')
+          .should('exist')
+          .and('have.text', 'Ongoing')
+          .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+          .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+          .and('have.css', 'border-radius', '40px')
+        //assert Column 11 > Action:View
+        cy.get(' > td:nth-child(11) > div ')
+          .should('exist')
+          .and('not.be.disabled')
+          .find('svg').should('have.css', 'color', 'rgb(0, 150, 109)') //text color
+      })
+      //////// COMPLAINTS TABLET LISTS ASSERTIONS ENDS HERE ///////////////
+      
+      //Then I will click the Action: View button
+      cy.get('table > tbody > tr:first-child > td:nth-child(11) > div')
+        .click()
+        .wait(3000)
+
+      //verify Complaint View Modal popup
+      cy.get(complaintslocators.ComplaintViewModal[0].modal)
+        .should('exist')
+
+      ///////// COMPLAINT VIEW MODAL ELEMENT ASSERTIONS STARTS HERE ///////////////
+
+      //verify modal title
+      cy.get(complaintslocators.ComplaintViewModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'Complaint')
+        .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+      
+      //verify Partner's Account label and the Partner's Account Name
+      cy.get(complaintslocators.ComplaintViewModal[0].PartnersAccountLabelandPartnerAccountsName)
+        .should('exist')
+        .within(()=>{
+          //assert Partner's Account Label
+          cy.get(' > p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Partner's Account")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert Partner's Account Name / Client Name
+          cy.get(' > p:nth-child(2)')
+            .should('exist')
+            .then((txt)=>{
+              GETClientName.then(()=>{
+                expect(txt.text().trim()).to.equal(clientName);
+              })
+            })
+        })
+      
+      //verify Partner's Name / Client Partner's Full Name
+      cy.get(complaintslocators.ComplaintViewModal[0].PartnersAccountNameLabelandPartnersAccountFullName)
+        .should('exist')
+        .within(()=>{
+          //assert Partner's Account Label
+          cy.get(' > p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Partner's Name")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert Partner's Account Name / Client Name
+          cy.get(' > p:nth-child(2)')
+            .should('exist')
+            .then((txt)=>{
+              GETClientPartnerFullName.then(()=>{
+                expect(txt.text().trim()).to.equal(clientFullName);
+              })
+            })
+        })
+
+      //verify Submitted Date Label and the Date
+      cy.get(complaintslocators.ComplaintViewModal[0].SubmittedDateLabelandTheDate)
+        .should('exist')
+        .within(()=>{
+          //assert Partner's Account Label
+          cy.get(' > p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Submitted Date")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert Partner's Account Name / Client Name
+          cy.get(' > p:nth-child(2)')
+            .should('exist')
+            .and('have.text', DateTodayIs.TodayDateMMDDYYYY_ShortMonthWord_NoTHonDate())
+        })
+
+      //verify Submitted By Label and the Initial Logo of the Submitter and its Full Name
+      cy.get(complaintslocators.ComplaintViewModal[0].SubmittedByLabelandTheSubmitter)
+        .should('exist')
+        .within(()=>{
+          //assert the Submitted By label
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', "Submitted By")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert the Initial Logo of the Submitter
+          cy.get(' > div > div > div > span')
+            .should('exist')
+            .and('have.text', 'LP')
+            .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+            .and('have.css', 'background-color', 'rgb(0, 47, 93)') //the circular background color
+            .and('have.css', 'border-radius', '9999px')
+          //assert the Submitter Full Name
+          cy.get(' > div > p')
+            .should('exist')
+            .and('have.text', 'Logan Paul')
+        })
+
+      //verify Project Manager Label and the Project Manager Full Name
+      cy.get(complaintslocators.ComplaintViewModal[0].ProjectManagerLabelandTheProjectManagerFullName)
+        .should('exist')
+        .within(()=>{
+          //assert Project Manager Label
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', "Project Manager")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert PM Initial Logo
+          cy.get(' > div > div > div > span')
+            .should('exist')
+            .and('have.text', 'PK')
+          //assert PM Full Name
+          cy.get(' > div > p')
+            .should('exist')
+            .and('have.text', 'Peter Kanluran')
+        })
+
+      //verify Type Label and the selected Type
+      cy.get(complaintslocators.ComplaintViewModal[0].TypeLabelandTheselectedType)
+        .should('exist')
+        .within(()=>{
+          //assert Type Label
+          cy.get(' > p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Type")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert the selected type
+          cy.get(' > p:nth-child(2)')
+            .should('exist')
+            .and('have.text', 'Onboarding Process')
+        })
+
+      //verify Occurent Label and the selected Occurence
+      cy.get(complaintslocators.ComplaintViewModal[0].OccurentLabelandTheselectedOccurent)
+        .should('exist')
+        .within(()=>{
+          //assert Type Label
+          cy.get(' > p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Occurent")
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+          //assert the selected type
+          cy.get(' > p:nth-child(2)')
+            .should('exist')
+            .and('have.text', '2nd')
+        })
+
+      //verify Files Uploaded by Client Label and the Uploaded File
+      cy.get(complaintslocators.ComplaintViewModal[0].FilesUploadedByClientLabelandTheUploadedFILE)
+        .should('exist')
+        .within(()=>{
+          //assert the Files Uploaded by Client Label
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', 'Files Uploaded by client')
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .and('have.css', 'font-weight', '700') // font bold
+          //assert the Uploaded Image
+          cy.get(' > div > div > img')
+            .should('exist')
+        })
+
+      //verify Additional Notes Label and the Note
+      cy.get(complaintslocators.ComplaintViewModal[0].AdditionalNotesLabelandTheNote)
+        .should('exist')
+        .within(()=>{
+          //assert Type Label
+          cy.get(' > p:nth-child(1)')
+            .should('exist')
+            .and('have.text', "Additional Notes")
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .and('have.css', 'font-weight', '700') // font bold
+          //assert the selected type
+          cy.get(' > p:nth-child(2)')
+            .should('exist')
+            .and('have.text', 'This is only a test data for testing purposes only')
+        })
+
+      //verify Mark as Resolved button
+      cy.get(complaintslocators.ComplaintViewModal[0].MarkasResolvedButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Mark as Resolved')
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'font-weight', '700') // font bold
+        .and('have.css', 'background-color', 'rgb(0, 186, 136)') //background color
+        .and('have.css', 'border-radius', '40px')
+
+      //verify Urgency Level Number
+      cy.get(complaintslocators.ComplaintViewModal[0].UrgencyLevelNumber)
+        .should('exist')
+        .and('have.text', '1')
+        .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+        .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Status
+      cy.get(complaintslocators.ComplaintViewModal[0].Status)
+        .should('exist')
+        .and('have.text', 'Ongoing')
+        .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+        .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+        .and('have.css', 'border-radius', '40px')
+
+      ///////// COMPLAINT VIEW MODAL ELEMENT ASSERTIONS ENDS HERE ///////////////
+      
+    })
+
+    it("Testcase ID: CC0003 - Verify client partner can mark as resolved the existing created complaint form",()=>{
+      
+      
+      let GETClientName;
+      let clientName;
+      let GETClientPartnerFullName;
+      let clientFullName;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //Then click then client name link text
+      cy.get('table > tbody > tr:first-child > td:nth-child(1) > a')
+        .click()
+        .wait(3000)
+
+      //GET the current client name that shows as the title
+      GETClientName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientNameTitle)
+          .then((name)=>{
+            clientName = name.text().trim();
+          })
+      })
+
+      //GET the Client Partner full name in the Client > Client Dashboard > Profile > Overview > Contact Name
+      GETClientPartnerFullName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientDashboardTabPage[0].ProfileTabpage[0].ClientBasicContactInformationSection[0].ContactName)
+          .then((cName)=>{
+            clientFullName = cName.text().trim();
+            resolve();
+          })
+      })
+    
+      //Click the Complaints Link text folder
+      cy.get(linktextfolder.ClientModule[0].Complaints)
+        .click()
+        .wait(1000)
+        .should('have.css', 'color', 'rgb(239, 68, 68)') // text color
+        .find('svg').should('have.css', 'color', 'rgb(239, 68, 68)') //text color
+
+      //verify correct destination page url
+      cy.url().should('contain', '/clients/complaints')
+  
+      //verify Add button if Found then click
+      cy.get(complaintslocators.AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)') //border capsule shape color
+        .and('have.css', 'border-radius', '40px') // the curve edge 
+        .click()
+        .wait(2000)
+
+      //verify that the Client Complaint Form modal popup
+      cy.get(complaintslocators.ClientComplaintFormModal[0].modal)
+        .should('exist')
+
+      ///////// CREATE CLIENT COMPLAINT STARTS HERE ///////////
+
+      //Select Client test in the Select Partner's Account
+      cy.get(complaintslocators.ClientComplaintFormModal[0].PartnersAccountLabelandSelectPartnersAccountButton)
+        .within(()=>{
+          //click the button
+          cy.get(' > div > div > button')
+          .click()
+          .wait(1000)
+          //enter the client name in the Search Input field
+          cy.get('input[type="email"][name="email"]')
+            .clear()
+            .type('(AAA')
+            .wait(3000)
+          //Then as it appears, click the client test
+          cy.get('ul > li > button')
+            .click()
+            .wait(700)
+        })
+
+      //verify that it appeared on top after it was selected
+      cy.get(complaintslocators.ClientComplaintFormModal[0].PartnersAccountLabelandSelectPartnersAccountButton)
+        .find(' > div > div > button')
+        .then((txt)=>{
+          GETClientName.then(()=>{
+            expect(txt.text().trim()).to.equal(clientName);
+          })
+        })
+
+      //Select Type of Complaint - Onboarding Process
+      cy.get(complaintslocators.ClientComplaintFormModal[0].TypeofComplaintLabelandTheLists)
+        .find(' > div > label:nth-child(1) > input')
+        .check()
+        .should('be.checked')
+
+      //Select Number of Occurence
+      cy.get(complaintslocators.ClientComplaintFormModal[0].HowmanytimeshasthisclientreachedoutregardingthisissuetoyouLabelandDropdownMenu)
+        .find(" > select[name='occurence']")
+        .select('2').should('have.value','2')
+        .wait(2000)
+
+      //verify that the selected number of occurence is on top 
+      cy.get(complaintslocators.ClientComplaintFormModal[0].HowmanytimeshasthisclientreachedoutregardingthisissuetoyouLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', '2nd')
+
+      //Select Urgency Level
+      cy.get(complaintslocators.ClientComplaintFormModal[0].UrgencyLevelLabelandDropdownMenu)
+        .find(' > div > button:nth-child(1)')
+        .click()
+        .wait(1000)
+
+      //Upload Additional Screenshot
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AdditionalInformationScreenshotsLabelandButton)
+        .find(' > div:nth-child(1) > div > input')
+        .attachFile('azoginsuit.jpg')
+        .wait(2000)
+
+      //Add data on Any additional notes related to this complaint?
+      cy.get(complaintslocators.ClientComplaintFormModal[0].AnyAdditionalNotesRelatedToThisComplaintLabelandTextareafield)
+        .find(' > textarea[name="information"]')
+        .clear()
+        .type('This is only a test data for testing purposes only')
+        .wait(500)
+        .should('have.value', 'This is only a test data for testing purposes only')
+
+      //verify that the submit button now is enabled
+      cy.get(complaintslocators.ClientComplaintFormModal[0].SubmitButton)
+        .should('not.be.disabled')
+
+      //Then click the Submit button
+      cy.get(complaintslocators.ClientComplaintFormModal[0].SubmitButton)
+        .click()
+        .wait(3000)
+
+      ///////// CREATE CLIENT COMPLAINT ENDS HERE ///////////
+        
+      //////// COMPLAINTS TABLET LISTS ASSERTIONS STARTS HERE ///////////////
+
+      //verify first the Column Names
+      const columnNames = [
+        "Partner's Account",
+        "Partner's Name",
+        "Submitted Date",
+        "Submitted By",
+        "Sales Representative",
+        "Project Manager",
+        "Type",
+        "Occurence",
+        "Urgency Level",
+        "Status",
+        "Action"
+      ]
+      cy.get('table > thead > tr > th').each(($option, index)=>{
+        cy.wrap($option)
+          .should('exist')
+          .and('have.text', columnNames[index])
+          .and('have.css', 'color', 'rgb(190, 190, 190)') //text color
+          .and('have.css', 'font-weight', '700') //font bold
+        cy.log(columnNames[index])
+      })
+
+      //Then verify each columns in row 1
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Partner's Account / Client Name
+        cy.get(' > td:nth-child(1) > a')
+          .should('exist')
+          .and('not.be.disabled')
+          .then((txt)=>{
+            GETClientName.then(()=>{
+              expect(txt.text().trim()).to.equal(clientName);
+            })
+          })
+        //assert Column 2 > Partner's Name / Client Partner's Name
+        cy.get(' > td:nth-child(2)')
+          .should('exist')
+          .then((txt)=>{
+            GETClientPartnerFullName.then(()=>{
+              expect(txt.text().trim()).to.equal(clientFullName);
+            })
+          })
+        //assert Column 3 > Submitted Date
+        cy.get(' > td:nth-child(3)')
+          .should('exist')
+          .and('have.text', DateTodayIs.TodayDateMMDDYYYY_ShortMonthWord_NoTHonDate())
+        //assert Column 4 > Submitted By
+        cy.get(' > td:nth-child(4) > div')
+          .should('exist')
+          .within(()=>{
+            //assert Logo Initial
+            cy.get(' > div > div > span')
+              .should('exist')
+              .and('have.text', 'LP')
+              .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)') //the circular background color
+              .and('have.css', 'border-radius', '9999px')
+            //assert the Name
+            cy.get(' > span')
+              .should('exist')
+              .and('have.text', 'Logan Paul')
+          })
+        //assert Column 5 > Sales Representative - this is optional
+        //assert Column 6 > Project Manager
+        cy.get(' > td:nth-child(6) > div')
+          .should('exist')
+          .within(()=>{
+            //assert Logo Initial
+            cy.get(' > div > div > span')
+              .should('exist')
+              .and('have.text', 'PK')
+              .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+              .and('have.css', 'background-color', 'rgb(0, 47, 93)') //the circular background color
+              .and('have.css', 'border-radius', '9999px')
+            //assert the Name
+            cy.get(' > span')
+              .should('exist')
+              .and('have.text', 'Peter Kanluran')
+          })
+        //assert Column 7 > Type
+        cy.get(' > td:nth-child(7)')
+          .should('exist')
+          .and('have.text', 'Onboarding Process')
+        //assert Column 8 > Occurrence
+        cy.get(' > td:nth-child(8)')
+          .should('exist')
+          .and('have.text', '2nd')
+        //assert Column 9 > Urgency Level
+        cy.get(' > td:nth-child(9) > span')
+          .should('exist')
+          .and('have.text', '1')
+          .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+          .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+          .and('have.css', 'border-radius', '9999px')
+        //assert Column 10 > Status
+        cy.get(' td:nth-child(10) > span')
+          .should('exist')
+          .and('have.text', 'Ongoing')
+          .and('have.css', 'color', 'rgb(191, 166, 84)') //text color
+          .and('have.css', 'background-color', 'rgb(249, 220, 125)') //the circular background color
+          .and('have.css', 'border-radius', '40px')
+        //assert Column 11 > Action:View
+        cy.get(' > td:nth-child(11) > div ')
+          .should('exist')
+          .and('not.be.disabled')
+          .find('svg').should('have.css', 'color', 'rgb(0, 150, 109)') //text color
+      })
+      //////// COMPLAINTS TABLET LISTS ASSERTIONS ENDS HERE ///////////////
+      
+      //Then I will click the Action: View button
+      cy.get('table > tbody > tr:first-child > td:nth-child(11) > div')
+        .click()
+        .wait(3000)
+
+      //verify Complaint View Modal popup
+      cy.get(complaintslocators.ComplaintViewModal[0].modal)
+        .should('exist')
+
+      //Then Click the Mark as Resolved button
+      cy.get(complaintslocators.ComplaintViewModal[0].MarkasResolvedButton)
+        .click()
+        .wait(2000)
+
+      //verify Mark as Resolved modal popup 
+      cy.get(complaintslocators.MarkasResolvedModal[0].modal)
+        .should('exist')
+        
+      //////// MARK AS RESOLVED MODAL ELEMENTS ASSERTIONS STARTS HERE /////////
+
+      //verify modal title
+      cy.get(complaintslocators.MarkasResolvedModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'Mark as Resolved')
+        .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+
+      //verify Tell us how you resolve the problem Label and its textarea field
+      cy.get(complaintslocators.MarkasResolvedModal[0].TellUsHowYouResolveTheProblemLabelandTextareafield)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Tell us how you resolve the problem*')
+            .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //text color
+          //assert textarea field
+          cy.get('textarea[name="resolution"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') //empty by default
+            .and('have.attr', 'placeholder', 'Enter additional notes here')
+        })
+
+      //verify Cancel Button
+      cy.get(complaintslocators.MarkasResolvedModal[0].CancelButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Cancel')
+        .and('have.css', 'color', 'rgb(24, 121, 216)') //text color
+        .and('have.css', 'font-weight', '700') // font bold
+
+      //verify Submit Button
+      cy.get(complaintslocators.MarkasResolvedModal[0].SubmitButton)
+        .should('exist')
+        .and('be.disabled')
+        .and('have.text', 'Submit')
+
+      //////// MARK AS RESOLVED MODAL ELEMENTS ASSERTIONS ENDS HERE /////////
+
+      //Now Enter data on Tell us how you resolve the problem textarea field
+      cy.get(complaintslocators.MarkasResolvedModal[0].TellUsHowYouResolveTheProblemLabelandTextareafield)
+        .find('textarea[name="resolution"]')
+        .clear()
+        .type('The data I entered here is for testing purposes only')
+        .wait(600)
+        .should('have.value', 'The data I entered here is for testing purposes only')
+
+      //verify now the Submit button should be enabled
+      cy.get(complaintslocators.MarkasResolvedModal[0].SubmitButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Submit')
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'font-weight', '700') // font bold
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color
+        .and('have.css', 'border-radius', '40px')
+        
+      //THEN I will now click the Submit button 
+      cy.get(complaintslocators.MarkasResolvedModal[0].SubmitButton)
+        .click()
+        .wait(300)
+
+      //verify back at the Complaint View Modal that there is no more Mark as Resolved button
+      cy.get(complaintslocators.ComplaintViewModal[0].MarkasResolvedButton)
+        .should('not.exist')
+
+      //verify there is no Ongoing Status Instead it becomes Resolved element
+      cy.get(complaintslocators.ComplaintViewModal[0].Status)
+        .should('exist')
+        .and('have.text', 'Resolved')
+        .and('have.css', 'background-color', 'rgb(207, 255, 221)') //background color
+        .and('have.css', 'border-radius', '40px')
+
+      //Now I am going to close the Complaints View modal by {esc} keyboard
+      cy.get('body').type('{esc}'); //esc keyboard execution
+        
+      //verify in the Complaints Table list under the same row at Column 10 > Status
+      cy.get('table > tbody > tr:first-child > td:nth-child(10) > span')
+        .should('exist')
+        .and('have.text', 'Resolved')
+        .and('have.css', 'color', 'rgb(102, 102, 102)') //text color
+        .and('have.css', 'background-color', 'rgb(207, 255, 221)') //the circular background color
+        .and('have.css', 'border-radius', '40px')
+        
+    })
+    // **** CLIENT CLIENT COMPLAINT ENDS HERE ***
+    // **** CLIENTS TERMINATION STARTS HERE ***
+    it.only("Testcase ID: CT0001 - Client Initiate Termination Request for a Client",()=>{
+
+      let GETClientService;
+      let ClientService;
+      let GETClientName;
+      let clientName;
+      let GETActivationDate;
+      let ClientActivationDate;
+
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Clients Navigation Module
+      cy.get(modulebutton.ClientsModuleButton)
+        .click()
+        .wait(2000) 
+
+      //GET the client Service of the test client in the last row in page 1 at column 2; can be found in the table at column 2
+      GETClientService = new Promise((resolve)=>{
+        cy.get('table > tbody > tr:last-child > td:nth-child(2)').then((textName)=>{
+          ClientService = textName.text().trim()
+          resolve();
+        })
+      })
+      
+      //Then I will select that last row in page 1 the test client 
+      cy.get('table > tbody > tr:last-child > td:nth-child(1) > a')
+        .click()
+        .wait(2000)
+
+      //GET client name H1 title
+      GETClientName = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.ClientNameTitle)
+          .then((name)=>{
+            clientName = name.text().trim();
+          })
+      })
+      
+      //click the billing tab
+      cy.get(clientmodulelocator.ClientMainPageTab[0].BillingTab)
+        .click()
+        .wait(2000)
+
+      //GET the Activation Date
+      GETActivationDate = new Promise((resolve)=>{
+        cy.get(clientmodulelocator.BillingTabPage[0].SubscriptionTabpage[0].ClientBasicContactInformationSection[0].ActivationDate)
+          .then((date)=>{
+            ClientActivationDate = date.text().trim();
+            resolve();
+          })
+      })
+
+      //verify there is Terminate link if Found then click
+      cy.get(clientmodulelocator.TerminateButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Terminate')
+        .and('have.css', 'color', 'rgb(195, 0, 0)')  // text color
+        .and('have.css', 'font-weight', '700')  // font bold
+        .click()
+        .wait(2000)
+        
+      //verify that the Termination Request modal popup open
+      cy.get(clientmodulelocator.TerminationRequestModal[0].modal)
+        .should('exist')
+
+      ///////// TERMINATION REQUEST MODAL ELEMENTS ASSERTIONS STARTS HERE ////////////////
+
+      //verify modal title
+      cy.get(clientmodulelocator.TerminationRequestModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'Termination Request')
+        .and('have.css', 'font-weight' ,'700') // font bold
+        .and('have.css', 'font-size', '25px')
+
+      //verify ' For + Client Name '
+      cy.get(clientmodulelocator.TerminationRequestModal[0].clientname)
+        .should('exist')
+        .then((txt)=>{
+          GETClientName.then(()=>{
+            expect(txt.text().trim()).to.equal(`For ${clientName}`)
+          })
+        })
+      
+      //verify Reason for Termination Label and Select Menu
+      cy.get(clientmodulelocator.TerminationRequestModal[0].ReasonForTerminationLabelandSelectMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Reason for Termination Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Reason for termination')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') // text color
+          //assert Select Menu
+          cy.get(' > div > select[name="reason"]')
+            .should('exist')
+            .and('not.be.disabled')
+          const listofReasons = [
+            'Select Reason',
+            'PPC Issues',
+            'Communication Issues',
+            'Design Issues',
+            'Writing Issues',
+            'Poor Sales Growth',
+            'Amazon Listing Restriction',
+            'Lack of Reporting/Strategies',
+            'Not profitable - No ROI with SI',
+            'SI Terminated',
+            'Change of Agency',
+            'Ceasing Amazon Channel',
+            'SI Delays',
+            'Created In-house Team',
+            'Contract Fulfilled'
+          ]
+          cy.get(' > div > select[name="reason"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('not.be.disabled')
+              .and('have.text', listofReasons[index])
+            cy.log(listofReasons[index])
+          })
+        })
+
+      //verify Retention Effort Checklist Label and Description
+      cy.get(clientmodulelocator.TerminationRequestModal[0].RetentionEffortChecklistLabelandDescription)
+        .should('exist')
+        .within(()=>{
+          //assert Retention Effort Checklist Label
+          cy.get(' > label') 
+            .should('exist')
+            .and('have.text', 'Retention Effort Checklist')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') // text color
+          //assert description
+          cy.get(' > div > label')
+            .should('exist')
+            .and('have.text', 'Before we terminate this client, we wanna make sure that all efforts are made. Kindly review the checklist and confirm the following has been done.')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') // text color
+        })
+      
+      //verify Retention Effort Checklist
+      cy.get(clientmodulelocator.TerminationRequestModal[0].RetentionEffortChecklists)
+        .should('exist')
+        .within(()=>{
+          const checklists = [
+            'Provided a seamless onboarding process.',
+            'Established a regular communication schdule.',
+            'Addressed and resolve issues promptly.',
+            'Reached out to clients with solutions before they encounter problems.',
+            'Schedule regular check-in calls or meetings to discuss their progress, challenges, and goals.'
+          ]
+          cy.get(' > div > span').each(($span, index)=>{
+            cy.wrap($span)
+              .should('exist')
+              .and('have.text', checklists[index])
+            cy.log(checklists[index])
+          })
+        })
+
+      //verify Additional Notes Label and Textarea field
+      cy.get(clientmodulelocator.TerminationRequestModal[0].AdditionalNotesLabelandTextareafield)
+        .should('exist')
+        .within(()=>{
+          //assert Additional Notes Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Additional Notes')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert textarea field
+          cy.get(' > div > textarea[name="moreInformation"]')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.value', '') // empty by default
+        })
+
+      //verify Cancel Button
+      cy.get(clientmodulelocator.TerminationRequestModal[0].CancelButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Cancel')
+        .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        .and('have.css', 'font-weight' ,'700') // font bold
+
+      //verify Request for Termination Button
+      cy.get(clientmodulelocator.TerminationRequestModal[0].RequestForTerminationButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Request for Termination')
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(195, 0, 0)') // background color 
+        .and('have.css', 'border-radius', '40px')
+        .and('have.css', 'font-weight' ,'700') // font bold
+  
+      ///////// TERMINATION REQUEST MODAL ELEMENTS ASSERTIONS ENDS HERE ////////////////
+
+      ///// REQUIRED FIELDS ASSERTIONS STARTS HERE /////////
+  
+      //without fill any of the fields, click the Request for Termination Button
+      cy.get(clientmodulelocator.TerminationRequestModal[0].RequestForTerminationButton)
+        .click()
+        .wait(3000)
+
+      //verify that the Termination Request modal popup should remain open
+      cy.get(clientmodulelocator.TerminationRequestModal[0].modal)
+        .should('exist')
+        
+      //verify Error Text 1 - Please select a reason for termination
+      cy.get('form > div.space-y-6 > div:nth-child(1) > div > div')
+        .should('exist')
+        .and('have.text', 'Please select a reason for termination')
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //verify Error Text 2 - Checklist must have at least 1 item.
+      cy.get('form > div.space-y-6 > div:nth-child(3) > div:nth-child(2)')
+        .should('exist')
+        .and('have.text', 'Checklist must have at least 1 item.')
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //verify Error Text 3 - Please provide more information about this termination request
+      cy.get('form > div.space-y-6 > div:nth-child(4) > div > div')
+        .should('exist')
+        .and('have.text', 'Please provide more information about this termination request')
+        .and('have.css', 'color', 'rgb(185, 28, 28)') //text color
+
+      //Now I will select one Reason for Termination
+      cy.get(clientmodulelocator.TerminationRequestModal[0].ReasonForTerminationLabelandSelectMenu)
+        .find(' > div > select[name="reason"]')
+        .select('Design Issues')
+        .wait(700)
+        .should('have.value','Design Issues')
+        
+      //verify that the selected reason goes on top
+      cy.get(clientmodulelocator.TerminationRequestModal[0].ReasonForTerminationLabelandSelectMenu)
+        .find('select option:selected')
+        .should('have.text', 'Design Issues')
+      
+      //verify that Error Text 1 - Please select a reason for termination should not be visible
+      cy.get('form > div.space-y-6 > div:nth-child(1) > div > div')
+        .should('not.exist')
+
+      //verify Error Text 2 - Checklist must have at least 1 item. remains visible
+      cy.get('form > div.space-y-6 > div:nth-child(3) > div:nth-child(2)')
+        .should('exist')
+
+      //verify Error Text 3 - Please provide more information about this termination request remains visible
+      cy.get('form > div.space-y-6 > div:nth-child(4) > div > div')
+        .should('exist')
+      
+      //Then Select 1 Retention Effort at Checklist - Addressed and resolve issues promptly.
+      cy.get('form > div.space-y-6 > div:nth-child(3) > div > div:nth-child(3) > input[name="retentionEffortCheckList"]')
+        .check()
+        .wait(600)
+        .should('be.checked')
+
+      //verify Error Text 2 - Checklist must have at least 1 item. should not be visible 
+      cy.get('form > div.space-y-6 > div:nth-child(3) > div:nth-child(2)')
+        .should('not.exist')
+
+      //verify Error Text 3 - Please provide more information about this termination request remains visible
+      cy.get('form > div.space-y-6 > div:nth-child(4) > div > div')
+        .should('exist')
+
+      //Now Enter Data on Additional Notes Textarea field
+      cy.get(clientmodulelocator.TerminationRequestModal[0].AdditionalNotesLabelandTextareafield)
+        .find(' > div > textarea[name="moreInformation"]')
+        .clear()
+        .type('The Data I entered here is for testing purposes only')
+        .wait(600)
+        .should('have.value', 'The Data I entered here is for testing purposes only')
+
+      //verify Error Text 3 - Please provide more information about this termination request should not be visible 
+      cy.get('form > div.space-y-6 > div:nth-child(4) > div > div')
+        .should('not.exist')
+      
+      //Then Finally I click the Request for Termination button
+      cy.get(clientmodulelocator.TerminationRequestModal[0].RequestForTerminationButton)
+        .click()
+        .wait(3000)
+
+      ///// REQUIRED FIELDS ASSERTIONS ENDS HERE /////////
+
+      //verify alert-success modal popup
+      cy.get('div.overflow-y-auto > div.min-h-full')
+        .should('exist')
+        .within(()=>{
+          //assert check logo
+          cy.get(' > div > div > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //check color
+          //assert message
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.text', 'Your termination request has been sent to the approver.')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //text color
+            .and('have.css', 'font-weight', '400')  //font bold
+        })
+
+      //then simulate pressing esc key in your keyboard
+      cy.get('body').type('{esc}');
+      cy.wait(3000)
+
+      //verify that the Terminate link button becomes Termination Ongoing
+      cy.get('div.main-content-inner2 > div > div > p')
+        .should('exist')
+        .and('have.text', 'Termination Ongoing')
+        .and('have.css', 'color', 'rgb(195, 0, 0)')  // text color
+        .and('have.css', 'background-color', 'rgb(255, 175, 175)')  // background color that forms like a capsule
+        .and('have.css', 'border-radius', '40px')  // the curve edge of the background color
+
+      //Go to Client > For Termination Folder
+      //verify FOR Termination link text folder
+      cy.get(linktextfolder.ClientModule[0].ForTermination)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'For Termination')
+        .and('have.css', 'color', 'rgb(156, 163, 175)') //default text color
+        .find('svg').should('exist').and('be.visible').and('have.css', 'color', 'rgb(156, 163, 175)') //its star icon verification
+        
+      //Click the FOR Termination Link text folder
+      cy.get(linktextfolder.ClientModule[0].ForTermination)
+        .click()
+        .wait(1000)
+        .should('have.css', 'color', 'rgb(239, 68, 68)') // text color
+        .find('svg').should('have.css', 'color', 'rgb(239, 68, 68)') //text color
+      
+      //verify correct destination page url
+      cy.url().should('contain', '/clients/fortermination')
+        
+      ////// FOR TERMINATION > REQUESTS TAB > TABLE LISTS ASSERTIONS STARTS HERE ///////////
+
+      //verify Column Names
+      const expected_columnNames = [
+        'Client Name',
+        'Service',
+        'Brand Strategist',
+        'Contract Signed',
+        'Submission Date',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($option, index) => {
+        cy.wrap($option)
+          .should('exist')
+          .and('have.text', expected_columnNames[index])  //verify names based on the expected names per column
+          .and('have.css', 'color', 'rgb(190, 190, 190)') // text color
+          .and('have.css', 'font-weight', '700')  //font bold
+          cy.log(expected_columnNames[index]) 
+      });
+
+      // I intentionally click the Submission Date column name in order to go to row 1 the recently send for approval test client
+      cy.get('table > thead > tr > th:nth-child(5)')
+        .click()
+        .wait(2000)
+
+      //Then assert Row 1 each columns in the table
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Column 1 > Client Name
+        GETClientName.then(()=>{
+          TerminationTable.assertColumn1ClientName(' > td:nth-child(1) > a', clientName)
+        })
+        //assert Column 2 > Service 
+        GETClientService.then(()=>{
+          TerminationTable.assertColumn2Service(' > td:nth-child(2)', ClientService)
+        })
+        //assert Column 3 > Brand Strategist
+        TerminationTable.assertColumn3BrandStrategist(' > td:nth-child(3) > div', 'JG', 'Jean Gray')
+        //assert Column 4 > Contract Signed
+        GETActivationDate.then(()=>{
+          TerminationTable.assertColumn4ContractSigned(' > td:nth-child(4)', ClientActivationDate)
+        })
+        //assert Column 5 > Submission Date
+        TerminationTable.assertColumn5SubmissionDate(' > td:nth-child(5) > span', DateTodayIs.TodayDateDDMMYYYY())
+        //assert Column 6 > Action:View
+        TerminationTable.assertColumn6Action(' > td:nth-child(6) > button', 'not.be.disabled', 'View')
+      })
+        
+      ////// FOR TERMINATION > REQUESTS TAB > TABLE LISTS ASSERTIONS ENDS HERE ///////////
+
+      //Then here I click the View button
+      cy.get('table > tbody > tr:first-child > td:nth-child(6) > button')
+        .click()
+        .wait(3000)
+
+      //verify Termination Request modal popup open
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].modal)
+        .should('exist')
+
+      ///////// TERMINATION REQUEST MODAL ELEMENTS ASSERTIONS STARTS HERE ////////
+
+      //verify modal title
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'Termination Request')
+        .and('have.css', 'font-weight', '700')  //font bold
+        .and('have.css', 'font-size', '25px')
+
+      //verify Client Name
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].clientname)
+        .should('exist')
+        .then((txt)=>{
+          GETClientName.then(()=>{
+            expect(txt.text().trim()).to.equal(`For ${clientName}`)
+          })
+        }) 
+
+      //verify Reason for Termination Label and Select Menu
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].ReasonForTerminationLabelandSelectMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Reason for Termination Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Reason for termination')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') // text color
+          //assert the select menu and that it is expected it shows on top the previously selected reason
+          cy.get('select option:selected')
+            .should('have.text', 'Design Issues')
+          //assert the rest of the list since at this point, i can still select or make changes
+          cy.get(' > div > select[name="reason"]')
+            .should('exist')
+            .and('not.be.disabled')
+            const viewlistofReasons = [
+              'PPC Issues',
+              'Communication Issues',
+              'Design Issues',
+              'Writing Issues',
+              'Poor Sales Growth',
+              'Amazon Listing Restriction',
+              'Lack of Reporting/Strategies',
+              'Not profitable - No ROI with SI',
+              'SI Terminated',
+              'Change of Agency',
+              'Ceasing Amazon Channel',
+              'SI Delays',
+              'Created In-house Team',
+              'Contract Fulfilled'
+            ]
+            cy.get(' > div > select[name="reason"] > option').each(($option, index)=>{
+              cy.wrap($option)
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.text', viewlistofReasons[index])
+              cy.log(viewlistofReasons[index])
+            })
+        })
+
+      //verify Retentiion Effort Checklist Label and the selected retention
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].RetentionEffortChecklistLabelandTheSelectedRetention)
+        .should('exist')
+        .within(()=>{
+          //assert Retention Effort Checklist Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Retention Effort Checklist')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert the check logo
+          cy.get(' > ul > li > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 186, 136)') //text color
+          //assert the selected retention
+          cy.get(' > ul > li > span')
+            .should('exist')
+            .and('have.text', 'Addressed and resolve issues promptly.')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+        })
+      
+      //verify Additional Notes Label and the Note
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].AdditionalNotesLabelandTheNotes)
+        .should('exist')
+        .within(()=>{
+          //assert Additional Notes Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Additional Notes')
+            .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+          //assert the textarea field and it should be disabled
+          cy.get(' > div > textarea[name="moreInformation"]')
+            .should('exist')
+            .and('be.disabled')
+            .and('have.text', 'The Data I entered here is for testing purposes only')
+        })
+
+      //verify Deny Button
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].DenyButton)
+        .should('exist')
+        .and('have.text', 'Deny')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(195, 0, 0)') //background color
+        .and('have.css', 'border-radius', '40px')
+
+      //verify Approve Button
+      cy.get(clientmodulelocator.View_TerminationRequestModal[0].ApproveButton)
+        .should('exist')
+        .and('have.text', 'Approve')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 186, 136)') //background color
+        .and('have.css', 'border-radius', '40px')
+
+      ///////// TERMINATION REQUEST MODAL ELEMENTS ASSERTIONS ENDS HERE ////////
+
+    })
+    // **** CLIENTS TERMINATION ENDS HERE ***
 })

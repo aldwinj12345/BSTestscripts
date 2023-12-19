@@ -68,6 +68,15 @@
                     "CancelButton":"form > div > div > button:nth-child(1)",
                     "DenyButton":"form > div > div > button:nth-child(2)"
                 }
+            ],
+            "AreyousureyouwanttoapprovetherequesttowaivetheupsellfeeModal":[
+                {
+                    "modal":"div.min-h-screen > div.max-w-xl",
+                    "modaltitle":"div.max-w-xl > h3",
+                    "IfyouclickapproveapaidinvoicewillbeautomaticallygeneratedTEXT":"div.my-8 > div > p",
+                    "CancelButton":"div.mt-4 > button:nth-child(1)",
+                    "ApproveButton":"div.mt-4 > button:nth-child(2)"    
+                }
             ]
         }
     ],
