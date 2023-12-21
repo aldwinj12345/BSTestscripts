@@ -1,0 +1,71 @@
+{
+    "EmployeeFolder":[
+        {
+
+        }
+    ],
+    "EmployeeSurveyFolder":[
+        {
+
+        }
+    ],
+    "PartnersFolder":[
+        {
+
+        }
+    ],
+    "ChurnFolder":[
+        {
+
+        }
+    ],
+    "ReportsFolder":[
+        {
+
+        }
+    ],
+    "DataSyncFolder":[
+        {
+
+        }
+    ],
+    "SettingsFolder":[
+        {
+
+        }
+    ],
+    "TaskManageementFolder":[
+        {
+            "pageTitle":"div > h2",
+            "AddButton":"div.items-center > button",
+            "pageTab":[
+                {
+                    "NewTab":"nav[aria-label='Tabs'] > div:nth-child(1)",
+                    "ExistingTab":"nav[aria-label='Tabs'] > div:nth-child(2)"
+                }
+            ],
+            "TaskListCreationModal":[
+                {
+                    "modal":"div.opacity-100 > div.inline-block",
+                    "modaltitle":"div > h3",
+                    "TemplateTitleText":"div > h1",
+                    "OnboardingTemplate":"form > div > div:nth-child(1) > div:nth-child(1)",
+                    "RoadmapTemplate":"form > div > div:nth-child(1) > div:nth-child(2)",
+                    "RecurringTemplate":"form > div > div:nth-child(1) > div:nth-child(3)",
+                    "OneTimeTemplate":"form > div > div:nth-child(1) > div:nth-child(4)",
+                    "NextButton":"form > div > div:nth-child(2) > button",
+                    "TemplateNameLabelandInputfield":"form > div > div:nth-child(1)",
+                    "PartnerTypeLabelandDropdownMenu":"form > div > div:nth-child(2)",
+                    "WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu":"form > div > div:nth-child(3)",
+                    "BackButton":"form > div > div:nth-child(4) > button:nth-child(1)",
+                    "CreateButton":"form > div > div:nth-child(4) > button:nth-child(2)"
+                }
+            ]
+        }
+    ],
+    "ProgressReportsFolder":[
+        {
+
+        }
+    ]   
+}

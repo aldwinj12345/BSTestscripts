@@ -43,7 +43,7 @@ class UpsellTablelist
         {
             cy.get(locator)
               .should('exist')
-             .and('contain', date)
+              .and('contain', date)
         }
         assertColumn5Submittedby(locator, initial, nname)
         {

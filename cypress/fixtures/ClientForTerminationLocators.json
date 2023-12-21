@@ -1,0 +1,9 @@
+{
+    "pageTitle":"div > h2",
+    "pageTab":[
+        {
+            "RequestsTab":"div.flex > a[href='/clients/fortermination']",
+            "DeniedTab":"div.flex > a[href='/clients/fortermination/denied']"
+        }
+    ]
+}

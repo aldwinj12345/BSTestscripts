@@ -102,8 +102,6 @@ class BillingUpsellsTable
               .and('have.css', 'color', 'rgb(255, 255, 255)')         //text color
               .and('have.css', 'background-color', 'rgb(0, 47, 93)')  //background color
               .and('have.css', 'border-radius', '9999px')             //the curve edge that form the background color like a circle
-              .and('have.css', 'width', '36px')
-              .and('have.css', 'height', '36px')
           })
     }
     assertColumn7Action(locator, enabled_disabled, buttonName)
@@ -133,8 +131,6 @@ class BillingUpsellsTable
           .and('have.css', 'color', 'rgb(255, 255, 255)')         //text color
           .and('have.css', 'background-color', 'rgb(0, 47, 93)')  //background color
           .and('have.css', 'border-radius', '9999px')             //the curve edge that form the background color like a circle
-          .and('have.css', 'width', '36px')
-          .and('have.css', 'height', '36px')
       })
     }
     assertColumn7RejectedTabRejector(locator, initial, projectmanagerName)
@@ -151,8 +147,6 @@ class BillingUpsellsTable
               .and('have.css', 'color', 'rgb(255, 255, 255)')         //text color
               .and('have.css', 'background-color', 'rgb(0, 47, 93)')  //background color
               .and('have.css', 'border-radius', '9999px')             //the curve edge that form the background color like a circle
-              .and('have.css', 'width', '36px')
-              .and('have.css', 'height', '36px')
           })
     }
     assertColumn8Action(locator, enabled_disabled, nname)

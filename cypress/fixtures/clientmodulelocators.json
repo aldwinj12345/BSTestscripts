@@ -122,19 +122,20 @@
                     "KebabMenu":"div.z-2 > div > button",
                     "ClientBasicContactInformationSection":[
                         {
-                            "ClientLabel":"",
-                            "ClientFirstName":"",
-                            "SubscriptionNumberLabel":"",
-                            "SubscriptionNumber":"",
-                            "StatusLabel":"",
-                            "StatusElements":"",
-                            "BillingAddressLabel":"",
-                            "ActivationDateLabel":"",
-                            "ActivationDate":"",
-                            "StartDateLabel":"",
-                            "StartDate":"",
-                            "ValidUntilDateLabel":"",
-                            "ValidUntil":""
+                            "ClientLabel":"div > dl:nth-child(2) > dt:nth-child(1)",
+                            "ClientFirstName":"div > dl:nth-child(2) > dd:nth-child(2)",
+                            "SubscriptionNumberLabel":"div > dl:nth-child(2) > dt:nth-child(3)",
+                            "SubscriptionNumber":"div > dl:nth-child(2) > dd:nth-child(4)",
+                            "StatusLabel":"div > dl:nth-child(2) > dt:nth-child(5)",
+                            "StatusElements":"div > dl:nth-child(2) > dd:nth-child(6)",
+                            "BillingAddressLabel":"div > dl:nth-child(2) > dt:nth-child(7)",
+                            "BillingAddress":"div > dl:nth-child(2) > dd:nth-child(8)",
+                            "ActivationDateLabel":"div > dl:nth-child(2) > dt:nth-child(9)",
+                            "ActivationDate":"div > dl:nth-child(2) > dd:nth-child(10)",
+                            "StartDateLabel":"div > dl:nth-child(2) > dt:nth-child(11)",
+                            "StartDate":"div > dl:nth-child(2) > dd:nth-child(12)",
+                            "ValidUntilDateLabel":"div > dl:nth-child(2) > dt:nth-child(13)",
+                            "ValidUntil":"div > dl:nth-child(2) > dd:nth-child(14)"
                         }
                     ],
                     "ChargeOneTimeAddonModal":[

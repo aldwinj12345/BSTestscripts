@@ -26,6 +26,18 @@ class GetCurrentDate
         const formattedDate = `${day}${month}${year}`;
         return formattedDate;
     }
+    TodayDateDDMMYYYYWithSpaceInBetween(){
+        const currentDate = new Date();
+        const day = currentDate.getDate();
+  
+        // Use the 'short' option to get the abbreviated month
+        const month = currentDate.toLocaleString('en-US', { month: 'short' });
+  
+        const year = currentDate.getFullYear();
+  
+        const formattedDate = `${day} ${month} ${year}`;
+        return formattedDate;
+    }
     TodayDateDDMMYYYYPlus5days() {
         const currentDate = new Date();
         const day = currentDate.getDate() + 5; // Add 5 days to the current day
@@ -50,7 +62,7 @@ class GetCurrentDate
         const formattedDate = `${month} ${day}, ${year}`;
         return formattedDate;
     }
-    TodayDateYYYYMMDDWithDashandAddZeroIfNeeded(){
+    TodayDateYYYYMMDDWithDashandAddZeroOnDDandMM(){
         const currentDate = new Date();
         const month = currentDate.getMonth() + 1; // Get the current month (adding 1 because months are zero-indexed)
         const day = currentDate.getDate(); // Get the current day
@@ -66,6 +78,25 @@ class GetCurrentDate
         const formattedDay = addLeadingZero(day);
   
         const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
+        return formattedDate;
+    }
+    TodayDateDDMMYYYYAddZeroOnDDandMM(){
+        const currentDate = new Date();
+        // Get the current month (adding 1 because months are zero-indexed)
+        const day = currentDate.getDate(); // Get the current day
+        const year = currentDate.getFullYear(); // Get the current year
+        // Use the 'short' option to get the abbreviated month
+        const month = currentDate.toLocaleString('en-US', { month: 'short' });
+        
+        // Function to add leading zero if needed
+        function addLeadingZero(value) {
+            return value < 10 ? `0${value}` : value;
+        }
+  
+        // Format month, day, and year with leading zeros if necessary
+        const formattedDay = addLeadingZero(day);
+  
+        const formattedDate = `${formattedDay} ${month} ${year}`;
         return formattedDate;
     }
     TodayDateMMDDYYYY_MonthisinWholeWordandDayiswithTH()
