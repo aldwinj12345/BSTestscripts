@@ -44,6 +44,14 @@
                     "ExistingTab":"nav[aria-label='Tabs'] > div:nth-child(2)"
                 }
             ],
+            "pageSubTab":[
+                {
+                    "OnboardingTab":"div.tabnav > a:nth-child(1)",
+                    "RoadmapTab":"div.tabnav > a:nth-child(2)",
+                    "RecurringTab":"div.tabnav > a:nth-child(3)",
+                    "OneTimeTab":"div.tabnav > a:nth-child(4)"
+                }
+            ],
             "TaskListCreationModal":[
                 {
                     "modal":"div.opacity-100 > div.inline-block",

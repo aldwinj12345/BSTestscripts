@@ -57,7 +57,7 @@ class TaskManagementTable
           .and('have.css', 'font-weight', '700')                  //font bold
           .and('have.css', 'color','rgb(148, 148, 148)')          //text color
           .and('have.css', 'border-color', 'rgb(148, 148, 148)')  //the line that forms a square of a button
-          .and('have.css', 'border-radius', '12px')               //the curve edge of the button
+          .and('have.css', 'border-radius', '8px')               //the curve edge of the button
           .then((cName)=>{
             expect(cName.text().trim()).to.equal(buttonName)
           })

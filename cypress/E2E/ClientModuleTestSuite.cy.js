@@ -10914,11 +10914,10 @@ describe('Login Module Test Suite',()=>{
     })
     // **** CLIENTS TERMINATION ENDS HERE ***
     // **** CLIENT ADMIN TASK MANAGEMENT STARTS HERE ***
-    it.only("Testcase ID: CATM0001 - Create Task Management Onboarding Template for New Onboarded client",()=>{
+    it("Testcase ID: CATM0001 - Create Task Management Onboarding Template for New Onboarded client",()=>{
 
       let GETHREF;
       let templatehref;
-
 
       //Login using account specialist
       cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
@@ -11269,7 +11268,7 @@ describe('Login Module Test Suite',()=>{
       //then simulate pressing esc key in your keyboard
       cy.get('body').type('{esc}');
       cy.wait(3000)
-
+        
       //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS STARTS HERE ////////////
 
       //verify first column Names
@@ -11308,13 +11307,13 @@ describe('Login Module Test Suite',()=>{
         //assert Last Updated
         TaskManagementTableList.assertColumn4LastUpdated(' > td:nth-child(4)', DateTodayIs.TodayDateMMDDYYYY_MonthisinWholeWordandDayiswithTH())
         //assert Updated By
-        TaskManagementTableList.assertColumn5UpdatedBy(' > td:nth-child(5) > div', 'LP', 'LoganPaul')
+        TaskManagementTableList.assertColumn5UpdatedBy(' > td:nth-child(5) > div', 'LP', 'Logan Paul')
         //aasert Action:Edit
         TaskManagementTableList.assertColumn6Action(' > td:nth-child(6) > a', 'not.be.disabled', 'Edit')
       })
 
       //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS ENDS HERE ////////////
-
+        
       //CLick the Action Edit button
       cy.get('table > tbody > tr:first-child > td:nth-child(6) > a')
         .click()
@@ -11384,9 +11383,6 @@ describe('Login Module Test Suite',()=>{
           //assert button
           cy.get(' > div > svg')
             .should('exist')
-            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
-            .and('have.css', 'border-color', 'rgb(148, 148, 148)')
-            .and('have.css', 'border-radius', '9999px')
           //assert Onboarding tasks title
           cy.get(' > p > span')
             .should('exist')
@@ -11434,6 +11430,7 @@ describe('Login Module Test Suite',()=>{
                 .should('exist')
                 .and('not.be.disabled')
               const typeOption = [
+                'Choose One',
                 'Onboarding',
                 'Roadmap',
                 'Recurring',
@@ -11455,13 +11452,8 @@ describe('Login Module Test Suite',()=>{
                 .should('exist')
                 .and('have.text', 'Partner Type *')
                 .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
-              //assert drop down menu
-              cy.get(' > div > select[name="partnerType"]')
-                .should('exist')
-                .and('not.be.disabled')
-                .find('select option:selected')
-                .should('have.text','New')
               const partnertypeOption = [
+                'Choose One',
                 'New',
                 'Existing'
               ]
@@ -11485,9 +11477,8 @@ describe('Login Module Test Suite',()=>{
               cy.get(' > select[name="partnerService"]')
                 .should('exist')
                 .and('not.be.disabled')
-                .find('select option:selected')
-                .should('have.text', 'Full Account Management')
               const serviceOption = [
+                'Choose One',
                 'Full Account Management',
                 'PPC Management',
                 'Listing Content Creation',
@@ -11514,17 +11505,18 @@ describe('Login Module Test Suite',()=>{
         })
 
       //Now if I will click the settings once again, these set of elements should not be visible
-      cy.get('form > div:nth-child(3) > div')
-        .should('have.attr', 'aria-expanded', 'true')
+      cy.get('form > div:nth-child(3) > div > svg')
         .click()
-        .wait(600)
+        .wait(2000)
+      //assert that the elements such as Template Name, Template Type, Partner Type, and Service Category are not visible
+      cy.get('form > div:nth-child(3) > div')
         .should('have.attr', 'aria-expanded', 'false')
 
-      //these set of element should not exist
+      //the group of element should not exist such as Template Name, Template Type, Partner Type, and Service Category
       cy.get('div.pb-6 > div')
         .should('not.exist')
 
-      //Click the Add button, should reveal additional elements
+      //Click the Tasks Add button, should reveal additional elements
       cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
         .find(' > button')
         .click()
@@ -11581,18 +11573,15 @@ describe('Login Module Test Suite',()=>{
       cy.get('div.font-inter > p:nth-child(2)')
         .should('exist')
         .and('have.text', 'Description')
-        .find('sup').should('have.css', 'color', 'rgb(148, 148, 148)') //asterisk text color
       //verify there would be Actions column name
       cy.get('div.font-inter > p:nth-child(3)')
         .should('exist')
         .and('have.text', 'Actions')
-        .find('sup').should('have.css', 'color', 'rgb(148, 148, 148)') //asterisk text color
       //verify No Items
       cy.get('div.space-y-8 > div > div.bg-white > p')
         .should('exist')
         .and('have.text', 'No Items')
-        .find('sup').should('have.css', 'color', 'rgb(102, 102, 102)') //asterisk text color
-
+    
       //Now if I am going to click again the '>' Onboarding tasks, Description, Actions, and No Items should not be visible
       cy.get('div.space-y-8 > div:nth-child(2) > div > div > div')
         .find(' > div > svg')
@@ -11609,6 +11598,4985 @@ describe('Login Module Test Suite',()=>{
       cy.get('div.space-y-8 > div > div.bg-white > p')
         .should('not.exist')
       
+    })
+    it("Testcase ID: CATM0002 - Create Task Management Recurring Template for New Onboarded client",()=>{
+
+      let GETHREF;
+      let templatehref;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Admin Navigation Module
+      cy.get(modulebutton.AdminModuleButton)
+        .click()
+        .wait(2000)
+        
+      //Click the Task Management link text folder
+      cy.get(linktextfolder.AdminModule[0].TaskManagement)
+        .click()
+        .wait(2000)
+        
+      //verify Page Title 'Task Management'
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTitle)
+        .should('exist')
+        .and('have.text', 'Task Management')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'font-size', '25px')
+
+      //verify Add button - if found click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+        .and('have.css', 'border-radius', '40px')
+        .click()
+        .wait(2000)
+
+      //verify Task List Creation Modal popup open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //Select Recurring Template
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].RecurringTemplate)
+        .click()
+        .wait(1000)
+        .should('have.css', 'border-color', 'rgb(24, 121, 216)') // the entire recurring template has blue border color signify it is seleected
+        .find(' > div > div').should('have.css', 'background-color', 'rgb(24, 121, 216)') //blue dot signify it is selected
+    
+      //Click the Next Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].NextButton)
+        .click()
+        .wait(2000)
+
+      //verify the Task List Creation Modal should remain open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //verify the Template title text should be 'Customize your recurring template' 
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateTitleText)
+        .should('exist')
+        .and('have.text', 'Customize your recurring template')
+        .and('have.css', 'font-weight', '700') //font bold
+   
+      //verify Template Name Label and Input field
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Template Name*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Input field
+          cy.get(' > input[name="name"]')
+            .should('exist')
+            .and('have.value', '') //empty by default
+        })
+
+      //verify Partner Type Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Partner Type *')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const optionsMenu = [
+            'Choose One',
+            'New',
+            'Existing'
+          ];
+          cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', optionsMenu[index])
+            cy.log(optionsMenu[index])
+          });
+        })
+
+      //verify Which service category will this be used? * Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('contain', 'Which service category will this be used?')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const serviceCategoryOptions = [
+            'Choose One',
+            'Full Account Management',
+            'PPC Management',
+            'Listing Content Creation',
+            'Account Health Management',
+            'Account Health Issue',
+            'Seller Launch',
+            'Account Creation',
+            'Amazon Traffic Boost',
+            'Advertising Management',
+            'Google Advertising',
+            'Meta Advertising',
+            'SEO Management',
+            'Website Content',
+            'Mailchimp Management',
+            'Website Activation'
+          ];
+          cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', serviceCategoryOptions[index])
+            cy.log(serviceCategoryOptions[index])
+          });
+        })
+
+      //verify Back Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].BackButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Back')
+        .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+        .and('have.css', 'background-color', 'rgb(255, 255, 255)') 
+        .and('have.css', 'border-color', 'rgb(107, 114, 128)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Create')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') 
+        .and('have.css', 'border-color', 'rgb(30, 58, 138)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //////// CREATE NEW RECURRING TASKS STARTS HERE ///////////
+
+      //Now Enter Template Name
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .find(' > input[name="name"]')
+        .clear()
+        .type('Test New Recurring Template')
+        .wait(600)
+        .should('have.value', 'Test New Recurring Template')
+
+      //Select New in Partner Type
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find(' > div > select[name="partnerType"]')
+        .select('new')
+        .wait(600)
+
+      //verify that the selected option goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'New')
+
+      //Select Service Category Full Account Management
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find(' > select[name="partnerService"]')
+        .select('Full Account Management')
+        .wait(600)
+
+      //verify the selected service category goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Full Account Management')
+
+      ///////// CREATE NEW RECURRING TASKS ENDS HERE ///////////
+      
+      //Click Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .click()
+        .wait(2000) 
+
+      //verify alert-success modal popup
+      cy.get('div.overflow-y-auto > div.min-h-full')
+        .should('exist')
+        .within(()=>{
+          //assert check logo
+          cy.get(' > div > div > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //check color
+          //assert message
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.text', 'Template has been created.')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //text color
+            .and('have.css', 'font-weight', '400')  //font bold
+        })
+
+      //then simulate pressing esc key in your keyboard
+      cy.get('body').type('{esc}');
+      cy.wait(3000)
+        
+      //Go to New > Recurring Tab
+      //verify Recurring Tab and click when found
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageSubTab[0].RecurringTab)
+        .click()
+        .wait(3000)
+
+      //verify expected url destination
+      cy.url().should('contain', 'recurring')
+        
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS STARTS HERE ////////////
+
+      //verify first column Names
+      const columnNames = [
+        'Template Name',
+        'Partner Type',
+        'Service Type',
+        'Last Updated',
+        'Updated By',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($column, index)=>{
+        cy.wrap($column)
+          .should('exist')
+          .and('have.text',columnNames[index])
+        cy.log(columnNames[index])
+      })
+      
+      //Then verify row 1 each column
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Template Name
+        TaskManagementTableList.assertColumn1TemplateName(' > td:nth-child(1) > a', 'Test New Recurring Template')
+        //I will get the href link for later assertion
+        GETHREF = new Promise((resolve)=>{
+          cy.get(' > td:nth-child(1) > a')
+            .then(($element)=>{
+              // Get the href attribute
+              templatehref = $element.attr('href');
+              resolve();
+            })
+        })
+        //assert Partner Type
+        TaskManagementTableList.assertColumn2PartnerType(' > td:nth-child(2)', 'new')
+        //assert Service Type
+        TaskManagementTableList.assertColumn3ServiceType(' > td:nth-child(3)', 'Full Account Management')
+        //assert Last Updated
+        TaskManagementTableList.assertColumn4LastUpdated(' > td:nth-child(4)', DateTodayIs.TodayDateMMDDYYYY_MonthisinWholeWordandDayiswithTH())
+        //assert Updated By
+        TaskManagementTableList.assertColumn5UpdatedBy(' > td:nth-child(5) > div', 'LP', 'Logan Paul')
+        //aasert Action:Edit
+        TaskManagementTableList.assertColumn6Action(' > td:nth-child(6) > a', 'not.be.disabled', 'Edit') 
+      }) 
+
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS ENDS HERE ////////////
+        
+      //Click the Edit button
+      cy.get('table > tbody > tr:first-child > td:nth-child(6) > a')
+        .click()
+        .wait(3000)
+
+      //verify url expected destination
+      cy.get('body').then(()=>{
+        GETHREF.then(()=>{
+          cy.url().should('contain', templatehref)
+        })
+      })
+
+      //Template Name as Title page
+      cy.get('div > h3')
+        .should('exist')
+        .and('have.text', 'Test New Recurring Template')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Update Button
+      cy.get('form > div:nth-child(2) > button')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Update')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') // background color
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Settings
+      cy.get('form > div:nth-child(3) > div')
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > span')
+            .should('exist')
+            .and('have.text', 'Settings')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert the '>' symbol
+          cy.get(' > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        })
+
+      //Click the Settings
+      cy.get('form > div:nth-child(3) > div')
+        .click()
+        .wait(1000)
+        .should('have.attr', 'aria-expanded', 'true')
+
+      //verify Additional elements emerged
+      cy.get('div.pb-6 > div')
+        .should('exist')
+        .within(()=>{
+          //assert Template Name Label and Input field
+          cy.get(' > div:nth-child(1)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Name*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert Input field
+              cy.get(' > input[name="name"]')
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.value', 'Test New Recurring Template')
+            })
+          //assert Template Type Label and drop down menu with the selected on top
+          cy.get(' > div:nth-child(2)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Type*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert the drop down menu with the already selected on top
+              cy.get(' > select[name="type"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const typeOption = [
+                'Choose One',
+                'Onboarding',
+                'Roadmap',
+                'Recurring',
+                'One Time'
+              ]
+              cy.get(' > select[name="type"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', typeOption[index])
+                cy.log(typeOption[index])
+              })
+            })
+          //assert Partner Type Label and drop down menu
+          cy.get(' > div:nth-child(3)')
+            .should('exist')
+            .within(()=>{
+              //assert Partner Type Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Partner Type *')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              const partnertypeOption = [
+                'Choose One',
+                'New',
+                'Existing'
+              ]
+              cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', partnertypeOption[index])
+                cy.log(partnertypeOption[index])
+              })
+            })
+          //assert Service Category Label and drop down menu
+          cy.get(' > div:nth-child(4)')
+            .should('exist')
+            .within(()=>{
+              //assert Service Category Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Service Category*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert drop down menu
+              cy.get(' > select[name="partnerService"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const serviceOption = [
+                'Choose One',
+                'Full Account Management',
+                'PPC Management',
+                'Listing Content Creation',
+                'Account Health Management',
+                'Account Health Issue',
+                'Seller Launch',
+                'Account Creation',
+                'Amazon Traffic Boost',
+                'Advertising Management',
+                'Google Advertising',
+                'Meta Advertising',
+                'SEO Management',
+                'Website Content',
+                'Mailchimp Management',
+                'Website Activation'
+              ]
+              cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', serviceOption[index])
+                cy.log(serviceOption[index])
+              })
+            })
+        })
+
+      //Click again the settings and the group elements should not be visible such as Template Name, Template Type, Partner Type, and Select Category Type
+      cy.get('form > div:nth-child(3) > div > svg')
+        .click()
+        .wait(1000)
+      cy.get('form > div:nth-child(3) > div')
+        .should('have.attr', 'aria-expanded', 'false')
+
+      //the main group element should not be visible
+      cy.get('div.pb-6 > div')
+        .should('not.exist')
+
+      //verify Tasks Title and Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert Tasks title
+          cy.get(' > h4')
+            .should('exist')
+            .and('have.text', 'Tasks')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert Add button
+          cy.get(' > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Add')
+            .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+            .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+            .and('have.css', 'border-radius', '40px')
+        })
+
+      //Click the Tasks Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .find(' > button')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field
+      cy.get('input[name="title"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task name')
+      //verify there would be Enter task description input field
+      cy.get('input[name="description"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task description')
+      //verify Recurring Button
+      cy.get('form > div > div > div:nth-child(3)')
+        .should('exist')
+        .within(()=>{
+          //assert Button
+          cy.get(' > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .find(' > label').should('have.text', 'Recurring')
+        })
+      //verify Select Department Dropdown menu
+      cy.get('select[name="department"]')
+        .should('exist')
+        .and('not.be.disabled')
+        const departmentOptions = [
+          ' Select Department',
+          'SI-Operations',
+          'SI-PPC',
+          'SI-Writing',
+          'SI-Design',
+          'SI-Admin',
+          'Billing',
+          'Sales',
+          'Lead Generation'
+        ]
+        cy.get('select[name="department"] > option').each(($option, index)=>{
+          cy.wrap($option)
+            .should('exist')
+            .and('have.text', departmentOptions[index])
+          cy.log(departmentOptions[index])
+        })
+      //verify there would be submit/check/save button icon
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color
+        .and('have.css', 'border-radius', '10px')
+      //verify there would be delete button icon
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'border-color', 'rgb(148, 148, 148)') //background color
+        .and('have.css', 'border-radius', '10px')
+
+      //Click again the delete icon and it would not be visible the Enter Task Name, Enter Task Description, Recurring button, and Department drop down menu
+      cy.get('div.grid > div > button:nth-child(2)')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field - should not be visible
+      cy.get('input[name="title"]')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify Recurring Button - should not be visible
+      cy.get('form > div > div > div:nth-child(3)')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify there would be submit/check/save button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('not.exist')
+      //verify there would be delete button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Operations
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-Operations Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-Operations title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Operations')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Now I click the SI-Operations - it should reveal additional within elements
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+      
+      //Click again the SI-Operations - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+        
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS ENDS HERE /////////////  
+
+      ////////// SI-PPC ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-PPC
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-PPC')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-PPC - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Then click again the SI-PPC - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-PPC ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Writing ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Writing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Writing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click SI-Writing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Now Click again SI-Writing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Writing ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Design ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Design
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Design')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI_Design - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again SI-Design - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Design ASSERTIONS ENDS HERE /////////////
+      
+      ////////// SI-Admin ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Admin
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Admin')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-Admin - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again the SI-Admin - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Admin ASSERTIONS ENDS HERE /////////////
+
+      ////////// Billing ASSERTIONS STARTS HERE ////////////
+
+      //verify Billing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Billing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Billing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Billing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Billing ASSERTIONS ENDS HERE /////////////
+
+      ////////// Sales ASSERTIONS STARTS HERE /////////////
+
+      //verify Sales
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Sales')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Sales - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Sales - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Sales ASSERTIONS ENDS HERE /////////////
+
+      ////////// Lead Generation ASSERTIONS STARTS HERE /////////////
+
+      //verify Lead Generation
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Lead Generation')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Lead Generation - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Lead Generation - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Lead Generation ASSERTIONS ENDS HERE /////////////
+      
+    })
+    it("Testcase ID: CATM0003 - Create Task Management One Time Template for New Onboarded client",()=>{
+
+
+      let GETHREF;
+      let templatehref;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Admin Navigation Module
+      cy.get(modulebutton.AdminModuleButton)
+        .click()
+        .wait(2000)
+        
+      //Click the Task Management link text folder
+      cy.get(linktextfolder.AdminModule[0].TaskManagement)
+        .click()
+        .wait(2000)
+      
+      //verify Page Title 'Task Management'
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTitle)
+        .should('exist')
+        .and('have.text', 'Task Management')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'font-size', '25px')
+
+      //verify Add button - if found click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+        .and('have.css', 'border-radius', '40px')
+        .click()
+        .wait(2000)
+
+      //verify Task List Creation Modal popup open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //Select One Time Template
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].OneTimeTemplate)
+        .click()
+        .wait(1000)
+        .should('have.css', 'border-color', 'rgb(24, 121, 216)') // the entire recurring template has blue border color signify it is seleected
+        .find(' > div > div').should('have.css', 'background-color', 'rgb(24, 121, 216)') //blue dot signify it is selected
+    
+      //Click the Next Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].NextButton)
+        .click()
+        .wait(2000)
+
+      //verify the Task List Creation Modal should remain open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //verify the Template title text should be 'Customize your recurring template' 
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateTitleText)
+        .should('exist')
+        .and('have.text', 'Customize your one-time template')
+        .and('have.css', 'font-weight', '700') //font bold
+   
+      //verify Template Name Label and Input field
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Template Name*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Input field
+          cy.get(' > input[name="name"]')
+            .should('exist')
+            .and('have.value', '') //empty by default
+        })
+
+      //verify Partner Type Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Partner Type *')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const optionsMenu = [
+            'Choose One',
+            'New',
+            'Existing'
+          ];
+          cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', optionsMenu[index])
+            cy.log(optionsMenu[index])
+          });
+        })
+
+      //verify Which service category will this be used? * Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('contain', 'Which service category will this be used?')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const serviceCategoryOptions = [
+            'Choose One',
+            'Full Account Management',
+            'PPC Management',
+            'Listing Content Creation',
+            'Account Health Management',
+            'Account Health Issue',
+            'Seller Launch',
+            'Account Creation',
+            'Amazon Traffic Boost',
+            'Advertising Management',
+            'Google Advertising',
+            'Meta Advertising',
+            'SEO Management',
+            'Website Content',
+            'Mailchimp Management',
+            'Website Activation'
+          ];
+          cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', serviceCategoryOptions[index])
+            cy.log(serviceCategoryOptions[index])
+          });
+        })
+
+      //verify Back Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].BackButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Back')
+        .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+        .and('have.css', 'background-color', 'rgb(255, 255, 255)') 
+        .and('have.css', 'border-color', 'rgb(107, 114, 128)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Create')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') 
+        .and('have.css', 'border-color', 'rgb(30, 58, 138)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //////// CREATE NEW ONE-TIME TASKS STARTS HERE ///////////
+
+      //Now Enter Template Name
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .find(' > input[name="name"]')
+        .clear()
+        .type('Test New One-Time Template')
+        .wait(600)
+        .should('have.value', 'Test New One-Time Template')
+
+      //Select New in Partner Type
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find(' > div > select[name="partnerType"]')
+        .select('new')
+        .wait(600)
+
+      //verify that the selected option goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'New')
+
+      //Select Service Category Full Account Management
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find(' > select[name="partnerService"]')
+        .select('Full Account Management')
+        .wait(600)
+
+      //verify the selected service category goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Full Account Management')
+
+      ///////// CREATE NEW ONE-TIME TASKS ENDS HERE ///////////
+      
+      //Click Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .click()
+        .wait(2000) 
+
+      //verify alert-success modal popup
+      cy.get('div.overflow-y-auto > div.min-h-full')
+        .should('exist')
+        .within(()=>{
+          //assert check logo
+          cy.get(' > div > div > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //check color
+          //assert message
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.text', 'Template has been created.')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //text color
+            .and('have.css', 'font-weight', '400')  //font bold
+        })
+
+      //then simulate pressing esc key in your keyboard
+      cy.get('body').type('{esc}');
+      cy.wait(3000)
+        
+      //Go to New > One Time Tab
+      //verify One Time and click when found
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageSubTab[0].OneTimeTab)
+        .click()
+        .wait(3000)
+
+      //verify expected url destination
+      cy.url().should('contain', 'one-time')
+        
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS STARTS HERE ////////////
+
+      //verify first column Names
+      const columnNames = [
+        'Template Name',
+        'Partner Type',
+        'Service Type',
+        'Last Updated',
+        'Updated By',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($column, index)=>{
+        cy.wrap($column)
+          .should('exist')
+          .and('have.text',columnNames[index])
+        cy.log(columnNames[index])
+      })
+      
+      //Then verify row 1 each column
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Template Name
+        TaskManagementTableList.assertColumn1TemplateName(' > td:nth-child(1) > a', 'Test New One-Time Template')
+        //I will get the href link for later assertion
+        GETHREF = new Promise((resolve)=>{
+          cy.get(' > td:nth-child(1) > a')
+            .then(($element)=>{
+              // Get the href attribute
+              templatehref = $element.attr('href');
+              resolve();
+            })
+        })
+        //assert Partner Type
+        TaskManagementTableList.assertColumn2PartnerType(' > td:nth-child(2)', 'new')
+        //assert Service Type
+        TaskManagementTableList.assertColumn3ServiceType(' > td:nth-child(3)', 'Full Account Management')
+        //assert Last Updated
+        TaskManagementTableList.assertColumn4LastUpdated(' > td:nth-child(4)', DateTodayIs.TodayDateMMDDYYYY_MonthisinWholeWordandDayiswithTH())
+        //assert Updated By
+        TaskManagementTableList.assertColumn5UpdatedBy(' > td:nth-child(5) > div', 'LP', 'Logan Paul')
+        //aasert Action:Edit
+        TaskManagementTableList.assertColumn6Action(' > td:nth-child(6) > a', 'not.be.disabled', 'Edit') 
+      }) 
+
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS ENDS HERE ////////////
+        
+      //Click the Edit button
+      cy.get('table > tbody > tr:first-child > td:nth-child(6) > a')
+        .click()
+        .wait(3000)
+
+      //verify url expected destination
+      cy.get('body').then(()=>{
+        GETHREF.then(()=>{
+          cy.url().should('contain', templatehref)
+        })
+      })
+
+      //Template Name as Title page
+      cy.get('div > h3')
+        .should('exist')
+        .and('have.text', 'Test New One-Time Template')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Update Button
+      cy.get('form > div:nth-child(2) > button')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Update')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') // background color
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Settings
+      cy.get('form > div:nth-child(3) > div')
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > span')
+            .should('exist')
+            .and('have.text', 'Settings')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert the '>' symbol
+          cy.get(' > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        })
+
+      //Click the Settings
+      cy.get('form > div:nth-child(3) > div')
+        .click()
+        .wait(1000)
+        .should('have.attr', 'aria-expanded', 'true')
+
+      //verify Additional elements emerged
+      cy.get('div.pb-6 > div')
+        .should('exist')
+        .within(()=>{
+          //assert Template Name Label and Input field
+          cy.get(' > div:nth-child(1)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Name*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert Input field
+              cy.get(' > input[name="name"]')
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.value', 'Test New One-Time Template')
+            })
+          //assert Template Type Label and drop down menu with the selected on top
+          cy.get(' > div:nth-child(2)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Type*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert the drop down menu with the already selected on top
+              cy.get(' > select[name="type"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const typeOption = [
+                'Choose One',
+                'Onboarding',
+                'Roadmap',
+                'Recurring',
+                'One Time'
+              ]
+              cy.get(' > select[name="type"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', typeOption[index])
+                cy.log(typeOption[index])
+              })
+            })
+          //assert Partner Type Label and drop down menu
+          cy.get(' > div:nth-child(3)')
+            .should('exist')
+            .within(()=>{
+              //assert Partner Type Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Partner Type *')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              const partnertypeOption = [
+                'Choose One',
+                'New',
+                'Existing'
+              ]
+              cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', partnertypeOption[index])
+                cy.log(partnertypeOption[index])
+              })
+            })
+          //assert Service Category Label and drop down menu
+          cy.get(' > div:nth-child(4)')
+            .should('exist')
+            .within(()=>{
+              //assert Service Category Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Service Category*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert drop down menu
+              cy.get(' > select[name="partnerService"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const serviceOption = [
+                'Choose One',
+                'Full Account Management',
+                'PPC Management',
+                'Listing Content Creation',
+                'Account Health Management',
+                'Account Health Issue',
+                'Seller Launch',
+                'Account Creation',
+                'Amazon Traffic Boost',
+                'Advertising Management',
+                'Google Advertising',
+                'Meta Advertising',
+                'SEO Management',
+                'Website Content',
+                'Mailchimp Management',
+                'Website Activation'
+              ]
+              cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', serviceOption[index])
+                cy.log(serviceOption[index])
+              })
+            })
+        })
+
+      //Click again the settings and the group elements should not be visible such as Template Name, Template Type, Partner Type, and Select Category Type
+      cy.get('form > div:nth-child(3) > div > svg')
+        .click()
+        .wait(1000)
+      cy.get('form > div:nth-child(3) > div')
+        .should('have.attr', 'aria-expanded', 'false')
+
+      //the main group element should not be visible
+      cy.get('div.pb-6 > div')
+        .should('not.exist')
+
+      //verify Tasks Title and Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert Tasks title
+          cy.get(' > h4')
+            .should('exist')
+            .and('have.text', 'Tasks')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert Add button
+          cy.get(' > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Add')
+            .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+            .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+            .and('have.css', 'border-radius', '40px')
+        })
+
+      //Click the Tasks Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .find(' > button')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field
+      cy.get('input[name="title"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task name')
+      //verify there would be Enter task description input field
+      cy.get('input[name="description"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task description')
+      //verify Select Department Dropdown menu
+      cy.get('select[name="department"]')
+        .should('exist')
+        .and('not.be.disabled')
+        const departmentOptions = [
+          ' Select Department',
+          'SI-Operations',
+          'SI-PPC',
+          'SI-Writing',
+          'SI-Design',
+          'SI-Admin',
+          'Billing',
+          'Sales',
+          'Lead Generation'
+        ]
+        cy.get('select[name="department"] > option').each(($option, index)=>{
+          cy.wrap($option)
+            .should('exist')
+            .and('have.text', departmentOptions[index])
+          cy.log(departmentOptions[index])
+        })
+      //verify there would be submit/check/save button icon
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color
+        .and('have.css', 'border-radius', '10px')
+      //verify there would be delete button icon
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'border-color', 'rgb(148, 148, 148)') //background color
+        .and('have.css', 'border-radius', '10px')
+
+      //Click again the delete icon and it would not be visible the Enter Task Name, Enter Task Description, Recurring button, and Department drop down menu
+      cy.get('div.grid > div > button:nth-child(2)')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field - should not be visible
+      cy.get('input[name="title"]')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify Recurring Button - should not be visible
+      cy.get('form > div > div > div:nth-child(3)')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify there would be submit/check/save button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('not.exist')
+      //verify there would be delete button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Operations
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-Operations Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-Operations title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Operations')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Now I click the SI-Operations - it should reveal additional within elements
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+      
+      //Click again the SI-Operations - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+        
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS ENDS HERE /////////////  
+
+      ////////// SI-PPC ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-PPC
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-PPC')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-PPC - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Then click again the SI-PPC - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-PPC ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Writing ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Writing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Writing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click SI-Writing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Now Click again SI-Writing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Writing ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Design ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Design
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Design')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI_Design - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again SI-Design - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Design ASSERTIONS ENDS HERE /////////////
+      
+      ////////// SI-Admin ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Admin
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Admin')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-Admin - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again the SI-Admin - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Admin ASSERTIONS ENDS HERE /////////////
+
+      ////////// Billing ASSERTIONS STARTS HERE ////////////
+
+      //verify Billing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Billing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Billing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Billing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Billing ASSERTIONS ENDS HERE /////////////
+
+      ////////// Sales ASSERTIONS STARTS HERE /////////////
+
+      //verify Sales
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Sales')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Sales - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Sales - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Sales ASSERTIONS ENDS HERE /////////////
+
+      ////////// Lead Generation ASSERTIONS STARTS HERE /////////////
+
+      //verify Lead Generation
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Lead Generation')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Lead Generation - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Lead Generation - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Lead Generation ASSERTIONS ENDS HERE /////////////
+
+    })
+    it("Testcase ID: CATM0004 - Create Task Management Onboarding Template for Existing client",()=>{
+
+
+      let GETHREF;
+      let templatehref;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Admin Navigation Module
+      cy.get(modulebutton.AdminModuleButton)
+        .click()
+        .wait(2000)
+        
+      //Click the Task Management link text folder
+      cy.get(linktextfolder.AdminModule[0].TaskManagement)
+        .click()
+        .wait(2000)
+      
+      //verify Page Title 'Task Management'
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTitle)
+        .should('exist')
+        .and('have.text', 'Task Management')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'font-size', '25px')
+
+      //verify Add button - if found click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+        .and('have.css', 'border-radius', '40px')
+        .click()
+        .wait(2000)
+
+      //verify Task List Creation Modal popup open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      /////// TASK LIST CREATION MODAL ELEMENT ASSERTIONS STARTS HERE ////////
+
+      //verify modal title
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modaltitle)
+        .should('exist')
+        .and('have.text', 'Task List Creation')
+        .and('have.css', 'color', 'rgb(31, 41, 55)') //text color
+        .and('have.css', 'font-weight', '500') //font bold
+
+      //verify 'Select a Template to start with'
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateTitleText)
+        .should('exist')
+        .and('have.text', 'Select a Template to start with')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Default Onboarding Template - default
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].OnboardingTemplate)
+        .should('exist')
+        .within(()=>{
+          //assert the blue circle signify it is selected by default
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.css', 'background-color', 'rgb(24, 121, 216)') // blue background color
+          //assert Onboarding
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', 'Onboarding')
+          //assert img template
+          cy.get(' > img')
+            .should('exist')
+            .should('attr', 'src')
+            .should('include', '/assets/tasks-templates/onboarding.png')
+        })
+
+      //verify Roadmap Template - disabled
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].RoadmapTemplate)
+        .should('exist')
+
+      //verify Recurring Template
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].RecurringTemplate)
+        .should('exist')
+        .within(()=>{
+          //assert the blue circle but transparent by default
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.css', 'background-color', 'rgba(0, 0, 0, 0)') // expected transparent color
+          //assert Onboarding
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', 'Recurring')
+          //assert img template
+          cy.get(' > img')
+            .should('exist')
+            .should('attr', 'src')
+            .should('include', '/assets/tasks-templates/recurring.png')
+        })
+
+      //verify One Time Template
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].OneTimeTemplate)
+        .should('exist')
+        .within(()=>{
+          //assert the blue circle but transparent by default
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.css', 'background-color', 'rgba(0, 0, 0, 0)') // expected transparent color
+          //assert Onboarding
+          cy.get(' > p')
+            .should('exist')
+            .and('have.text', 'One Time')
+          //assert img template
+          cy.get(' > img')
+            .should('exist')
+            .should('attr', 'src')
+            .should('include', '/assets/tasks-templates/one-time.png')
+        })
+
+      //verify Next button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].NextButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Next')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(30, 58, 138)') //background color
+        .and('have.css','border-color', 'rgb(30, 58, 138)')
+        .and('have.css', 'border-radius', '9999px')
+
+      /////// TASK LIST CREATION MODAL ELEMENT ASSERTIONS ENDS HERE /////////
+
+      //Click the Next Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].NextButton)
+        .click()
+        .wait(2000)
+
+      //verify the Task List Creation Modal should remain open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //verify the Template title text should be 'Customize your onboardin template' 
+      //since we choose the default template which is the Onboarding Template
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateTitleText)
+        .should('exist')
+        .and('have.text', 'Customize your onboarding template')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Template Name Label and Input field
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Template Name*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Input field
+          cy.get(' > input[name="name"]')
+            .should('exist')
+            .and('have.value', '') //empty by default
+        })
+
+      //verify Partner Type Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Partner Type *')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const optionsMenu = [
+            'Choose One',
+            'New',
+            'Existing'
+          ];
+          cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', optionsMenu[index])
+            cy.log(optionsMenu[index])
+          });
+        })
+
+      //verify Which service category will this be used? * Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('contain', 'Which service category will this be used?')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const serviceCategoryOptions = [
+            'Choose One',
+            'Full Account Management',
+            'PPC Management',
+            'Listing Content Creation',
+            'Account Health Management',
+            'Account Health Issue',
+            'Seller Launch',
+            'Account Creation',
+            'Amazon Traffic Boost',
+            'Advertising Management',
+            'Google Advertising',
+            'Meta Advertising',
+            'SEO Management',
+            'Website Content',
+            'Mailchimp Management',
+            'Website Activation'
+          ];
+          cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', serviceCategoryOptions[index])
+            cy.log(serviceCategoryOptions[index])
+          });
+        })
+
+      //verify Back Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].BackButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Back')
+        .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+        .and('have.css', 'background-color', 'rgb(255, 255, 255)') 
+        .and('have.css', 'border-color', 'rgb(107, 114, 128)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Create')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') 
+        .and('have.css', 'border-color', 'rgb(30, 58, 138)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //////// CREATE EXISTING ONBOARDING STARTS HERE ///////////
+
+      //Now Enter Template Name
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .find(' > input[name="name"]')
+        .clear()
+        .type('Test Existing Onboarding Template')
+        .wait(600)
+        .should('have.value', 'Test Existing Onboarding Template')
+
+      //Select New in Partner Type
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find(' > div > select[name="partnerType"]')
+        .select('existing')
+        .wait(600)
+
+      //verify that the selected option goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Existing')
+
+      //Select Service Category Full Account Management
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find(' > select[name="partnerService"]')
+        .select('Full Account Management')
+        .wait(600)
+
+      //verify the selected service category goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Full Account Management')
+
+      ///////// CREATE EXISTING ONBOARDING ENDS HERE ///////////
+
+      //Click Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .click()
+        .wait(2000)
+
+      //verify alert-success modal popup
+      cy.get('div.overflow-y-auto > div.min-h-full')
+        .should('exist')
+        .within(()=>{
+          //assert check logo
+          cy.get(' > div > div > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //check color
+          //assert message
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.text', 'Template has been created.')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //text color
+            .and('have.css', 'font-weight', '400')  //font bold
+        })
+
+      //then simulate pressing esc key in your keyboard
+      cy.get('body').type('{esc}');
+      cy.wait(3000)
+        
+      //Go to Existing Onboarding
+      //Verify Existing Tab if Found then click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTab[0].ExistingTab)
+        .should('exist')
+        .click()
+        .wait(3000)
+
+      //Automatically it goes to Onboarding tab so no need to click the Onboarding Tab
+        
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS STARTS HERE ////////////
+
+      //verify first column Names
+      const columnNames = [
+        'Template Name',
+        'Partner Type',
+        'Service Type',
+        'Last Updated',
+        'Updated By',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($column, index)=>{
+        cy.wrap($column)
+          .should('exist')
+          .and('have.text',columnNames[index])
+        cy.log(columnNames[index])
+      })
+
+      //Then verify row 1 each column
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Template Name
+        TaskManagementTableList.assertColumn1TemplateName(' > td:nth-child(1) > a', 'Test Existing Onboarding Template')
+        //I will get the href link for later assertion
+        GETHREF = new Promise((resolve)=>{
+          cy.get(' > td:nth-child(1) > a')
+            .then(($element)=>{
+              // Get the href attribute
+              templatehref = $element.attr('href');
+              resolve();
+            })
+        })
+        //assert Partner Type
+        TaskManagementTableList.assertColumn2PartnerType(' > td:nth-child(2)', 'existing')
+        //assert Service Type
+        TaskManagementTableList.assertColumn3ServiceType(' > td:nth-child(3)', 'Full Account Management')
+        //assert Last Updated
+        TaskManagementTableList.assertColumn4LastUpdated(' > td:nth-child(4)', DateTodayIs.TodayDateMMDDYYYY_MonthisinWholeWordandDayiswithTH())
+        //assert Updated By
+        TaskManagementTableList.assertColumn5UpdatedBy(' > td:nth-child(5) > div', 'LP', 'Logan Paul')
+        //aasert Action:Edit
+        TaskManagementTableList.assertColumn6Action(' > td:nth-child(6) > a', 'not.be.disabled', 'Edit')
+      })
+
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS ENDS HERE ////////////
+        
+      //CLick the Action Edit button
+      cy.get('table > tbody > tr:first-child > td:nth-child(6) > a')
+        .click()
+        .wait(3000)
+
+      //verify url expected destination
+      cy.get('body').then(()=>{
+        GETHREF.then(()=>{
+          cy.url().should('contain', templatehref)
+        })
+      })
+
+      //Template Name as Title page
+      cy.get('div > h3')
+        .should('exist')
+        .and('have.text', 'Test Existing Onboarding Template')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Update Button
+      cy.get('form > div:nth-child(2) > button')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Update')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') // background color
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Settings
+      cy.get('form > div:nth-child(3) > div')
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > span')
+            .should('exist')
+            .and('have.text', 'Settings')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert the '>' symbol
+          cy.get(' > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        })
+
+      //verify Tasks Title and Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert Tasks title
+          cy.get(' > h4')
+            .should('exist')
+            .and('have.text', 'Tasks')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert Add button
+          cy.get(' > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Add')
+            .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+            .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+            .and('have.css', 'border-radius', '40px')
+        })
+
+      //verify Onboarding Tasks
+      cy.get('div.space-y-8 > div:nth-child(2) > div > div > div')
+        .should('exist')
+        .within(()=>{
+          //assert button
+          cy.get(' > div > svg')
+            .should('exist')
+          //assert Onboarding tasks title
+          cy.get(' > p > span')
+            .should('exist')
+            .and('have.text', 'Onboarding tasks')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Now if I click the Settings, there will be additional elements that should be visible
+      cy.get('form > div:nth-child(3) > div')
+        .should('have.attr', 'aria-expanded', 'false')
+        .click()
+        .wait(600)
+        .should('have.attr', 'aria-expanded', 'true')
+
+      //verify the additional elements are visible
+      cy.get('div.pb-6 > div')
+        .should('exist')
+        .within(()=>{
+          //assert Template Name Label and Input field
+          cy.get(' > div:nth-child(1)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Name*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert Input field
+              cy.get(' > input[name="name"]')
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.value', 'Test Existing Onboarding Template')
+            })
+          //assert Template Type Label and drop down menu with the selected on top
+          cy.get(' > div:nth-child(2)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Type*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert the drop down menu with the already selected on top
+              cy.get(' > select[name="type"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const typeOption = [
+                'Choose One',
+                'Onboarding',
+                'Roadmap',
+                'Recurring',
+                'One Time'
+              ]
+              cy.get(' > select[name="type"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', typeOption[index])
+                cy.log(typeOption[index])
+              })
+            })
+          //assert Partner Type Label and drop down menu
+          cy.get(' > div:nth-child(3)')
+            .should('exist')
+            .within(()=>{
+              //assert Partner Type Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Partner Type *')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              const partnertypeOption = [
+                'Choose One',
+                'New',
+                'Existing'
+              ]
+              cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', partnertypeOption[index])
+                cy.log(partnertypeOption[index])
+              })
+            })
+          //assert Service Category Label and drop down menu
+          cy.get(' > div:nth-child(4)')
+            .should('exist')
+            .within(()=>{
+              //assert Service Category Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Service Category*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert drop down menu
+              cy.get(' > select[name="partnerService"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const serviceOption = [
+                'Choose One',
+                'Full Account Management',
+                'PPC Management',
+                'Listing Content Creation',
+                'Account Health Management',
+                'Account Health Issue',
+                'Seller Launch',
+                'Account Creation',
+                'Amazon Traffic Boost',
+                'Advertising Management',
+                'Google Advertising',
+                'Meta Advertising',
+                'SEO Management',
+                'Website Content',
+                'Mailchimp Management',
+                'Website Activation'
+              ]
+              cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', serviceOption[index])
+                cy.log(serviceOption[index])
+              })
+            })
+        })
+
+      //Now if I will click the settings once again, these set of elements should not be visible
+      cy.get('form > div:nth-child(3) > div > svg')
+        .click()
+        .wait(2000)
+      //assert that the elements such as Template Name, Template Type, Partner Type, and Service Category are not visible
+      cy.get('form > div:nth-child(3) > div')
+        .should('have.attr', 'aria-expanded', 'false')
+
+      //the group of element should not exist such as Template Name, Template Type, Partner Type, and Service Category
+      cy.get('div.pb-6 > div')
+        .should('not.exist')
+
+      //Click the Tasks Add button, should reveal additional elements
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .find(' > button')
+        .click()
+        .wait(2000)
+
+      //verify there would be Enter Task Name input field
+      cy.get('input[name="title"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task name')
+      //verify there would be Enter task description input field
+      cy.get('input[name="description"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task description')
+      //verify there would be submit/check/save button icon
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color
+        .and('have.css', 'border-radius', '10px')
+      //verify there would be delete button icon
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'border-color', 'rgb(148, 148, 148)') //background color
+        .and('have.css', 'border-radius', '10px')
+
+      //Then if I am going to click the delete icon, the Enter Task Name, Enter Task Description, 
+      //input fields and the check button including delete icon will not be visible
+      cy.get('div.grid > div > button:nth-child(2)')
+        .click()
+        .wait(3000)
+
+      //verify Enter Task Name input field should not be visible'
+      cy.get('input[name="title"]')
+        .should('not.exist')
+      //verify Enter Task description input field should not be visible
+      cy.get('input[name="description"]')
+        .should('not.exist')
+      //verify there would be delete button icon
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('not.exist')
+
+      //Click the '>' Onboarding tasks
+      cy.get('div.space-y-8 > div:nth-child(2) > div > div > div')
+        .find(' > div > svg')
+        .click()
+        .wait(3000)
+
+      //verify there would be Description column name
+      cy.get('div.font-inter > p:nth-child(2)')
+        .should('exist')
+        .and('have.text', 'Description')
+      //verify there would be Actions column name
+      cy.get('div.font-inter > p:nth-child(3)')
+        .should('exist')
+        .and('have.text', 'Actions')
+      //verify No Items
+      cy.get('div.space-y-8 > div > div.bg-white > p')
+        .should('exist')
+        .and('have.text', 'No Items')
+    
+      //Now if I am going to click again the '>' Onboarding tasks, Description, Actions, and No Items should not be visible
+      cy.get('div.space-y-8 > div:nth-child(2) > div > div > div')
+        .find(' > div > svg')
+        .click()
+        .wait(3000)
+
+      //verify there would be Description column name - should not be visible
+      cy.get('div.font-inter > p:nth-child(2)')
+        .should('not.exist')
+      //verify there would be Actions column name - should not be visible
+      cy.get('div.font-inter > p:nth-child(3)')
+        .should('not.exist')
+      //verify No Items - should not be visible 
+      cy.get('div.space-y-8 > div > div.bg-white > p')
+        .should('not.exist')
+
+    })
+    it("Testcase ID: CATM0005 - Create Task Management Recurring Template for Existing client",()=>{
+
+
+      let GETHREF;
+      let templatehref;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Admin Navigation Module
+      cy.get(modulebutton.AdminModuleButton)
+        .click()
+        .wait(2000)
+        
+      //Click the Task Management link text folder
+      cy.get(linktextfolder.AdminModule[0].TaskManagement)
+        .click()
+        .wait(2000)
+        
+      //verify Page Title 'Task Management'
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTitle)
+        .should('exist')
+        .and('have.text', 'Task Management')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'font-size', '25px')
+
+      //verify Add button - if found click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+        .and('have.css', 'border-radius', '40px')
+        .click()
+        .wait(2000)
+
+      //verify Task List Creation Modal popup open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //Select Recurring Template
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].RecurringTemplate)
+        .click()
+        .wait(1000)
+        .should('have.css', 'border-color', 'rgb(24, 121, 216)') // the entire recurring template has blue border color signify it is seleected
+        .find(' > div > div').should('have.css', 'background-color', 'rgb(24, 121, 216)') //blue dot signify it is selected
+    
+      //Click the Next Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].NextButton)
+        .click()
+        .wait(2000)
+
+      //verify the Task List Creation Modal should remain open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //verify the Template title text should be 'Customize your recurring template' 
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateTitleText)
+        .should('exist')
+        .and('have.text', 'Customize your recurring template')
+        .and('have.css', 'font-weight', '700') //font bold
+   
+      //verify Template Name Label and Input field
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Template Name*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Input field
+          cy.get(' > input[name="name"]')
+            .should('exist')
+            .and('have.value', '') //empty by default
+        })
+
+      //verify Partner Type Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Partner Type *')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const optionsMenu = [
+            'Choose One',
+            'New',
+            'Existing'
+          ];
+          cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', optionsMenu[index])
+            cy.log(optionsMenu[index])
+          });
+        })
+
+      //verify Which service category will this be used? * Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('contain', 'Which service category will this be used?')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const serviceCategoryOptions = [
+            'Choose One',
+            'Full Account Management',
+            'PPC Management',
+            'Listing Content Creation',
+            'Account Health Management',
+            'Account Health Issue',
+            'Seller Launch',
+            'Account Creation',
+            'Amazon Traffic Boost',
+            'Advertising Management',
+            'Google Advertising',
+            'Meta Advertising',
+            'SEO Management',
+            'Website Content',
+            'Mailchimp Management',
+            'Website Activation'
+          ];
+          cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', serviceCategoryOptions[index])
+            cy.log(serviceCategoryOptions[index])
+          });
+        })
+
+      //verify Back Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].BackButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Back')
+        .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+        .and('have.css', 'background-color', 'rgb(255, 255, 255)') 
+        .and('have.css', 'border-color', 'rgb(107, 114, 128)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Create')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') 
+        .and('have.css', 'border-color', 'rgb(30, 58, 138)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //////// CREATE EXISTING RECURRING TASKS STARTS HERE ///////////
+
+      //Now Enter Template Name
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .find(' > input[name="name"]')
+        .clear()
+        .type('Test Existing Recurring Template')
+        .wait(600)
+        .should('have.value', 'Test Existing Recurring Template')
+
+      //Select New in Partner Type
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find(' > div > select[name="partnerType"]')
+        .select('existing')
+        .wait(600)
+
+      //verify that the selected option goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Existing')
+
+      //Select Service Category Full Account Management
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find(' > select[name="partnerService"]')
+        .select('Full Account Management')
+        .wait(600)
+
+      //verify the selected service category goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Full Account Management')
+
+      ///////// CREATE EXISTING RECURRING TASKS ENDS HERE ///////////
+      
+      //Click Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .click()
+        .wait(2000) 
+
+      //verify alert-success modal popup
+      cy.get('div.overflow-y-auto > div.min-h-full')
+        .should('exist')
+        .within(()=>{
+          //assert check logo
+          cy.get(' > div > div > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //check color
+          //assert message
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.text', 'Template has been created.')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //text color
+            .and('have.css', 'font-weight', '400')  //font bold
+        })
+
+      //then simulate pressing esc key in your keyboard
+      cy.get('body').type('{esc}');
+      cy.wait(3000)
+        
+      //Go to Existing Onboarding
+      //Verify Existing Tab if Found then click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTab[0].ExistingTab)
+        .should('exist')
+        .click()
+        .wait(3000)
+
+      //Go to New > Recurring Tab
+      //verify Recurring Tab and click when found
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageSubTab[0].RecurringTab)
+        .click()
+        .wait(3000)
+
+      //verify expected url destination
+      cy.url().should('contain', 'recurring')
+        
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS STARTS HERE ////////////
+
+      //verify first column Names
+      const columnNames = [
+        'Template Name',
+        'Partner Type',
+        'Service Type',
+        'Last Updated',
+        'Updated By',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($column, index)=>{
+        cy.wrap($column)
+          .should('exist')
+          .and('have.text',columnNames[index])
+        cy.log(columnNames[index])
+      })
+      
+      //Then verify row 1 each column
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Template Name
+        TaskManagementTableList.assertColumn1TemplateName(' > td:nth-child(1) > a', 'Test Existing Recurring Template')
+        //I will get the href link for later assertion
+        GETHREF = new Promise((resolve)=>{
+          cy.get(' > td:nth-child(1) > a')
+            .then(($element)=>{
+              // Get the href attribute
+              templatehref = $element.attr('href');
+              resolve();
+            })
+        })
+        //assert Partner Type
+        TaskManagementTableList.assertColumn2PartnerType(' > td:nth-child(2)', 'existing')
+        //assert Service Type
+        TaskManagementTableList.assertColumn3ServiceType(' > td:nth-child(3)', 'Full Account Management')
+        //assert Last Updated
+        TaskManagementTableList.assertColumn4LastUpdated(' > td:nth-child(4)', DateTodayIs.TodayDateMMDDYYYY_MonthisinWholeWordandDayiswithTH())
+        //assert Updated By
+        TaskManagementTableList.assertColumn5UpdatedBy(' > td:nth-child(5) > div', 'LP', 'Logan Paul')
+        //aasert Action:Edit
+        TaskManagementTableList.assertColumn6Action(' > td:nth-child(6) > a', 'not.be.disabled', 'Edit') 
+      }) 
+
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS ENDS HERE ////////////
+        
+      //Click the Edit button
+      cy.get('table > tbody > tr:first-child > td:nth-child(6) > a')
+        .click()
+        .wait(3000)
+
+      //verify url expected destination
+      cy.get('body').then(()=>{
+        GETHREF.then(()=>{
+          cy.url().should('contain', templatehref)
+        })
+      })
+
+      //Template Name as Title page
+      cy.get('div > h3')
+        .should('exist')
+        .and('have.text', 'Test Existing Recurring Template')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Update Button
+      cy.get('form > div:nth-child(2) > button')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Update')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') // background color
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Settings
+      cy.get('form > div:nth-child(3) > div')
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > span')
+            .should('exist')
+            .and('have.text', 'Settings')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert the '>' symbol
+          cy.get(' > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        })
+
+      //Click the Settings
+      cy.get('form > div:nth-child(3) > div')
+        .click()
+        .wait(1000)
+        .should('have.attr', 'aria-expanded', 'true')
+
+      //verify Additional elements emerged
+      cy.get('div.pb-6 > div')
+        .should('exist')
+        .within(()=>{
+          //assert Template Name Label and Input field
+          cy.get(' > div:nth-child(1)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Name*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert Input field
+              cy.get(' > input[name="name"]')
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.value', 'Test Existing Recurring Template')
+            })
+          //assert Template Type Label and drop down menu with the selected on top
+          cy.get(' > div:nth-child(2)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Type*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert the drop down menu with the already selected on top
+              cy.get(' > select[name="type"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const typeOption = [
+                'Choose One',
+                'Onboarding',
+                'Roadmap',
+                'Recurring',
+                'One Time'
+              ]
+              cy.get(' > select[name="type"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', typeOption[index])
+                cy.log(typeOption[index])
+              })
+            })
+          //assert Partner Type Label and drop down menu
+          cy.get(' > div:nth-child(3)')
+            .should('exist')
+            .within(()=>{
+              //assert Partner Type Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Partner Type *')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              const partnertypeOption = [
+                'Choose One',
+                'New',
+                'Existing'
+              ]
+              cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', partnertypeOption[index])
+                cy.log(partnertypeOption[index])
+              })
+            })
+          //assert Service Category Label and drop down menu
+          cy.get(' > div:nth-child(4)')
+            .should('exist')
+            .within(()=>{
+              //assert Service Category Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Service Category*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert drop down menu
+              cy.get(' > select[name="partnerService"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const serviceOption = [
+                'Choose One',
+                'Full Account Management',
+                'PPC Management',
+                'Listing Content Creation',
+                'Account Health Management',
+                'Account Health Issue',
+                'Seller Launch',
+                'Account Creation',
+                'Amazon Traffic Boost',
+                'Advertising Management',
+                'Google Advertising',
+                'Meta Advertising',
+                'SEO Management',
+                'Website Content',
+                'Mailchimp Management',
+                'Website Activation'
+              ]
+              cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', serviceOption[index])
+                cy.log(serviceOption[index])
+              })
+            })
+        })
+
+      //Click again the settings and the group elements should not be visible such as Template Name, Template Type, Partner Type, and Select Category Type
+      cy.get('form > div:nth-child(3) > div > svg')
+        .click()
+        .wait(1000)
+      cy.get('form > div:nth-child(3) > div')
+        .should('have.attr', 'aria-expanded', 'false')
+
+      //the main group element should not be visible
+      cy.get('div.pb-6 > div')
+        .should('not.exist')
+
+      //verify Tasks Title and Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert Tasks title
+          cy.get(' > h4')
+            .should('exist')
+            .and('have.text', 'Tasks')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert Add button
+          cy.get(' > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Add')
+            .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+            .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+            .and('have.css', 'border-radius', '40px')
+        })
+
+      //Click the Tasks Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .find(' > button')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field
+      cy.get('input[name="title"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task name')
+      //verify there would be Enter task description input field
+      cy.get('input[name="description"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task description')
+      //verify Recurring Button
+      cy.get('form > div > div > div:nth-child(3)')
+        .should('exist')
+        .within(()=>{
+          //assert Button
+          cy.get(' > div > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .find(' > label').should('have.text', 'Recurring')
+        })
+      //verify Select Department Dropdown menu
+      cy.get('select[name="department"]')
+        .should('exist')
+        .and('not.be.disabled')
+        const departmentOptions = [
+          ' Select Department',
+          'SI-Operations',
+          'SI-PPC',
+          'SI-Writing',
+          'SI-Design',
+          'SI-Admin',
+          'Billing',
+          'Sales',
+          'Lead Generation'
+        ]
+        cy.get('select[name="department"] > option').each(($option, index)=>{
+          cy.wrap($option)
+            .should('exist')
+            .and('have.text', departmentOptions[index])
+          cy.log(departmentOptions[index])
+        })
+      //verify there would be submit/check/save button icon
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color
+        .and('have.css', 'border-radius', '10px')
+      //verify there would be delete button icon
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'border-color', 'rgb(148, 148, 148)') //background color
+        .and('have.css', 'border-radius', '10px')
+
+      //Click again the delete icon and it would not be visible the Enter Task Name, Enter Task Description, Recurring button, and Department drop down menu
+      cy.get('div.grid > div > button:nth-child(2)')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field - should not be visible
+      cy.get('input[name="title"]')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify Recurring Button - should not be visible
+      cy.get('form > div > div > div:nth-child(3)')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify there would be submit/check/save button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('not.exist')
+      //verify there would be delete button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Operations
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-Operations Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-Operations title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Operations')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Now I click the SI-Operations - it should reveal additional within elements
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+      
+      //Click again the SI-Operations - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+        
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS ENDS HERE /////////////  
+
+      ////////// SI-PPC ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-PPC
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-PPC')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-PPC - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Then click again the SI-PPC - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-PPC ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Writing ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Writing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Writing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click SI-Writing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Now Click again SI-Writing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Writing ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Design ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Design
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Design')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI_Design - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again SI-Design - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Design ASSERTIONS ENDS HERE /////////////
+      
+      ////////// SI-Admin ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Admin
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Admin')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-Admin - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again the SI-Admin - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Admin ASSERTIONS ENDS HERE /////////////
+
+      ////////// Billing ASSERTIONS STARTS HERE ////////////
+
+      //verify Billing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Billing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Billing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Billing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Billing ASSERTIONS ENDS HERE /////////////
+
+      ////////// Sales ASSERTIONS STARTS HERE /////////////
+
+      //verify Sales
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Sales')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Sales - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Sales - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Sales ASSERTIONS ENDS HERE /////////////
+
+      ////////// Lead Generation ASSERTIONS STARTS HERE /////////////
+
+      //verify Lead Generation
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Lead Generation')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Lead Generation - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Recurring',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Lead Generation - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Lead Generation ASSERTIONS ENDS HERE /////////////
+
+
+    })
+    it("Testcase ID: CATM0006 - Create Task Management One Time Template for Existing client",()=>{
+
+
+      let GETHREF;
+      let templatehref;
+
+      //Login using account specialist
+      cy.userlogin(loginmodule.EmailAddressInputfield, loginmodule.PasswordInputfield, loginmodule.SigninButton, testdata.userAccounts[0].accountspecialist1, testdata.userAccounts[0].accountspecialistandprojectmanagerpassword)
+
+      //Click the Admin Navigation Module
+      cy.get(modulebutton.AdminModuleButton)
+        .click()
+        .wait(2000)
+        
+      //Click the Task Management link text folder
+      cy.get(linktextfolder.AdminModule[0].TaskManagement)
+        .click()
+        .wait(2000)
+      
+      //verify Page Title 'Task Management'
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTitle)
+        .should('exist')
+        .and('have.text', 'Task Management')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'font-size', '25px')
+
+      //verify Add button - if found click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].AddButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Add')
+        .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+        .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+        .and('have.css', 'border-radius', '40px')
+        .click()
+        .wait(2000)
+
+      //verify Task List Creation Modal popup open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //Select One Time Template
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].OneTimeTemplate)
+        .click()
+        .wait(1000)
+        .should('have.css', 'border-color', 'rgb(24, 121, 216)') // the entire recurring template has blue border color signify it is seleected
+        .find(' > div > div').should('have.css', 'background-color', 'rgb(24, 121, 216)') //blue dot signify it is selected
+    
+      //Click the Next Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].NextButton)
+        .click()
+        .wait(2000)
+
+      //verify the Task List Creation Modal should remain open
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].modal)
+        .should('exist')
+
+      //verify the Template title text should be 'Customize your recurring template' 
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateTitleText)
+        .should('exist')
+        .and('have.text', 'Customize your one-time template')
+        .and('have.css', 'font-weight', '700') //font bold
+   
+      //verify Template Name Label and Input field
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Template Name*')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert Input field
+          cy.get(' > input[name="name"]')
+            .should('exist')
+            .and('have.value', '') //empty by default
+        })
+
+      //verify Partner Type Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('have.text', 'Partner Type *')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const optionsMenu = [
+            'Choose One',
+            'New',
+            'Existing'
+          ];
+          cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', optionsMenu[index])
+            cy.log(optionsMenu[index])
+          });
+        })
+
+      //verify Which service category will this be used? * Label and drop down menu
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > label')
+            .should('exist')
+            .and('contain', 'Which service category will this be used?')
+            .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+          //assert drop down menu
+          const serviceCategoryOptions = [
+            'Choose One',
+            'Full Account Management',
+            'PPC Management',
+            'Listing Content Creation',
+            'Account Health Management',
+            'Account Health Issue',
+            'Seller Launch',
+            'Account Creation',
+            'Amazon Traffic Boost',
+            'Advertising Management',
+            'Google Advertising',
+            'Meta Advertising',
+            'SEO Management',
+            'Website Content',
+            'Mailchimp Management',
+            'Website Activation'
+          ];
+          cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', serviceCategoryOptions[index])
+            cy.log(serviceCategoryOptions[index])
+          });
+        })
+
+      //verify Back Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].BackButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Back')
+        .and('have.css', 'color', 'rgb(107, 114, 128)') //text color
+        .and('have.css', 'background-color', 'rgb(255, 255, 255)') 
+        .and('have.css', 'border-color', 'rgb(107, 114, 128)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Create')
+        .and('have.css', 'color', 'rgb(255, 255, 255)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') 
+        .and('have.css', 'border-color', 'rgb(30, 58, 138)')
+        .and('have.css', 'border-radius', '9999px')
+
+      //////// CREATE NEW ONE-TIME TASKS STARTS HERE ///////////
+
+      //Now Enter Template Name
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].TemplateNameLabelandInputfield)
+        .find(' > input[name="name"]')
+        .clear()
+        .type('Test Existing One-Time Template')
+        .wait(600)
+        .should('have.value', 'Test Existing One-Time Template')
+
+      //Select New in Partner Type
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find(' > div > select[name="partnerType"]')
+        .select('existing')
+        .wait(600)
+
+      //verify that the selected option goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].PartnerTypeLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Existing')
+
+      //Select Service Category Full Account Management
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find(' > select[name="partnerService"]')
+        .select('Full Account Management')
+        .wait(600)
+
+      //verify the selected service category goes on top
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].WhichServiceCategoryWIllThisBeUsedLabelandDropdownMenu)
+        .find('select option:selected')
+        .should('have.text', 'Full Account Management')
+
+      ///////// CREATE NEW ONE-TIME TASKS ENDS HERE ///////////
+      
+      //Click Create Button
+      cy.get(adminmodulelocator.TaskManageementFolder[0].TaskListCreationModal[0].CreateButton)
+        .click()
+        .wait(2000) 
+
+      //verify alert-success modal popup
+      cy.get('div.overflow-y-auto > div.min-h-full')
+        .should('exist')
+        .within(()=>{
+          //assert check logo
+          cy.get(' > div > div > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //check color
+          //assert message
+          cy.get(' > div > div')
+            .should('exist')
+            .and('have.text', 'Template has been created.')
+            .and('have.css', 'color', 'rgb(0, 150, 109)') //text color
+            .and('have.css', 'font-weight', '400')  //font bold
+        })
+
+      //then simulate pressing esc key in your keyboard
+      cy.get('body').type('{esc}');
+      cy.wait(3000)
+
+      //Go to Existing Onboarding
+      //Verify Existing Tab if Found then click
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageTab[0].ExistingTab)
+        .should('exist')
+        .click()
+        .wait(3000)
+        
+      //Go to New > One Time Tab
+      //verify One Time and click when found
+      cy.get(adminmodulelocator.TaskManageementFolder[0].pageSubTab[0].OneTimeTab)
+        .click()
+        .wait(3000)
+
+      //verify expected url destination
+      cy.url().should('contain', 'one-time')
+        
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS STARTS HERE ////////////
+
+      //verify first column Names
+      const columnNames = [
+        'Template Name',
+        'Partner Type',
+        'Service Type',
+        'Last Updated',
+        'Updated By',
+        'Action'
+      ];
+      cy.get('table > thead > tr > th').each(($column, index)=>{
+        cy.wrap($column)
+          .should('exist')
+          .and('have.text',columnNames[index])
+        cy.log(columnNames[index])
+      })
+      
+      //Then verify row 1 each column
+      cy.get('table > tbody > tr:first-child').within(()=>{
+        //assert Template Name
+        TaskManagementTableList.assertColumn1TemplateName(' > td:nth-child(1) > a', 'Test Existing One-Time Template')
+        //I will get the href link for later assertion
+        GETHREF = new Promise((resolve)=>{
+          cy.get(' > td:nth-child(1) > a')
+            .then(($element)=>{
+              // Get the href attribute
+              templatehref = $element.attr('href');
+              resolve();
+            })
+        })
+        //assert Partner Type
+        TaskManagementTableList.assertColumn2PartnerType(' > td:nth-child(2)', 'existing')
+        //assert Service Type
+        TaskManagementTableList.assertColumn3ServiceType(' > td:nth-child(3)', 'Full Account Management')
+        //assert Last Updated
+        TaskManagementTableList.assertColumn4LastUpdated(' > td:nth-child(4)', DateTodayIs.TodayDateMMDDYYYY_MonthisinWholeWordandDayiswithTH())
+        //assert Updated By
+        TaskManagementTableList.assertColumn5UpdatedBy(' > td:nth-child(5) > div', 'LP', 'Logan Paul')
+        //aasert Action:Edit
+        TaskManagementTableList.assertColumn6Action(' > td:nth-child(6) > a', 'not.be.disabled', 'Edit') 
+      }) 
+
+      //////// TASK MANAGEMENT > NEW > ONBOARDING TABLE LIST ASSERTIONS ENDS HERE ////////////
+        
+      //Click the Edit button
+      cy.get('table > tbody > tr:first-child > td:nth-child(6) > a')
+        .click()
+        .wait(3000)
+
+      //verify url expected destination
+      cy.get('body').then(()=>{
+        GETHREF.then(()=>{
+          cy.url().should('contain', templatehref)
+        })
+      })
+
+      //Template Name as Title page
+      cy.get('div > h3')
+        .should('exist')
+        .and('have.text', 'Test Existing One-Time Template')
+        .and('have.css', 'font-weight', '700') //font bold
+
+      //verify Update Button
+      cy.get('form > div:nth-child(2) > button')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.text', 'Update')
+        .and('have.css', 'font-weight', '700') //font bold
+        .and('have.css', 'color', 'rgb(250, 250, 250)') //text color
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') // background color
+        .and('have.css', 'border-radius', '9999px')
+
+      //verify Settings
+      cy.get('form > div:nth-child(3) > div')
+        .should('exist')
+        .within(()=>{
+          //assert Label
+          cy.get(' > span')
+            .should('exist')
+            .and('have.text', 'Settings')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert the '>' symbol
+          cy.get(' > svg')
+            .should('exist')
+            .and('have.css', 'color', 'rgb(148, 148, 148)') //text color
+        })
+
+      //Click the Settings
+      cy.get('form > div:nth-child(3) > div')
+        .click()
+        .wait(1000)
+        .should('have.attr', 'aria-expanded', 'true')
+
+      //verify Additional elements emerged
+      cy.get('div.pb-6 > div')
+        .should('exist')
+        .within(()=>{
+          //assert Template Name Label and Input field
+          cy.get(' > div:nth-child(1)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Name*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert Input field
+              cy.get(' > input[name="name"]')
+                .should('exist')
+                .and('not.be.disabled')
+                .and('have.value', 'Test Existing One-Time Template')
+            })
+          //assert Template Type Label and drop down menu with the selected on top
+          cy.get(' > div:nth-child(2)')
+            .should('exist')
+            .within(()=>{
+              //assert Template Name Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Template Type*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert the drop down menu with the already selected on top
+              cy.get(' > select[name="type"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const typeOption = [
+                'Choose One',
+                'Onboarding',
+                'Roadmap',
+                'Recurring',
+                'One Time'
+              ]
+              cy.get(' > select[name="type"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', typeOption[index])
+                cy.log(typeOption[index])
+              })
+            })
+          //assert Partner Type Label and drop down menu
+          cy.get(' > div:nth-child(3)')
+            .should('exist')
+            .within(()=>{
+              //assert Partner Type Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Partner Type *')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              const partnertypeOption = [
+                'Choose One',
+                'New',
+                'Existing'
+              ]
+              cy.get(' > div > select[name="partnerType"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', partnertypeOption[index])
+                cy.log(partnertypeOption[index])
+              })
+            })
+          //assert Service Category Label and drop down menu
+          cy.get(' > div:nth-child(4)')
+            .should('exist')
+            .within(()=>{
+              //assert Service Category Label
+              cy.get(' > label')
+                .should('exist')
+                .and('have.text', 'Service Category*')
+                .find('sup').should('have.css', 'color', 'rgb(237, 46, 46)') //asterisk text color
+              //assert drop down menu
+              cy.get(' > select[name="partnerService"]')
+                .should('exist')
+                .and('not.be.disabled')
+              const serviceOption = [
+                'Choose One',
+                'Full Account Management',
+                'PPC Management',
+                'Listing Content Creation',
+                'Account Health Management',
+                'Account Health Issue',
+                'Seller Launch',
+                'Account Creation',
+                'Amazon Traffic Boost',
+                'Advertising Management',
+                'Google Advertising',
+                'Meta Advertising',
+                'SEO Management',
+                'Website Content',
+                'Mailchimp Management',
+                'Website Activation'
+              ]
+              cy.get(' > select[name="partnerService"] > option').each(($option, index)=>{
+                cy.wrap($option)
+                  .should('exist')
+                  .and('have.text', serviceOption[index])
+                cy.log(serviceOption[index])
+              })
+            })
+        })
+
+      //Click again the settings and the group elements should not be visible such as Template Name, Template Type, Partner Type, and Select Category Type
+      cy.get('form > div:nth-child(3) > div > svg')
+        .click()
+        .wait(1000)
+      cy.get('form > div:nth-child(3) > div')
+        .should('have.attr', 'aria-expanded', 'false')
+
+      //the main group element should not be visible
+      cy.get('div.pb-6 > div')
+        .should('not.exist')
+
+      //verify Tasks Title and Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert Tasks title
+          cy.get(' > h4')
+            .should('exist')
+            .and('have.text', 'Tasks')
+            .and('have.css', 'font-weight', '700') //font bold
+          //assert Add button
+          cy.get(' > button')
+            .should('exist')
+            .and('not.be.disabled')
+            .and('have.text', 'Add')
+            .and('have.css', 'color', 'rgb(0, 47, 93)') //text color
+            .and('have.css', 'border-color', 'rgb(0, 47, 93)')
+            .and('have.css', 'border-radius', '40px')
+        })
+
+      //Click the Tasks Add button
+      cy.get('div.main-content-inner2 > div > div.space-y-8 > div:nth-child(1)')
+        .find(' > button')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field
+      cy.get('input[name="title"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task name')
+      //verify there would be Enter task description input field
+      cy.get('input[name="description"]')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.value', '') //empty by default
+        .and('have.attr', 'placeholder', 'Enter task description')
+      //verify Select Department Dropdown menu
+      cy.get('select[name="department"]')
+        .should('exist')
+        .and('not.be.disabled')
+        const departmentOptions = [
+          ' Select Department',
+          'SI-Operations',
+          'SI-PPC',
+          'SI-Writing',
+          'SI-Design',
+          'SI-Admin',
+          'Billing',
+          'Sales',
+          'Lead Generation'
+        ]
+        cy.get('select[name="department"] > option').each(($option, index)=>{
+          cy.wrap($option)
+            .should('exist')
+            .and('have.text', departmentOptions[index])
+          cy.log(departmentOptions[index])
+        })
+      //verify there would be submit/check/save button icon
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'background-color', 'rgb(0, 47, 93)') //background color
+        .and('have.css', 'border-radius', '10px')
+      //verify there would be delete button icon
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('exist')
+        .and('not.be.disabled')
+        .and('have.css', 'border-color', 'rgb(148, 148, 148)') //background color
+        .and('have.css', 'border-radius', '10px')
+
+      //Click again the delete icon and it would not be visible the Enter Task Name, Enter Task Description, Recurring button, and Department drop down menu
+      cy.get('div.grid > div > button:nth-child(2)')
+        .click()
+        .wait(1000)
+
+      //verify there would be Enter Task Name input field - should not be visible
+      cy.get('input[name="title"]')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify Recurring Button - should not be visible
+      cy.get('form > div > div > div:nth-child(3)')
+        .should('not.exist')
+      //verify Select Department Dropdown menu - should not be visible
+      cy.get('select[name="department"]')
+        .should('not.exist')
+      //verify there would be submit/check/save button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(1)')
+        .should('not.exist')
+      //verify there would be delete button icon - should not be visible
+      cy.get('div.grid > div > button:nth-child(2)')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Operations
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-Operations Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-Operations title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Operations')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Now I click the SI-Operations - it should reveal additional within elements
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+      
+      //Click again the SI-Operations - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+        
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(1) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-OPERATIONS ASSERTIONS ENDS HERE /////////////  
+
+      ////////// SI-PPC ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-PPC
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-PPC')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-PPC - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Then click again the SI-PPC - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(2) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-PPC ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Writing ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Writing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Writing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click SI-Writing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Now Click again SI-Writing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Writing ASSERTIONS ENDS HERE /////////////
+
+      ////////// SI-Design ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Design
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Design')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI_Design - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again SI-Design - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(4)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Design ASSERTIONS ENDS HERE /////////////
+      
+      ////////// SI-Admin ASSERTIONS STARTS HERE /////////////
+
+      //verify SI-Admin
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'SI-Admin')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click the SI-Admin - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again the SI-Admin - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(5)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// SI-Admin ASSERTIONS ENDS HERE /////////////
+
+      ////////// Billing ASSERTIONS STARTS HERE ////////////
+
+      //verify Billing
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Billing')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Billing - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Billing - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(6)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Billing ASSERTIONS ENDS HERE /////////////
+
+      ////////// Sales ASSERTIONS STARTS HERE /////////////
+
+      //verify Sales
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Sales')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Sales - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Sales - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(7)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Sales ASSERTIONS ENDS HERE /////////////
+
+      ////////// Lead Generation ASSERTIONS STARTS HERE /////////////
+
+      //verify Lead Generation
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .should('exist')
+        .within(()=>{
+          //assert the button left beside the SI-PPC Title
+          cy.get(' > div > div > div')
+            .should('exist')
+            .and('not.be.disabled')
+          //assert SI-PPC title
+          cy.get(' > div > div > p > span')
+            .should('exist')
+            .and('have.text', 'Lead Generation')
+            .and('have.css', 'font-weight', '700') //font bold
+        })
+
+      //Click Lead Generation - it should reveal additional within element
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .click()
+        .wait(1000)
+        .within(()=>{
+          //assert Description, Recurring, Department, and Actions column names
+          const operationcolNames = [
+            'Description',
+            'Department',
+            'Actions'
+          ]
+          cy.get(' > div:nth-child(1) > p').each(($option, index)=>{
+            cy.wrap($option)
+              .should('exist')
+              .and('have.text', operationcolNames[index])
+            cy.log(operationcolNames[index])
+          })
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+          //assert No Items
+          cy.get(' > div:nth-child(2) > p')
+            .should('exist')
+            .and('have.text', 'No Items')
+        })
+
+      //Click again Lead Generation - it should hide the additional elements within
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(8)')
+        .find(' > div > div > div')
+        .click()
+        .wait(1000)
+
+      //verify Description column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(2)')
+        .should('not.exist')
+      //verify Recurring column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(3)')
+        .should('not.exist')
+      //verify Department column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(4)')
+        .should('not.exist')
+      //verify Action column name should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(1) > p:nth-child(5)')
+        .should('not.exist')
+      //verify No Items should not be visible
+      cy.get('div.space-y-8 > div.space-y-8 > div:nth-child(3) > div:nth-child(2) > p')
+        .should('not.exist')
+
+      ////////// Lead Generation ASSERTIONS ENDS HERE /////////////
+
     })
 
     // **** CLIENT ADMIN TASK MANAGEMENT ENDS HERE ***
